@@ -620,3 +620,47 @@ body, #root {
   max-width: 100%;
 }
 
+/* Hide scrollbars inside scroll stack cards to maintain premium look */
+.scroll-stack-card::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Mobile Layout Tweaks — Native CSS Sticky ScrollStack */
+@media (max-width: 1023px) {
+  .tech-grid-container {
+    min-height: auto;
+  }
+  
+  .scroll-stack-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    min-height: auto !important;
+  }
+  
+  /* Set stacking order so they overlap correctly */
+  .scroll-stack-card {
+    min-height: calc(100vh - var(--header-height, 61px)) !important;
+    will-change: transform, filter;
+  }
+
+  /* Ensure the sections take up the full height of the card */
+  section, footer {
+    min-height: 100% !important;
+    height: auto !important;
+    padding-top: 2rem !important;
+    padding-bottom: 3rem !important;
+    margin: 0 !important;
+  }
+
+  /* Remove any empty space above the Hero section */
+  #hero {
+    padding-top: 1.5rem !important;
+  }
+}
+
+
+

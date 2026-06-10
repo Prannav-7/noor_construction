@@ -5,7 +5,7 @@ export default function Footer({ timeText }) {
   const mapUrl = "https://maps.google.com/?q=Noor+Infrastructure+Kalpakkam";
 
   return (
-    <footer id="contact" className="py-8 lg:py-12 px-6 h-full relative z-10 border-t border-white/5 bg-black text-white flex flex-col justify-center concrete-texture">
+    <footer id="contact" className="py-8 lg:py-12 px-6 h-full relative z-10 border-t border-white/5 bg-black text-white flex flex-col justify-center">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 relative z-10">
         
         {/* Brand/Contact Details */}
@@ -97,52 +97,33 @@ export default function Footer({ timeText }) {
           </div>
         </div>
 
-        {/* Clickable Custom SVG telemetry map container */}
+        {/* Real Embedded Google Map */}
         <div className="lg:col-span-4 reveal-on-scroll">
-          <a 
-            href={mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group rounded p-4 border border-white/10 relative bg-neutral-950 aspect-square flex flex-col justify-between overflow-hidden hover:border-[#ff4e00]/50 transition-all duration-300 cursor-pointer block"
-            title="Open coordinates in Google Maps"
-          >
-            <div className="absolute top-2 left-2 text-[10px] font-mono text-neutral-400 font-semibold group-hover:text-white transition-colors flex items-center gap-1.5">
+          <div className="group rounded p-1 border border-white/10 relative bg-neutral-950 aspect-square flex flex-col overflow-hidden hover:border-[#ff4e00]/50 transition-all duration-300">
+            <div className="absolute top-3 left-3 z-20 text-[10px] font-mono text-white font-semibold bg-black/60 px-2 py-1 rounded backdrop-blur-sm border border-white/10 flex items-center gap-1.5 pointer-events-none">
               <span>// REGIONAL_MAP_LINK</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#ff4e00] opacity-70 group-hover:opacity-100 transition-all" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#ff4e00]" />
             </div>
 
-            {/* Vector Blueprint rendering */}
-            <div className="flex-1 flex items-center justify-center relative my-4 border border-white/5 bg-[#0a1628] blueprint-grid rounded overflow-hidden">
-              {/* Layout coordinates */}
-              <div className="absolute inset-x-0 top-[40%] h-[1px] border-b border-dashed border-[#1a3a5c]/50"></div>
-              <div className="absolute inset-y-0 left-[60%] w-[1px] border-r border-dashed border-[#1a3a5c]/50"></div>
-              
-              {/* ECR road line */}
-              <div className="absolute w-[200%] h-4 bg-[#0d1f38] -rotate-12 top-[35%] left-[-50%] border-y border-white/5 flex items-center justify-center">
-                <span className="font-mono text-[9px] text-[#5a8ab5] tracking-widest font-semibold">EAST COAST ROAD (ECR)</span>
-              </div>
-              
-              {/* Bay of Bengal */}
-              <div className="absolute right-0 top-0 bottom-0 w-[30%] bg-[#071120] border-l border-white/5 flex items-center justify-center">
-                <span className="font-mono text-[8px] text-[#5a8ab5] -rotate-90 tracking-widest uppercase font-semibold">BAY OF BENGAL</span>
-              </div>
-
-              {/* Beacon Marker */}
-              <div className="absolute top-[34%] left-[58%] flex items-center justify-center">
-                <span className="absolute w-5 h-5 rounded-full bg-[#ff4e00]/20 border border-[#ff4e00]/40 animate-ping"></span>
-                <span className="relative w-2.5 h-2.5 rounded-full bg-[#ff4e00] border border-white shadow-[0_0_10px_rgba(255,78,0,0.5)]"></span>
-                <span className="absolute left-4 font-mono text-[9px] font-bold text-white bg-black px-1.5 py-0.5 rounded border border-white/10 shrink-0 group-hover:bg-[#ff4e00] group-hover:text-black transition-colors">
-                  NOOR.HQ
-                </span>
-              </div>
+            {/* Embedded Google Map */}
+            <div className="flex-1 w-full relative bg-[#0a1628] rounded-sm overflow-hidden pointer-events-auto">
+              <iframe
+                title="Google Maps Location"
+                src="https://maps.google.com/maps?q=East+Coast+Road,+Kalpakkam,+Tamil+Nadu&t=m&z=13&output=embed&iwloc=near"
+                className="absolute inset-0 w-full h-full border-0"
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                style={{ filter: 'grayscale(1) invert(1) contrast(1.2)' }}
+              ></iframe>
             </div>
 
             {/* Coordinate telemetry metadata */}
-            <div className="font-mono text-[10px] text-neutral-300 flex justify-between font-medium">
+            <div className="p-3 font-mono text-[10px] text-neutral-300 flex justify-between font-medium bg-neutral-950">
               <span>COORDS: G46W+J8 KALPAKKAM</span>
-              <span className="text-neutral-450">PUDUPATTINAM SEC</span>
+              <span className="text-neutral-400">PUDUPATTINAM SEC</span>
             </div>
-          </a>
+          </div>
         </div>
       </div>
 
@@ -150,14 +131,14 @@ export default function Footer({ timeText }) {
       <div className="construction-tape w-full mt-6 relative z-10"></div>
 
       {/* Copyright/Contract details */}
-      <div className="max-w-7xl mx-auto w-full mt-4 pt-4 flex flex-col md:flex-row justify-between items-center font-mono text-[10px] text-neutral-500 gap-3 tracking-widest relative z-10">
+      <div className="max-w-7xl mx-auto w-full mt-4 pt-4 flex flex-col md:flex-row justify-between items-center font-mono text-[10px] text-neutral-400 gap-3 tracking-widest relative z-10">
         <div>
           © 2026 NOOR INFRASTRUCTURE FOUNDATION, LTD. ALL SYSTEM DATA SECURED.
         </div>
         <div className="flex gap-6">
           <a href="#" className="hover:text-white transition-colors">PRIVACY_LEDGER</a>
           <a href="#" className="hover:text-white transition-colors">TERMS_OF_GRID</a>
-          <span>DEED_CONTRACT: 0x5d6...ba4</span>
+          <span className="text-neutral-500">DEED_CONTRACT: 0x5d6...ba4</span>
         </div>
       </div>
     </footer>

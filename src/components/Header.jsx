@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { HardHat } from './ConstructionIcons';
 
 export default function Header({ activeNav, setActiveNav, setAllocationModal }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const header = document.querySelector('header');
+      if (header) {
+        document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const navLinks = [
     { id: 'projects', label: '01_PROJECTS', href: '#projects' },
@@ -19,7 +31,7 @@ export default function Header({ activeNav, setActiveNav, setAllocationModal }) 
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full px-6 py-3.5 md:py-5 border-b border-black/5 bg-[#faf9f6]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-[100] w-full px-6 py-3.5 md:py-5 border-b border-black/5 bg-[#faf9f6]/80 backdrop-blur-md" style={{ transform: 'translate3d(0, 0, 0)', zIndex: 100 }}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
         {/* Logo with HardHat icon */}
@@ -73,7 +85,7 @@ export default function Header({ activeNav, setActiveNav, setAllocationModal }) 
 
       {/* Mobile Navigation Drawer Overlay */}
       <div 
-        className={`fixed inset-0 top-[61px] md:top-[73px] bg-[#0a1628] blueprint-grid z-45 md:hidden transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col justify-between ${
+        className={`absolute left-0 w-full h-[calc(100vh-100%)] top-full bg-[#0a1628] blueprint-grid z-45 md:hidden transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) flex flex-col justify-between ${
           isMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-4'
         }`}
       >

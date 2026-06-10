@@ -289,7 +289,7 @@ function App() {
         <ScrollStackItem>
           <Reviews reviews={reviews} />
         </ScrollStackItem>
-        <ScrollStackItem>
+        <ScrollStackItem itemClassName="!bg-black">
           <Footer timeText={timeText} />
         </ScrollStackItem>
       </ScrollStack>
