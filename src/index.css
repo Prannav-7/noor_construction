@@ -591,3 +591,32 @@ body {
   );
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+
+/* ===================================================================
+   SMOOTHNESS & RESPONSIVENESS — Reveal & Scroll System
+   =================================================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Offset for sticky header */
+}
+
+/* Scroll Reveal Animations */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive fixes to prevent horizontal overflow */
+body, #root {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+

@@ -106,22 +106,25 @@ export default function Reviews({ reviews }) {
               </div>
 
               {/* Client Info Bar */}
-              <div className="flex items-center gap-4 p-4 rounded-lg bg-white border border-neutral-200">
-                {/* Avatar */}
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff4e00] to-[#ec9f05] flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-lg shadow-orange-500/20">
-                  <TextTransition duration={150}>
-                    {activeReview.name.split(' ').map(n => n[0]).join('')}
-                  </TextTransition>
-                </div>
-                <div className="flex-1">
-                  <div className="text-[#111115] font-semibold text-sm">
-                    <TextTransition duration={180}>{activeReview.name}</TextTransition>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg bg-white border border-neutral-200">
+                <div className="flex items-center gap-4">
+                  {/* Avatar */}
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff4e00] to-[#ec9f05] flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-lg shadow-orange-500/20">
+                    <TextTransition duration={150}>
+                      {activeReview.name.split(' ').map(n => n[0]).join('')}
+                    </TextTransition>
                   </div>
-                  <div className="text-neutral-500 text-xs font-medium">
-                    <TextTransition duration={200}>{activeReview.role}</TextTransition>
+                  <div>
+                    <div className="text-[#111115] font-semibold text-sm">
+                      <TextTransition duration={180}>{activeReview.name}</TextTransition>
+                    </div>
+                    <div className="text-neutral-500 text-xs font-medium">
+                      <TextTransition duration={200}>{activeReview.role}</TextTransition>
+                    </div>
                   </div>
                 </div>
-                <div className="text-right">
+                
+                <div className="flex sm:flex-col justify-between sm:text-right items-center sm:items-end border-t sm:border-t-0 border-neutral-100 pt-3 sm:pt-0">
                   <div className="font-mono text-[10px] text-neutral-400 tracking-wider font-medium">
                     <TextTransition duration={200}>{activeReview.date}</TextTransition>
                   </div>

@@ -61,7 +61,12 @@ export default function Ecosystem() {
 
               {/* Connector dashed line (except last) */}
               {i < stages.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-2 w-4 border-t-2 border-dashed border-[#1a3a5c] z-5"></div>
+                <>
+                  {/* Desktop Horizontal Connector */}
+                  <div className="hidden md:block absolute top-1/2 -right-2 w-4 border-t-2 border-dashed border-[#1a3a5c] z-5"></div>
+                  {/* Mobile Vertical Connector */}
+                  <div className="block md:hidden absolute left-1 -bottom-4 h-4 border-l-2 border-dashed border-[#ff4e00]/60 z-5"></div>
+                </>
               )}
             </div>
           ))}

@@ -54,18 +54,18 @@ export default function Hero({ timeText, setAllocationModal }) {
         </div>
 
         {/* Mini-Stats Grid */}
-        <div className="grid grid-cols-3 gap-6 pt-10 border-t border-black/5 font-mono text-sm relative z-10">
+        <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-10 border-t border-black/5 font-mono text-sm relative z-10">
           <div>
-            <div className="text-2xl font-bold text-black mb-1">450K+</div>
-            <div className="text-[11px] text-neutral-500 tracking-wider font-medium">SQ FT DEVELOPED</div>
+            <div className="text-xl sm:text-2xl font-bold text-black mb-1">450K+</div>
+            <div className="text-[10px] sm:text-[11px] text-neutral-500 tracking-wider font-medium">SQ FT DEVELOPED</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-neutral-700 mb-1">5.0 ★</div>
-            <div className="text-[11px] text-neutral-500 tracking-wider font-medium">6 ACTIVE RATINGS</div>
+            <div className="text-xl sm:text-2xl font-bold text-neutral-700 mb-1">5.0 ★</div>
+            <div className="text-[10px] sm:text-[11px] text-neutral-500 tracking-wider font-medium">6 ACTIVE RATINGS</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-black mb-1">94.2%</div>
-            <div className="text-[11px] text-neutral-500 tracking-wider font-medium">SOLAR ENERGY DEP</div>
+            <div className="text-xl sm:text-2xl font-bold text-black mb-1">94.2%</div>
+            <div className="text-[10px] sm:text-[11px] text-neutral-500 tracking-wider font-medium">SOLAR ENERGY DEP</div>
           </div>
         </div>
       </div>
