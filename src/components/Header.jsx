@@ -3,6 +3,15 @@ import { ArrowUpRight } from 'lucide-react';
 import { HardHat } from './ConstructionIcons';
 import PillNav from './PillNav';
 
+const navItems = [
+  { label: 'Home', href: '#hero' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Ecosystem', href: '#ecosystem' },
+  { label: 'Estimator', href: '#estimator' },
+  { label: 'Reviews', href: '#reviews' },
+  { label: 'Contact', href: '#contact' }
+];
+
 export default function Header({ setAllocationModal }) {
   const [activeHash, setActiveHash] = useState('#hero');
 
@@ -70,15 +79,6 @@ export default function Header({ setAllocationModal }) {
       window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
-
-  const navItems = [
-    { label: 'Home', href: '#hero' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Ecosystem', href: '#ecosystem' },
-    { label: 'Estimator', href: '#estimator' },
-    { label: 'Reviews', href: '#reviews' },
-    { label: 'Contact', href: '#contact' }
-  ];
 
   return (
     <header className="sticky top-0 z-[100] w-full px-6 py-3.5 md:py-4 border-b border-black/5 bg-[#faf9f6]/80 backdrop-blur-md" style={{ transform: 'translate3d(0, 0, 0)', zIndex: 100 }}>

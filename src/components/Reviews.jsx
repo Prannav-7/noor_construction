@@ -153,13 +153,13 @@ export default function Reviews({ reviews }) {
             <div className="w-full max-w-[300px] h-[420px] relative">
               <Stack 
                 cards={cards}
-                randomRotation={true}
+                randomRotation={false}
                 sensitivity={130}
-                autoplay={true}
-                autoplayDelay={4500}
+                autoplay={false}
                 pauseOnHover={true}
                 sendToBackOnClick={true}
                 onChange={setActiveIdx}
+                enableTutorial={false}
               />
             </div>
           </div>

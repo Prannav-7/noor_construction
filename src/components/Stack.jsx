@@ -50,7 +50,8 @@ export default function Stack({
     pauseOnHover = false,
     mobileClickOnly = false,
     mobileBreakpoint = 768,
-    onChange
+    onChange,
+    enableTutorial = false
 }) {
     const [isMobile, setIsMobile] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
@@ -108,12 +109,14 @@ export default function Stack({
         }
     }, [autoplay, autoplayDelay, stack, isPaused]);
 
-    const [showTutorial, setShowTutorial] = useState(true);
+    const [showTutorial, setShowTutorial] = useState(enableTutorial);
 
     useEffect(() => {
-        const timer = setTimeout(() => setShowTutorial(false), 4500);
-        return () => clearTimeout(timer);
-    }, []);
+        if (enableTutorial) {
+            const timer = setTimeout(() => setShowTutorial(false), 4500);
+            return () => clearTimeout(timer);
+        }
+    }, [enableTutorial]);
 
     return (
         <div

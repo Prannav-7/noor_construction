@@ -105,7 +105,7 @@ const PillNav = ({
     }
 
     const menu = mobileMenuRef.current;
-    if (menu) {
+    if (menu && !isMobileMenuOpen) {
       gsap.set(menu, { visibility: 'hidden', opacity: 0, scaleY: 1, y: 0 });
     }
 
