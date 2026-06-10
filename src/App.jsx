@@ -11,7 +11,6 @@ import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
 
 function App() {
   // Navigation & Modal States
-  const [activeNav, setActiveNav] = useState('home');
   const [allocationModal, setAllocationModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -247,8 +246,6 @@ function App() {
 
       {/* Header component */}
       <Header 
-        activeNav={activeNav} 
-        setActiveNav={setActiveNav} 
         setAllocationModal={setAllocationModal} 
       />
 
