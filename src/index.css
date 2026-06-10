@@ -1,0 +1,593 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Bodoni Moda', serif;
+  --font-mono: 'Space Grotesk', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  
+  --color-cyber-lime: #000000;
+  --color-cyber-lime-glow: rgba(0, 0, 0, 0.03);
+  --color-tech-cyan: #111115;
+  --color-tech-cyan-glow: rgba(17, 17, 21, 0.03);
+  --color-dark-bg: #faf9f6;
+  --color-dark-card: #ffffff;
+  --color-dark-border: rgba(0, 0, 0, 0.07);
+}
+
+/* Global Text Clarity - Crystal Clear Rendering */
+*, *::before, *::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-optical-sizing: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #faf9f6;
+}
+::-webkit-scrollbar-thumb {
+  background: #e2e1dc;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #111115;
+}
+
+/* Realistic Diagonal Blinds Shadow Overlay for Warm-Light Theme */
+.window-shadow-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  /* Simulating soft diagonal blind shadows cast across a light surface */
+  background: repeating-linear-gradient(
+    130deg,
+    transparent,
+    transparent 120px,
+    rgba(0, 0, 0, 0.035) 120px,
+    rgba(0, 0, 0, 0.035) 240px,
+    transparent 240px,
+    transparent 360px,
+    rgba(0, 0, 0, 0.02) 360px,
+    rgba(0, 0, 0, 0.02) 400px
+  );
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+}
+
+/* Light Card Panels (Editorial styling) */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.015);
+}
+
+.glass-panel-hover {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Technical Telemetry Grid Background for Light Theme */
+.tech-grid-container {
+  position: relative;
+  background-color: #faf9f6;
+  overflow: hidden;
+}
+
+.tech-grid-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.012) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tech-grid-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 900px at 50% -100px, rgba(0, 0, 0, 0.01), transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Diagonal Light Shadow Accent inside specific panels */
+.light-window-shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: repeating-linear-gradient(
+    130deg,
+    transparent,
+    transparent 80px,
+    rgba(0, 0, 0, 0.02) 80px,
+    rgba(0, 0, 0, 0.02) 160px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Typography Gradient for Light Theme */
+.text-serif-gradient {
+  background: linear-gradient(180deg, #111115 40%, #5c5c62 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #111115 30%, #a67c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Telemetry Tick Marks in Dark Charcoal for Light Theme */
+.tick-mark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.tick-mark-tr {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.tick-mark-bl {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.tick-mark-br {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Glow Elements */
+.glow-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.04), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+
+.glow-btn:hover::after {
+  transform: translateX(100%);
+}
+
+/* Custom Scroll Reveals */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Super Animatic Carousel Custom Animations */
+@keyframes cardScaleReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) rotate(2deg) translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg) translateY(0);
+  }
+}
+
+.animate-card-reveal {
+  animation: cardScaleReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes textClipReveal {
+  0% {
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+    transform: translateY(80%);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: translateY(0);
+  }
+}
+
+.animate-clip-reveal {
+  display: block;
+  animation: textClipReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-35px) scale(0.96) rotate(-0.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1) rotate(0deg);
+  }
+}
+
+.animate-card-slide {
+  animation: cardSlideIn 0.8s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+/* 3D Tilt Card Effects */
+.tilt-card-container {
+  perspective: 1200px;
+}
+
+.tilt-card {
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-card-inner {
+  transform: translateZ(30px);
+}
+
+/* Nav Button Pulse Rings */
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.hover-pulse-ring {
+  position: relative;
+}
+
+.hover-pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hover-pulse-ring:hover::before {
+  animation: pulseRing 1.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  opacity: 1;
+}
+
+@keyframes highlightFlash {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+    opacity: 0.5;
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+    opacity: 1;
+  }
+  100% {
+    text-shadow: none;
+    opacity: 1;
+  }
+}
+
+.animate-recalc {
+  animation: highlightFlash 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes textFadeInOut {
+  0% { opacity: 0; transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: textFadeInOut 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ===================================================================
+   CONSTRUCTION-LEVEL FEEL — Material & Texture System
+   =================================================================== */
+
+/* 1. Concrete Grain Texture Overlay
+   Simulates raw plaster/concrete surface via CSS noise pattern */
+.concrete-texture {
+  position: relative;
+}
+.concrete-texture::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* 2. Blueprint Grid Pattern — Technical drawing grid */
+.blueprint-grid {
+  position: relative;
+  background-color: #0a1628;
+}
+.blueprint-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(26, 58, 92, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 58, 92, 0.5) 1px, transparent 1px),
+    linear-gradient(rgba(26, 58, 92, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 58, 92, 0.2) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: center;
+}
+
+/* 3. Safety Stripe Accent — Orange/Black Hazard Diagonals */
+.safety-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff4e00,
+    #ff4e00 10px,
+    #111115 10px,
+    #111115 20px
+  );
+}
+
+.safety-stripe-thin {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff4e00,
+    #ff4e00 5px,
+    #111115 5px,
+    #111115 10px
+  );
+}
+
+/* 4. Steel Beam Border — Industrial I-beam effect */
+.steel-beam-border {
+  border: 2px solid #111115;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 2px 0 #000,
+    0 3px 0 rgba(0,0,0,0.2);
+}
+
+/* 5. Construction Tape Divider */
+.construction-tape {
+  height: 6px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff4e00,
+    #ff4e00 8px,
+    #000000 8px,
+    #000000 16px
+  );
+  border: none;
+  margin: 0;
+}
+
+/* 6. Animated Striped Progress Bar */
+@keyframes stripedProgress {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 0; }
+}
+
+.progress-bar-construction {
+  height: 8px;
+  border-radius: 0;
+  background-color: rgba(0,0,0,0.15);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.progress-bar-construction .progress-fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff4e00,
+    #ff4e00 8px,
+    #e64400 8px,
+    #e64400 16px
+  );
+  background-size: 40px 100%;
+  animation: stripedProgress 1s linear infinite;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-bar-construction-dark .progress-fill {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffffff,
+    #ffffff 8px,
+    rgba(255,255,255,0.6) 8px,
+    rgba(255,255,255,0.6) 16px
+  );
+  background-size: 40px 100%;
+  animation: stripedProgress 1s linear infinite;
+}
+
+/* 7. Rebar Cross-Hatch Pattern */
+.rebar-pattern {
+  position: relative;
+}
+.rebar-pattern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(45deg, rgba(255,78,0,0.04) 1px, transparent 1px),
+    linear-gradient(-45deg, rgba(255,78,0,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* 8. Blueprint Fold/Crease Marks */
+.blueprint-fold::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(225deg, rgba(0,0,0,0.08) 50%, transparent 50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 9. Clipboard Document Style */
+.clipboard-doc {
+  position: relative;
+  background: linear-gradient(180deg, #f5f4f0 0%, #eae8e3 100%);
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 2px 4px 12px rgba(0,0,0,0.08);
+}
+.clipboard-doc::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 16px;
+  background: #888;
+  border-radius: 0 0 6px 6px;
+  box-shadow: inset 0 -2px 3px rgba(0,0,0,0.2);
+  z-index: 5;
+}
+
+/* 10. Verification Stamp Seal */
+.stamp-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px double #ff4e00;
+  color: #ff4e00;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  transform: rotate(-12deg);
+  opacity: 0.7;
+  line-height: 1.3;
+  padding: 10px;
+}
+
+/* 11. Corner Rivet Marks (for blueprint frames) */
+.rivet-corners {
+  position: relative;
+}
+.rivet-corners::before,
+.rivet-corners::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.05);
+  z-index: 5;
+}
+.rivet-corners::before { top: 8px; left: 8px; }
+.rivet-corners::after { top: 8px; right: 8px; }
+
+/* 12. Pin/Tack Mark on Cards */
+.pin-mark {
+  position: relative;
+}
+.pin-mark::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #ff4e00, #cc3e00);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+/* 13. Under Construction Ribbon */
+.under-construction-ribbon {
+  position: absolute;
+  top: 14px;
+  right: -35px;
+  width: 140px;
+  text-align: center;
+  padding: 4px 0;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: white;
+  text-transform: uppercase;
+  transform: rotate(45deg);
+  z-index: 10;
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff4e00,
+    #ff4e00 6px,
+    #111115 6px,
+    #111115 12px
+  );
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
