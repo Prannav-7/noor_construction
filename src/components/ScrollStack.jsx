@@ -346,6 +346,17 @@ const ScrollStack = ({
             card.style.webkitPerspective = '1000px';
         });
 
+        // Setup ResizeObserver to handle dynamic height changes and HMR adjustments
+        const resizeObserver = new ResizeObserver(() => {
+            measureLayout();
+            updateCardTransforms();
+        });
+        cards.forEach(card => {
+            if (card) resizeObserver.observe(card);
+        });
+        const header = document.querySelector('header');
+        if (header) resizeObserver.observe(header);
+
         // Perform initial measurements
         measureLayout();
 
@@ -359,6 +370,7 @@ const ScrollStack = ({
         updateCardTransforms();
 
         return () => {
+            resizeObserver.disconnect();
             clearTimeout(timer);
             if (animationFrameRef.current) {
                 cancelAnimationFrame(animationFrameRef.current);

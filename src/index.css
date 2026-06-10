@@ -634,8 +634,6 @@ body, #root {
   }
   
   .scroll-stack-inner {
-    display: flex !important;
-    flex-direction: column !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     min-height: auto !important;

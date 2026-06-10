@@ -4,13 +4,15 @@ import TypewriterText from './TypewriterText';
 
 export default function Hero({ timeText, setAllocationModal }) {
   return (
-    <section id="hero" className="relative py-8 lg:py-12 px-6 h-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:items-center z-10">
+    <section id="hero" className="relative py-8 lg:py-12 px-6 h-full max-w-7xl mx-auto z-10">
       
       {/* Light-beam Blind Shadow Overlay across the Hero section (casts real-time shadow slats) */}
       <div className="window-shadow-overlay absolute inset-0"></div>
 
-      {/* Hero Left Content — Concrete textured background */}
-      <div className="lg:col-span-7 flex flex-col justify-start lg:justify-center reveal-on-scroll relative z-10 concrete-texture pt-2 lg:pt-0">
+      {/* Grid container */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:items-center h-full w-full relative z-10">
+        {/* Hero Left Content — Concrete textured background */}
+        <div className="lg:col-span-7 flex flex-col justify-start lg:justify-center reveal-on-scroll relative z-10 concrete-texture pt-2 lg:pt-0">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded border border-black/10 bg-black/5 text-neutral-700 font-mono text-[11px] tracking-widest mb-8 w-fit relative z-10">
           <Activity className="w-3.5 h-3.5 text-black animate-pulse" />
           SECURE DECENTRALIZED INFRASTRUCTURE // V5.0
@@ -161,6 +163,7 @@ export default function Hero({ timeText, setAllocationModal }) {
         {/* Bottom Rivet Corners (extra pair) */}
         <div className="absolute bottom-0 left-[calc(50%-225px)] w-2 h-2 rounded-full border border-black/20 bg-black/5 hidden lg:block"></div>
         <div className="absolute bottom-0 right-[calc(50%-225px)] w-2 h-2 rounded-full border border-black/20 bg-black/5 hidden lg:block"></div>
+      </div>
       </div>
     </section>
   );
