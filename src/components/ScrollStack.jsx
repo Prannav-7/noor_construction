@@ -308,9 +308,14 @@ const ScrollStack = ({
 
     // Recalculate layout values on window resizing & load events
     useEffect(() => {
+        let lastWidth = window.innerWidth;
         const handleResize = () => {
-            measureLayout();
-            updateCardTransforms();
+            const currentWidth = window.innerWidth;
+            if (currentWidth !== lastWidth) {
+                lastWidth = currentWidth;
+                measureLayout();
+                updateCardTransforms();
+            }
         };
         window.addEventListener('resize', handleResize);
         window.addEventListener('load', handleResize);
