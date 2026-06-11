@@ -6,39 +6,46 @@ import './Carousel.css';
 
 const DEFAULT_ITEMS = [
   {
-    title: 'Noor Luminosity',
-    description: 'Eco-Living Smart Villas in ECR Pudupattinam.',
+    title: 'Noor Luminosity Villas',
+    description: 'Eco-Living Smart Villas — ECR Pudupattinam.',
     id: 1,
     image: '/local_villa_project.png',
     icon: <Layers className="carousel-icon" />
   },
   {
     title: 'Nova Smart Homes',
-    description: 'High-Density Decarbonized Living in Kalpakkam.',
+    description: 'Decarbonized Living — Kalpakkam.',
     id: 2,
     image: '/local_smart_home.png',
     icon: <Circle className="carousel-icon" />
   },
   {
-    title: 'Tech-Helix Park',
-    description: 'Next-Gen Commercial IT Park in Chennai.',
+    title: 'Greenwood Duplex',
+    description: 'Twin-Unit Modern Living — Maraimalai Nagar.',
     id: 3,
-    image: '/local_tech_office.png',
+    image: '/local_duplex_house.png',
     icon: <Layout className="carousel-icon" />
   },
   {
-    title: 'Oceanic Horizon',
-    description: 'Off-Grid Net-Zero Villa on the Meiyur Coastal Stretch.',
+    title: 'Tech-Helix Park',
+    description: 'Next-Gen Commercial IT Park — ECR Highway.',
     id: 4,
-    image: '/local_coastal_home.png',
+    image: '/local_tech_office.png',
     icon: <FileText className="carousel-icon" />
   },
   {
-    title: 'Local Construction',
-    description: 'Residential Building Site — South India.',
+    title: 'Sunrise Apartment Block',
+    description: 'Urban Vertical Living — Potheri, SRM Road.',
     id: 5,
-    image: '/hero_bg_local_construction.png',
+    image: '/local_apartment_construction.png',
     icon: <Code className="carousel-icon" />
+  },
+  {
+    title: 'Oceanic Horizon Villa',
+    description: 'Off-Grid Net-Zero — Meiyur Coastal Stretch.',
+    id: 6,
+    image: '/local_coastal_home.png',
+    icon: <Layers className="carousel-icon" />
   }
 ];
 

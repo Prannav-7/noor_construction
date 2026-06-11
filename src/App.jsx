@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutUs from './components/AboutUs';
+import Projects from './components/Projects';
 import WhyUs from './components/WhyUs';
 import SmartHUD from './components/SmartHUD';
 import Reviews from './components/Reviews';
@@ -84,6 +85,8 @@ function App() {
         tagline: 'Futuristic Eco-Living Ecosystem',
         location: 'East Coast Road, Pudupattinam',
         progress: 88,
+        year: '2025',
+        area: '3,800 sqft',
         specifications: {
           sqFt: '3,800 Avg',
           solarCapacity: '12.5 kWp',
@@ -91,7 +94,8 @@ function App() {
           smartIndex: '95/100'
         },
         image: '/local_villa_project.png',
-        features: ['BIM Blueprint Twin', 'Greywater Grid', 'Holographic Controls', 'Off-Grid Backup']
+        features: ['BIM Blueprint Twin', 'Greywater Grid', 'Holographic Controls', 'Off-Grid Backup'],
+        description: 'A premium eco-smart villa development along East Coast Road featuring solar-integrated rooftops, intelligent water management, and a BIM digital twin for full lifecycle monitoring. Built with M25-grade concrete and corrosion-resistant TMT steel.'
       },
       {
         id: 'r2',
@@ -99,6 +103,8 @@ function App() {
         tagline: 'High-Density Decarbonized Living',
         location: 'Kalpakkam, Dhawood Nagar',
         progress: 100,
+        year: '2024',
+        area: '1,850 sqft',
         specifications: {
           sqFt: '1,850 Avg',
           solarCapacity: '6.2 kWp',
@@ -106,7 +112,26 @@ function App() {
           smartIndex: '90/100'
         },
         image: '/local_smart_home.png',
-        features: ['Smart Glass Facade', 'Micro-Ventilation', 'On-Chain Deed Registry', 'App Mesh Network']
+        features: ['Smart Glass Facade', 'Micro-Ventilation', 'On-Chain Deed Registry', 'App Mesh Network'],
+        description: 'A completed smart residential project with automated climate control, app-based access management, and energy-efficient smart glass facades. Fully handed over to owners with zero-snagging certification.'
+      },
+      {
+        id: 'r3',
+        title: 'Greenwood Duplex Homes',
+        tagline: 'Twin-Unit Modern Living',
+        location: 'Maraimalai Nagar, Chennai',
+        progress: 72,
+        year: '2026',
+        area: '2,200 sqft each',
+        specifications: {
+          sqFt: '2,200 Per Unit',
+          solarCapacity: '4.8 kWp',
+          carbonReduction: '2.1 Tons/Yr',
+          smartIndex: '85/100'
+        },
+        image: '/local_duplex_house.png',
+        features: ['Twin-Unit Layout', 'Shared Solar Array', 'Rain Harvesting', 'EV Charging Point'],
+        description: 'Thoughtfully designed duplex units sharing a solar array and rainwater harvesting system. Each unit has independent access, private garden, and EV charging infrastructure. Ideal for joint families or rental investment.'
       }
     ],
     commercial: [
@@ -116,6 +141,8 @@ function App() {
         tagline: 'Next-Gen Commercial Nexus',
         location: 'East Coast Rd Highway',
         progress: 42,
+        year: '2027',
+        area: '185,000 sqft',
         specifications: {
           sqFt: '185,000 Total',
           solarCapacity: '250 kWp',
@@ -123,7 +150,26 @@ function App() {
           smartIndex: '98/100'
         },
         image: '/local_tech_office.png',
-        features: ['Parametric White Concrete', 'Pneumatic Waste Grid', 'Dynamic Sun Shading', 'Tokenized Lease Registry']
+        features: ['Parametric Concrete', 'Pneumatic Waste Grid', 'Dynamic Sun Shading', 'Tokenized Lease Registry'],
+        description: 'A landmark commercial development featuring parametric structural design, automated waste management, and dynamic external sun-shading louvers. Targeting LEED Platinum certification upon completion.'
+      },
+      {
+        id: 'c2',
+        title: 'Sunrise Apartment Block',
+        tagline: 'Urban Vertical Living',
+        location: 'Potheri, SRM Road',
+        progress: 55,
+        year: '2026',
+        area: '24,000 sqft',
+        specifications: {
+          sqFt: '24,000 Total',
+          solarCapacity: '18 kWp',
+          carbonReduction: '8.5 Tons/Yr',
+          smartIndex: '88/100'
+        },
+        image: '/local_apartment_construction.png',
+        features: ['Fly Ash Blocks', 'Common Solar Roof', 'CCTV Grid', 'Fire Suppression System'],
+        description: 'A 4-storey residential apartment block with 12 units across G+3 floors. Built with eco-friendly fly ash bricks and a common solar rooftop system, the project serves the growing student and working professional community near SRM.'
       }
     ],
     coastal: [
@@ -133,6 +179,8 @@ function App() {
         tagline: 'Off-Grid Luxury Haven',
         location: 'Meiyur Coastal Stretch',
         progress: 65,
+        year: '2026',
+        area: '5,200 sqft',
         specifications: {
           sqFt: '5,200',
           solarCapacity: '22 kWp',
@@ -140,10 +188,12 @@ function App() {
           smartIndex: '97/100'
         },
         image: '/local_coastal_home.png',
-        features: ['Sea-Breeze Geo Cooling', 'Tidal Energy Micro-Hook', 'Structural Health Sensors', 'Self-Healing Bio Concrete']
+        features: ['Sea-Breeze Geo Cooling', 'Tidal Energy Micro-Hook', 'Structural Health Sensors', 'Self-Healing Bio Concrete'],
+        description: 'An off-grid coastal villa engineered for marine-grade durability. Features self-healing bio-concrete for salt resistance, real-time structural health monitoring, and a tidal micro-energy hook for 24/7 renewable power independence.'
       }
     ]
   };
+
 
   // Client Testimonials
   const reviews = [
@@ -277,6 +327,9 @@ function App() {
         </ScrollStackItem>
         <ScrollStackItem>
           <AboutUs />
+        </ScrollStackItem>
+        <ScrollStackItem itemClassName="overflow-y-auto">
+          <Projects projects={projects} />
         </ScrollStackItem>
         <ScrollStackItem data-margin-bottom="85vh">
           <WhyUs />
