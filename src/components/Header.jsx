@@ -77,7 +77,7 @@ export default function Header({ setAllocationModal }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-[100] w-full px-6 py-2.5 md:py-3 border-b border-white/10 bg-[#8b0000]" style={{ transform: 'translate3d(0, 0, 0)', zIndex: 100 }}>
+    <header className="sticky top-0 z-[100] w-full px-6 py-2.5 md:py-3 border-b border-white/10" style={{ background: 'linear-gradient(135deg, #f7f0eeff 0%, #e6dfddff 60%, #eddfd9ff 100%)', transform: 'translate3d(0, 0, 0)', zIndex: 100 }}>
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         
         {/* Left: Brand Logo (Order-1) */}

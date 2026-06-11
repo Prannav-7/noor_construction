@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutUs from './components/AboutUs';
@@ -9,6 +10,8 @@ import Reviews from './components/Reviews';
 import Footer from './components/Footer';
 import AllocationModal from './components/AllocationModal';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
+import ProjectDetail from './pages/ProjectDetail';
+import { PROJECTS_BY_CATEGORY } from './data/projects';
 
 function App() {
   // Navigation & Modal States
@@ -76,123 +79,8 @@ function App() {
     };
   }, []);
 
-  // Real Estate Projects Database
-  const projects = {
-    residential: [
-      {
-        id: 'r1',
-        title: 'Noor Luminosity Smart Villas',
-        tagline: 'Futuristic Eco-Living Ecosystem',
-        location: 'East Coast Road, Pudupattinam',
-        progress: 88,
-        year: '2025',
-        area: '3,800 sqft',
-        specifications: {
-          sqFt: '3,800 Avg',
-          solarCapacity: '12.5 kWp',
-          carbonReduction: '4.8 Tons/Yr',
-          smartIndex: '95/100'
-        },
-        image: '/local_villa_project.png',
-        features: ['BIM Blueprint Twin', 'Greywater Grid', 'Holographic Controls', 'Off-Grid Backup'],
-        description: 'A premium eco-smart villa development along East Coast Road featuring solar-integrated rooftops, intelligent water management, and a BIM digital twin for full lifecycle monitoring. Built with M25-grade concrete and corrosion-resistant TMT steel.'
-      },
-      {
-        id: 'r2',
-        title: 'Nova Apex Smart Homes',
-        tagline: 'High-Density Decarbonized Living',
-        location: 'Kalpakkam, Dhawood Nagar',
-        progress: 100,
-        year: '2024',
-        area: '1,850 sqft',
-        specifications: {
-          sqFt: '1,850 Avg',
-          solarCapacity: '6.2 kWp',
-          carbonReduction: '2.9 Tons/Yr',
-          smartIndex: '90/100'
-        },
-        image: '/local_smart_home.png',
-        features: ['Smart Glass Facade', 'Micro-Ventilation', 'On-Chain Deed Registry', 'App Mesh Network'],
-        description: 'A completed smart residential project with automated climate control, app-based access management, and energy-efficient smart glass facades. Fully handed over to owners with zero-snagging certification.'
-      },
-      {
-        id: 'r3',
-        title: 'Greenwood Duplex Homes',
-        tagline: 'Twin-Unit Modern Living',
-        location: 'Maraimalai Nagar, Chennai',
-        progress: 72,
-        year: '2026',
-        area: '2,200 sqft each',
-        specifications: {
-          sqFt: '2,200 Per Unit',
-          solarCapacity: '4.8 kWp',
-          carbonReduction: '2.1 Tons/Yr',
-          smartIndex: '85/100'
-        },
-        image: '/local_duplex_house.png',
-        features: ['Twin-Unit Layout', 'Shared Solar Array', 'Rain Harvesting', 'EV Charging Point'],
-        description: 'Thoughtfully designed duplex units sharing a solar array and rainwater harvesting system. Each unit has independent access, private garden, and EV charging infrastructure. Ideal for joint families or rental investment.'
-      }
-    ],
-    commercial: [
-      {
-        id: 'c1',
-        title: 'Noor Tech-Helix Corporate Park',
-        tagline: 'Next-Gen Commercial Nexus',
-        location: 'East Coast Rd Highway',
-        progress: 42,
-        year: '2027',
-        area: '185,000 sqft',
-        specifications: {
-          sqFt: '185,000 Total',
-          solarCapacity: '250 kWp',
-          carbonReduction: '180 Tons/Yr',
-          smartIndex: '98/100'
-        },
-        image: '/local_tech_office.png',
-        features: ['Parametric Concrete', 'Pneumatic Waste Grid', 'Dynamic Sun Shading', 'Tokenized Lease Registry'],
-        description: 'A landmark commercial development featuring parametric structural design, automated waste management, and dynamic external sun-shading louvers. Targeting LEED Platinum certification upon completion.'
-      },
-      {
-        id: 'c2',
-        title: 'Sunrise Apartment Block',
-        tagline: 'Urban Vertical Living',
-        location: 'Potheri, SRM Road',
-        progress: 55,
-        year: '2026',
-        area: '24,000 sqft',
-        specifications: {
-          sqFt: '24,000 Total',
-          solarCapacity: '18 kWp',
-          carbonReduction: '8.5 Tons/Yr',
-          smartIndex: '88/100'
-        },
-        image: '/local_apartment_construction.png',
-        features: ['Fly Ash Blocks', 'Common Solar Roof', 'CCTV Grid', 'Fire Suppression System'],
-        description: 'A 4-storey residential apartment block with 12 units across G+3 floors. Built with eco-friendly fly ash bricks and a common solar rooftop system, the project serves the growing student and working professional community near SRM.'
-      }
-    ],
-    coastal: [
-      {
-        id: 'co1',
-        title: 'Oceanic Horizon Net-Zero Villa',
-        tagline: 'Off-Grid Luxury Haven',
-        location: 'Meiyur Coastal Stretch',
-        progress: 65,
-        year: '2026',
-        area: '5,200 sqft',
-        specifications: {
-          sqFt: '5,200',
-          solarCapacity: '22 kWp',
-          carbonReduction: '9.2 Tons/Yr',
-          smartIndex: '97/100'
-        },
-        image: '/local_coastal_home.png',
-        features: ['Sea-Breeze Geo Cooling', 'Tidal Energy Micro-Hook', 'Structural Health Sensors', 'Self-Healing Bio Concrete'],
-        description: 'An off-grid coastal villa engineered for marine-grade durability. Features self-healing bio-concrete for salt resistance, real-time structural health monitoring, and a tidal micro-energy hook for 24/7 renewable power independence.'
-      }
-    ]
-  };
+  // Real Estate Projects Database — sourced from shared data
+  const projects = PROJECTS_BY_CATEGORY;
 
 
   // Client Testimonials
@@ -297,12 +185,39 @@ function App() {
 
   const estimates = calculateEstimates();
 
+  return (
+    <Routes>
+      <Route path="/project/:id" element={<ProjectDetail />} />
+      <Route path="/*" element={
+        <HomePage
+          timeText={timeText}
+          allocationModal={allocationModal}
+          setAllocationModal={setAllocationModal}
+          selectedProject={selectedProject}
+          setSelectedProject={setSelectedProject}
+          projects={projects}
+          calculator={calculator}
+          updateCalculator={updateCalculator}
+          estimates={estimates}
+          reviews={reviews}
+        />
+      } />
+    </Routes>
+  );
+}
 
+function HomePage({
+  timeText, allocationModal, setAllocationModal,
+  selectedProject, setSelectedProject,
+  projects, calculator, updateCalculator, estimates, reviews
+}) {
+  // Fix blank page: always scroll to top when home mounts after navigating back
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
 
   return (
     <div className="tech-grid-container min-h-screen text-[#111115] font-sans selection:bg-black selection:text-white">
-      
-
 
       {/* Grid Border Ticks */}
       <div className="grid-ticks">
@@ -313,17 +228,12 @@ function App() {
       </div>
 
       {/* Header component */}
-      <Header 
-        setAllocationModal={setAllocationModal} 
-      />
+      <Header setAllocationModal={setAllocationModal} />
 
       {/* ScrollStack for sections */}
       <ScrollStack useWindowScroll={true} itemDistance={0} baseScale={1} itemScale={0} itemStackDistance={0} stackPosition="1%" scaleEndPosition="0%" blurAmount={0}>
         <ScrollStackItem>
-          <Hero 
-            timeText={timeText} 
-            setAllocationModal={setAllocationModal} 
-          />
+          <Hero timeText={timeText} setAllocationModal={setAllocationModal} />
         </ScrollStackItem>
         <ScrollStackItem>
           <AboutUs />
@@ -335,7 +245,7 @@ function App() {
           <WhyUs />
         </ScrollStackItem>
         <ScrollStackItem itemClassName="overflow-y-auto">
-          <SmartHUD 
+          <SmartHUD
             calculator={calculator}
             updateCalculator={updateCalculator}
             estimates={estimates}
@@ -350,9 +260,9 @@ function App() {
         </ScrollStackItem>
       </ScrollStack>
 
-      {/* Allocation Modal popup */}
+      {/* Allocation Modal */}
       {allocationModal && (
-        <AllocationModal 
+        <AllocationModal
           selectedProject={selectedProject}
           setAllocationModal={setAllocationModal}
           setSelectedProject={setSelectedProject}

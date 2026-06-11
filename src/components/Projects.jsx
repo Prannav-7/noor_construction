@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MapPin, CheckCircle2, Clock, ChevronRight, Zap, Leaf, Home, Building2, Waves } from 'lucide-react';
+import { ALL_PROJECTS, PROJECTS_BY_CATEGORY } from '../data/projects';
 
 const TAB_CONFIG = [
   { key: 'all',         label: 'All Projects', icon: <Home className="w-3.5 h-3.5" /> },
@@ -22,13 +24,17 @@ function ProgressBar({ value }) {
 
 function ProjectCard({ project }) {
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
   const isDone = project.progress === 100;
 
   return (
     <div className="group bg-white border border-black/8 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col">
 
       {/* Image */}
-      <div className="relative h-52 overflow-hidden">
+      <div
+        className="relative h-52 overflow-hidden cursor-pointer"
+        onClick={() => navigate(`/project/${project.id}`)}
+      >
         <img
           src={project.image}
           alt={project.title}
@@ -144,14 +150,15 @@ function ProjectCard({ project }) {
 
 export default function Projects({ projects }) {
   const [activeTab, setActiveTab] = useState('all');
+  const resolvedProjects = projects || PROJECTS_BY_CATEGORY;
 
   const allProjects = [
-    ...(projects.residential || []),
-    ...(projects.commercial || []),
-    ...(projects.coastal || []),
+    ...(resolvedProjects.residential || []),
+    ...(resolvedProjects.commercial || []),
+    ...(resolvedProjects.coastal || []),
   ];
 
-  const displayed = activeTab === 'all' ? allProjects : (projects[activeTab] || []);
+  const displayed = activeTab === 'all' ? allProjects : (resolvedProjects[activeTab] || []);
   const totalCount = allProjects.length;
   const completedCount = allProjects.filter(p => p.progress === 100).length;
 
