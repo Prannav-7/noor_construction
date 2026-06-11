@@ -9,35 +9,35 @@ const DEFAULT_ITEMS = [
     title: 'Noor Luminosity',
     description: 'Eco-Living Smart Villas in ECR Pudupattinam.',
     id: 1,
-    image: '/coastal_villa.png',
+    image: '/local_villa_project.png',
     icon: <Layers className="carousel-icon" />
   },
   {
     title: 'Nova Smart Homes',
     description: 'High-Density Decarbonized Living in Kalpakkam.',
     id: 2,
-    image: '/smart_home.png',
+    image: '/local_smart_home.png',
     icon: <Circle className="carousel-icon" />
   },
   {
     title: 'Tech-Helix Park',
     description: 'Next-Gen Commercial IT Park in Chennai.',
     id: 3,
-    image: '/tech_park.png',
+    image: '/local_tech_office.png',
     icon: <Layout className="carousel-icon" />
   },
   {
     title: 'Oceanic Horizon',
     description: 'Off-Grid Net-Zero Villa on the Meiyur Coastal Stretch.',
     id: 4,
-    image: '/coastal_villa.png',
+    image: '/local_coastal_home.png',
     icon: <FileText className="carousel-icon" />
   },
   {
-    title: 'Eco Tower 01',
-    description: 'Futuristic Eco-Friendly Skyscraper in Chennai.',
+    title: 'Local Construction',
+    description: 'Residential Building Site — South India.',
     id: 5,
-    image: '/hero_skyscraper.png',
+    image: '/hero_bg_local_construction.png',
     icon: <Code className="carousel-icon" />
   }
 ];

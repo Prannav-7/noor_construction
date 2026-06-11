@@ -90,7 +90,7 @@ function App() {
           carbonReduction: '4.8 Tons/Yr',
           smartIndex: '95/100'
         },
-        image: '/coastal_villa.png',
+        image: '/local_villa_project.png',
         features: ['BIM Blueprint Twin', 'Greywater Grid', 'Holographic Controls', 'Off-Grid Backup']
       },
       {
@@ -105,7 +105,7 @@ function App() {
           carbonReduction: '2.9 Tons/Yr',
           smartIndex: '90/100'
         },
-        image: '/smart_home.png',
+        image: '/local_smart_home.png',
         features: ['Smart Glass Facade', 'Micro-Ventilation', 'On-Chain Deed Registry', 'App Mesh Network']
       }
     ],
@@ -122,7 +122,7 @@ function App() {
           carbonReduction: '180 Tons/Yr',
           smartIndex: '98/100'
         },
-        image: '/tech_park.png',
+        image: '/local_tech_office.png',
         features: ['Parametric White Concrete', 'Pneumatic Waste Grid', 'Dynamic Sun Shading', 'Tokenized Lease Registry']
       }
     ],
@@ -139,7 +139,7 @@ function App() {
           carbonReduction: '9.2 Tons/Yr',
           smartIndex: '97/100'
         },
-        image: '/coastal_villa.png',
+        image: '/local_coastal_home.png',
         features: ['Sea-Breeze Geo Cooling', 'Tidal Energy Micro-Hook', 'Structural Health Sensors', 'Self-Healing Bio Concrete']
       }
     ]
@@ -156,8 +156,8 @@ function App() {
       authTag: "DEED#0924-ECR",
       title: "Noor Luminosity Villas",
       year: "2026",
-      image: "/coastal_villa.png",
-      details: ["/smart_home.png", "/tech_park.png", "/hero_skyscraper.png", "/coastal_villa.png"]
+      image: "/local_villa_project.png",
+      details: ["/local_smart_home.png", "/local_tech_office.png", "/local_coastal_home.png", "/local_villa_project.png"]
     },
     {
       name: "Dr. Ananya Ramakrishnan",
@@ -168,8 +168,8 @@ function App() {
       authTag: "DEED#0714-KAL",
       title: "Nova Apex Smart Homes",
       year: "2026",
-      image: "/smart_home.png",
-      details: ["/coastal_villa.png", "/hero_skyscraper.png", "/smart_home.png", "/tech_park.png"]
+      image: "/local_smart_home.png",
+      details: ["/local_villa_project.png", "/local_coastal_home.png", "/local_smart_home.png", "/local_tech_office.png"]
     },
     {
       name: "Farhan Dhawood",
@@ -180,8 +180,8 @@ function App() {
       authTag: "DEED#1102-DHW",
       title: "Tech-Helix Corporate Park",
       year: "2025",
-      image: "/tech_park.png",
-      details: ["/hero_skyscraper.png", "/coastal_villa.png", "/tech_park.png", "/smart_home.png"]
+      image: "/local_tech_office.png",
+      details: ["/local_coastal_home.png", "/local_villa_project.png", "/local_tech_office.png", "/local_smart_home.png"]
     },
     {
       name: "Sarah Joshua",
@@ -192,8 +192,8 @@ function App() {
       authTag: "DEED#0442-ECR",
       title: "Oceanic Horizon Villa",
       year: "2026",
-      image: "/coastal_villa.png",
-      details: ["/smart_home.png", "/tech_park.png", "/coastal_villa.png", "/hero_skyscraper.png"]
+      image: "/local_coastal_home.png",
+      details: ["/local_smart_home.png", "/local_tech_office.png", "/local_coastal_home.png", "/local_villa_project.png"]
     }
   ];
 

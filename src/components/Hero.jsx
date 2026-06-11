@@ -11,7 +11,7 @@ export default function Hero({ timeText, setAllocationModal }) {
       <div 
         className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.85] rounded-[32px]"
         style={{ 
-          backgroundImage: "url('/hero_bg_workers_colored.png')"
+          backgroundImage: "url('/hero_bg_local_construction.png')"
         }}
       ></div>
 
