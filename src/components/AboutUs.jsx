@@ -61,7 +61,7 @@ export default function AboutUs() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative py-12 lg:py-16 px-6 min-h-full flex flex-col justify-start overflow-hidden"
+      className="relative py-12 lg:py-16 px-6 w-full overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #faf9f6 0%, #f3f1eb 50%, #faf9f6 100%)' }}
     >
       {/* Subtle rebar crosshatch pattern overlay */}
@@ -75,19 +75,19 @@ export default function AboutUs() {
           <div className="flex items-center gap-3 mb-5">
             <div className="w-8 h-[2px] bg-[#ff4e00]"></div>
             <span className="font-mono text-[10px] tracking-[0.35em] text-[#ff4e00] font-bold uppercase">
-              Company Overview
+              Who We Are
             </span>
           </div>
 
           <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-black mb-4">
-            Building Trust Through<br />
+            Building Your Vision<br />
             <span className="font-serif italic font-normal text-neutral-400">
-              Uncompromising Quality
+              On a Foundation of Trust
             </span>
           </h2>
 
           <p className="font-sans text-base md:text-lg text-neutral-600 max-w-2xl leading-relaxed">
-            At Noor Infrastructure, we prioritize reliability and structural integrity above all else. Since 2010, we have consistently delivered robust residential projects.
+            At Noor Infrastructure, your peace of mind is our highest priority. Since 2010, we've partnered with families and businesses to deliver high-quality, safe, and beautiful spaces. We believe in complete transparency, rigorous safety standards, and keeping our promises.
           </p>
         </div>
 
@@ -199,10 +199,10 @@ export default function AboutUs() {
               <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="safety-stripe-thin w-6 h-3 rounded-sm"></div>
-                  <span className="font-mono text-[9px] tracking-[0.35em] text-[#ff4e00] font-bold">OUR MISSION</span>
+                  <span className="font-mono text-[9px] tracking-[0.35em] text-[#ff4e00] font-bold">OUR COMMITMENT</span>
                 </div>
                 <p className="font-serif italic text-lg md:text-xl text-white/90 leading-relaxed mb-4">
-                  "We deliver customized layouts that represent elegance, luxury, and absolute resilience — from concept to completion."
+                  "Our mission is to build more than just structures; we build lasting relationships. We are dedicated to delivering exceptional quality, on time and within budget, ensuring every project is a place you can proudly call home."
                 </p>
                 <div className="flex flex-wrap gap-4 font-mono text-[10px] tracking-wider text-white/50">
                   <span className="flex items-center gap-1.5">
