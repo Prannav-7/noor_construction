@@ -15,7 +15,11 @@ export default function TypewriterText({
   const [isDeleting, setIsDeleting] = useState(false);
   const [isStarted, setIsStarted] = useState(startImmediately);
 
-  const wordList = Array.isArray(words) ? words : [words];
+  const stringifiedWords = JSON.stringify(words);
+  const wordList = React.useMemo(() => {
+    const parsed = JSON.parse(stringifiedWords);
+    return Array.isArray(parsed) ? parsed : [parsed];
+  }, [stringifiedWords]);
 
   useEffect(() => {
     if (!isStarted) return;

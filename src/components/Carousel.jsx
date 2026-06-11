@@ -20,10 +20,10 @@ function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, trans
 
   const backgroundStyle = item.image
     ? {
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.80) 100%), url(${item.image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }
+      backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.80) 100%), url(${item.image})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }
     : { background: 'linear-gradient(135deg, #2d2d35 0%, #222227 50%, #18181c 100%)' };
 
   return (
@@ -186,8 +186,8 @@ export default function Carousel({
     const { offset, velocity } = info;
     const direction =
       offset.x < -DRAG_BUFFER || velocity.x < -VELOCITY_THRESHOLD ? 1
-      : offset.x > DRAG_BUFFER || velocity.x > VELOCITY_THRESHOLD ? -1
-      : 0;
+        : offset.x > DRAG_BUFFER || velocity.x > VELOCITY_THRESHOLD ? -1
+          : 0;
     if (direction === 0) return;
     setPosition(prev => {
       const next = prev + direction;
@@ -205,8 +205,8 @@ export default function Carousel({
 
   const activeIndex =
     resolvedItems.length === 0 ? 0
-    : loop ? (position - 1 + resolvedItems.length) % resolvedItems.length
-    : Math.min(position, resolvedItems.length - 1);
+      : loop ? (position - 1 + resolvedItems.length) % resolvedItems.length
+        : Math.min(position, resolvedItems.length - 1);
 
   return (
     <div

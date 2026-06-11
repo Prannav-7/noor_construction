@@ -4,10 +4,10 @@ import { MapPin, CheckCircle2, Clock, ChevronRight, Zap, Leaf, Home, Building2, 
 import { ALL_PROJECTS, PROJECTS_BY_CATEGORY } from '../data/projects';
 
 const TAB_CONFIG = [
-  { key: 'all',         label: 'All Projects', icon: <Home className="w-3.5 h-3.5" /> },
-  { key: 'residential', label: 'Residential',  icon: <Home className="w-3.5 h-3.5" /> },
-  { key: 'commercial',  label: 'Commercial',   icon: <Building2 className="w-3.5 h-3.5" /> },
-  { key: 'coastal',     label: 'Coastal',      icon: <Waves className="w-3.5 h-3.5" /> },
+  { key: 'all', label: 'All Projects', icon: <Home className="w-3.5 h-3.5" /> },
+  { key: 'residential', label: 'Residential', icon: <Home className="w-3.5 h-3.5" /> },
+  { key: 'commercial', label: 'Commercial', icon: <Building2 className="w-3.5 h-3.5" /> },
+  { key: 'coastal', label: 'Coastal', icon: <Waves className="w-3.5 h-3.5" /> },
 ];
 
 function ProgressBar({ value }) {
@@ -218,11 +218,10 @@ export default function Projects({ projects }) {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full font-mono text-[11px] font-bold tracking-wider transition-all border ${
-                activeTab === tab.key
+              className={`flex items-center gap-2 px-4 py-2 rounded-full font-mono text-[11px] font-bold tracking-wider transition-all border ${activeTab === tab.key
                   ? 'bg-[#8b0000] text-white border-[#8b0000] shadow-md'
                   : 'bg-white text-neutral-600 border-black/10 hover:border-[#8b0000]/40 hover:text-[#8b0000]'
-              }`}
+                }`}
             >
               {tab.icon}
               {tab.label.toUpperCase()}

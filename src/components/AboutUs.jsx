@@ -61,7 +61,7 @@ export default function AboutUs() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative py-8 lg:py-12 px-6 h-full flex flex-col justify-center overflow-hidden"
+      className="relative py-12 lg:py-16 px-6 min-h-full flex flex-col justify-start overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #faf9f6 0%, #f3f1eb 50%, #faf9f6 100%)' }}
     >
       {/* Subtle rebar crosshatch pattern overlay */}
@@ -80,14 +80,14 @@ export default function AboutUs() {
           </div>
 
           <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-black mb-4">
-            Pioneering Luxury &<br />
+            Building Trust Through<br />
             <span className="font-serif italic font-normal text-neutral-400">
-              Structural Strength
+              Uncompromising Quality
             </span>
           </h2>
 
           <p className="font-sans text-base md:text-lg text-neutral-600 max-w-2xl leading-relaxed">
-            At Noor Infrastructure, we believe that construction is not just about raw materials — it is an art of shaping the future. Since 2010, our firm has built a legendary reputation for executing residential complexes, modern commercial towers, and highly durable industrial spaces.
+            At Noor Infrastructure, we prioritize reliability and structural integrity above all else. Since 2010, we have consistently delivered robust residential projects.
           </p>
         </div>
 

@@ -3,8 +3,8 @@ import { ArrowUpRight } from 'lucide-react';
 import PillNav from './PillNav';
 
 const navItems = [
-  { label: 'Projects', href: '#projects' },
   { label: 'About Us', href: '#about' },
+  { label: 'Projects', href: '#projects' },
   { label: 'Contact', href: '#contact' }
 ];
 
@@ -35,7 +35,7 @@ export default function Header({ setAllocationModal }) {
   // IntersectionObserver Scroll Spy to auto-highlight active section pill
   useEffect(() => {
     const sections = ['hero', 'projects', 'about', 'contact'];
-    
+
     const observerOptions = {
       root: null,
       rootMargin: '-40% 0px -40% 0px', // Triggers when section is centered in viewport
@@ -77,16 +77,19 @@ export default function Header({ setAllocationModal }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-[100] w-full px-6 py-2.5 md:py-3 border-b border-white/10" style={{ background: 'linear-gradient(135deg, #f7f0eeff 0%, #e6dfddff 60%, #eddfd9ff 100%)', transform: 'translate3d(0, 0, 0)', zIndex: 100 }}>
+    <header className="sticky top-0 z-[100] w-full px-6 py-2.5 md:py-3 border-b border-white/10" style={{ background: 'linear-gradient(135deg, #f7f0eeff 0%, #e6dfddff 60%, rgba(244, 240, 239, 1) 100%)', transform: 'translate3d(0, 0, 0)', zIndex: 100 }}>
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-        
+
         {/* Left: Brand Logo (Order-1) */}
-        <a href="#hero" className="flex items-center gap-2 group z-50 shrink-0 order-1">
+        <a href="#hero" className="flex items-center gap-3 group z-50 shrink-0 order-1">
           <img
             src="/logo.png.png"
             alt="NCS Logo"
-            className="h-12 w-auto object-contain drop-shadow-md group-hover:opacity-80 transition-opacity"
+            className="h-11 md:h-12 w-auto object-contain drop-shadow-md group-hover:opacity-80 transition-opacity"
           />
+          <span className="text-lg md:text-2xl font-black tracking-tight text-[#8b0000] drop-shadow-sm group-hover:text-[#cc0000] transition-colors uppercase">
+            Noor Infrastructure
+          </span>
         </a>
 
         {/* Right-aligned Navigation */}
@@ -107,7 +110,7 @@ export default function Header({ setAllocationModal }) {
 
         {/* Right: CTA Access Portal Button (Order-2 on mobile, Order-3 on desktop) */}
         <div className="flex items-center gap-2 md:gap-4 z-50 shrink-0 order-2 md:order-3">
-          <button 
+          <button
             onClick={() => setAllocationModal(true)}
             className="glow-btn flex items-center justify-center p-3 font-bold text-white bg-black rounded-none hover:bg-neutral-850 transition-all steel-beam-border"
             title="Access Portal"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -146,7 +146,7 @@ function App() {
     const rate = PACKAGES[calculator.package]?.rate || 4500;
     const packageName = PACKAGES[calculator.package]?.label || 'Noor Luminosity Villa Package';
 
-    const floorArea = 
+    const floorArea =
       Number(calculator.groundFloor || 0) +
       Number(calculator.firstFloor || 0) +
       Number(calculator.secondFloor || 0) +
@@ -211,9 +211,18 @@ function HomePage({
   selectedProject, setSelectedProject,
   projects, calculator, updateCalculator, estimates, reviews
 }) {
-  // Fix blank page: always scroll to top when home mounts after navigating back
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+  // Fix layout overlap: reset scroll and force ScrollStack to remeasure
+  useLayoutEffect(() => {
+    if (window.scrollY !== 0) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      
+      // Dispatching a resize event forces ScrollStack to run measureLayout() with the correct scroll position
+      requestAnimationFrame(() => {
+        window.dispatchEvent(new Event('resize'));
+      });
+    }
   }, []);
 
   return (
@@ -235,7 +244,7 @@ function HomePage({
         <ScrollStackItem>
           <Hero timeText={timeText} setAllocationModal={setAllocationModal} />
         </ScrollStackItem>
-        <ScrollStackItem>
+        <ScrollStackItem itemClassName="overflow-y-auto">
           <AboutUs />
         </ScrollStackItem>
         <ScrollStackItem itemClassName="overflow-y-auto">
