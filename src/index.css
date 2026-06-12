@@ -642,6 +642,7 @@ body, #root {
   /* Set stacking order so they overlap correctly */
   .scroll-stack-card {
     min-height: calc(100vh - var(--header-height, 61px)) !important;
+    margin-bottom: 1.5rem !important;
     will-change: transform, filter;
   }
 
@@ -728,4 +729,71 @@ body, #root {
   background: transparent;
   height: 4px;
 }
+
+/* Responsive laptop styles for smaller heights to prevent content from cutting off */
+@media (min-width: 1024px) and (max-height: 850px) {
+  section, footer {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  
+  #why-us .mb-8, #why-us .mb-10 {
+    margin-bottom: 1rem !important;
+  }
+  #why-us h2 {
+    font-size: 2.5rem !important;
+  }
+  
+  #about .mb-12, #about .mb-16 {
+    margin-bottom: 1rem !important;
+  }
+  #about h2 {
+    font-size: 2.25rem !important;
+  }
+  #about .grid {
+    margin-bottom: 1rem !important;
+    gap: 1.25rem !important;
+  }
+  #about img {
+    height: 200px !important;
+  }
+  #about .milestone-desc {
+    display: none !important;
+  }
+  #about .w-8.h-8 {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  #about .w-8.h-8 > div {
+    width: 0.5rem !important;
+    height: 0.5rem !important;
+  }
+  #about .font-display.text-xl {
+    font-size: 1rem !important;
+  }
+  #about .mt-12 {
+    margin-top: 1.5rem !important;
+  }
+  
+  #reviews .py-12 {
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+  #reviews .grid {
+    gap: 2rem !important;
+  }
+  .clipboard-doc {
+    padding: 1.25rem !important;
+    padding-top: 1.5rem !important;
+  }
+  .clipboard-doc h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .clipboard-doc .mb-6, .clipboard-doc .mb-8 {
+    margin-bottom: 0.75rem !important;
+  }
+}
+
 

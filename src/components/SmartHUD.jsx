@@ -62,7 +62,7 @@ export default function SmartHUD({
   const totalCost = estimates.totalCostInRs;
 
   return (
-    <section id="estimator" className="bg-[#ff4e00] text-white py-16 lg:py-20 px-4 md:px-8 relative overflow-hidden">
+    <section id="estimator" className="bg-[#ff4e00] text-white lg:h-full flex flex-col justify-center py-10 lg:py-12 px-4 md:px-8 relative overflow-hidden">
 
       {/* Safety Stripe Header Bar */}
       <div className="safety-stripe-thin w-full h-[6px] absolute top-0 left-0 right-0 z-20"></div>
@@ -85,10 +85,10 @@ export default function SmartHUD({
       {/* Rebar pattern behind everything */}
       <div className="absolute inset-0 rebar-pattern opacity-30 pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="max-w-7xl mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
         {/* LEFT COLUMN: Section Title, Project Spotlight & Telemetry (Span 4) */}
-        <div className="lg:col-span-4 space-y-6 reveal-on-scroll">
+        <div className="lg:col-span-4 space-y-4 reveal-on-scroll">
           <div>
             <h2 className="font-display font-bold text-4xl md:text-5xl tracking-tight text-[#4c1300] leading-none mb-1">
               Smart HUD
@@ -116,7 +116,7 @@ export default function SmartHUD({
               </div>
             </div>
 
-            <div className="mt-3.5 pt-3 border-t border-white/10 font-mono text-[10px] text-white/70 flex justify-between">
+            <div className="mt-2.5 pt-2.5 border-t border-white/10 font-mono text-[10px] text-white/70 flex justify-between">
               <span>UNIT SPEC RATE:</span>
               <span className="font-bold text-white">₹{currentRate.toLocaleString('en-IN')}/SQFT</span>
             </div>
@@ -265,7 +265,7 @@ export default function SmartHUD({
             </div>
 
             {/* Package Selector Bar */}
-            <div className="flex items-center gap-3 bg-neutral-50 border-b border-neutral-200 px-1 py-2.5 mb-4 -mx-4 md:-mx-5 px-4 md:px-5">
+            <div className="flex items-center gap-3 bg-neutral-50 border-b border-neutral-200 px-1 py-2 mb-3 -mx-4 md:-mx-5 px-4 md:px-5">
               <span className="font-mono text-[10px] font-bold text-neutral-500 uppercase tracking-widest shrink-0">Package:</span>
               <select
                 value={currentPackage}

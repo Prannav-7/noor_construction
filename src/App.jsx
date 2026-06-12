@@ -242,16 +242,16 @@ function HomePage({
         <ScrollStackItem>
           <Hero timeText={timeText} setAllocationModal={setAllocationModal} />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="overflow-y-auto">
+        <ScrollStackItem itemClassName="!overflow-y-auto">
           <AboutUs />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="overflow-y-auto">
+        <ScrollStackItem itemClassName="!overflow-y-auto">
           <Projects projects={projects} />
         </ScrollStackItem>
-        <ScrollStackItem data-margin-bottom="85vh">
+        <ScrollStackItem data-margin-bottom="85vh" itemClassName="!overflow-y-auto">
           <WhyUs />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="overflow-y-auto">
+        <ScrollStackItem itemClassName="!overflow-y-auto" data-margin-bottom="85vh">
           <SmartHUD
             calculator={calculator}
             updateCalculator={updateCalculator}
@@ -259,10 +259,10 @@ function HomePage({
             setAllocationModal={setAllocationModal}
           />
         </ScrollStackItem>
-        <ScrollStackItem>
+        <ScrollStackItem itemClassName="!overflow-y-auto" data-margin-bottom="85vh">
           <Reviews reviews={reviews} />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="!bg-black">
+        <ScrollStackItem itemClassName="!bg-black !overflow-y-auto">
           <Footer timeText={timeText} />
         </ScrollStackItem>
       </ScrollStack>

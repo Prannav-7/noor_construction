@@ -61,7 +61,7 @@ export default function AboutUs() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative py-12 lg:py-16 px-6 w-full overflow-hidden"
+      className="relative lg:h-full flex flex-col justify-center py-8 lg:py-10 px-6 w-full overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #faf9f6 0%, #f3f1eb 50%, #faf9f6 100%)' }}
     >
       {/* Subtle rebar crosshatch pattern overlay */}
@@ -69,39 +69,38 @@ export default function AboutUs() {
 
       <div className="max-w-7xl w-full mx-auto relative z-10">
 
-        {/* ── SECTION HEADER ── */}
-        <div className="about-reveal mb-12 lg:mb-16">
-          {/* Mono Tag */}
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-8 h-[2px] bg-[#ff4e00]"></div>
-            <span className="font-mono text-[10px] tracking-[0.35em] text-[#ff4e00] font-bold uppercase">
-              Who We Are
-            </span>
-          </div>
-
-          <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-black mb-4">
-            Building Your Vision<br />
-            <span className="font-serif italic font-normal text-neutral-400">
-              On a Foundation of Trust
-            </span>
-          </h2>
-
-          <p className="font-sans text-base md:text-lg text-neutral-600 max-w-2xl leading-relaxed">
-            At Noor Infrastructure, your peace of mind is our highest priority. Since 2010, we've partnered with families and businesses to deliver high-quality, safe, and beautiful spaces. We believe in complete transparency, rigorous safety standards, and keeping our promises.
-          </p>
-        </div>
-
         {/* ── MAIN CONTENT GRID ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start mb-8">
 
-          {/* LEFT COLUMN: Image + Registration Card */}
+          {/* LEFT COLUMN: Header + Image + Registration Card */}
           <div className="lg:col-span-5 about-reveal" style={{ animationDelay: '0.15s' }}>
+            {/* ── SECTION HEADER ── */}
+            <div className="mb-5">
+              {/* Mono Tag */}
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-6 h-[2px] bg-[#ff4e00]"></div>
+                <span className="font-mono text-[9px] tracking-[0.3em] text-[#ff4e00] font-bold uppercase">
+                  Who We Are
+                </span>
+              </div>
+
+              <h2 className="font-display font-extrabold text-2xl md:text-3xl lg:text-[2rem] leading-[1.1] text-black mb-2.5">
+                Building Your Vision<br />
+                <span className="font-serif italic font-normal text-neutral-400">
+                  On a Foundation of Trust
+                </span>
+              </h2>
+
+              <p className="font-sans text-[13px] text-neutral-500 leading-relaxed">
+                At Noor Infrastructure, your peace of mind is our highest priority. Since 2010, we've partnered with families and businesses to deliver high-quality, safe, and beautiful spaces. We believe in complete transparency, rigorous safety standards, and keeping our promises.
+              </p>
+            </div>
             {/* Inspection Image with steel-beam border */}
             <div className="relative overflow-hidden rounded steel-beam-border group">
               <img
                 src="/about_inspection.png"
                 alt="Architectural structure inspection by Noor Infrastructure engineers"
-                className="w-full h-[320px] lg:h-[380px] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                className="w-full h-[220px] lg:h-[240px] object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
@@ -127,7 +126,7 @@ export default function AboutUs() {
             </div>
 
             {/* Registration Card */}
-            <div className="mt-5 p-5 rounded bg-white border border-black/8 relative clipboard-doc" style={{ boxShadow: '0 6px 24px rgba(0,0,0,0.04)' }}>
+            <div className="mt-3.5 p-4 rounded bg-white border border-black/8 relative clipboard-doc" style={{ boxShadow: '0 6px 24px rgba(0,0,0,0.04)' }}>
               <div className="flex items-start gap-4">
                 {/* Stamp seal */}
                 <div className="stamp-seal flex-shrink-0 hidden sm:flex">
@@ -156,10 +155,10 @@ export default function AboutUs() {
           </div>
 
           {/* RIGHT COLUMN: Core Values + Mission */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 lg:pt-12">
 
             {/* Core Values Grid */}
-            <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-2 gap-3.5 mb-5">
               {coreValues.map((item, i) => (
                 <div
                   key={i}
@@ -202,7 +201,7 @@ export default function AboutUs() {
                   <span className="font-mono text-[9px] tracking-[0.35em] text-[#ff4e00] font-bold">OUR COMMITMENT</span>
                 </div>
                 <p className="font-serif italic text-lg md:text-xl text-white/90 leading-relaxed mb-4">
-                  "Our mission is to build more than just structures; we build lasting relationships. We are dedicated to delivering exceptional quality, on time and within budget, ensuring every project is a place you can proudly call home."
+                  "We do more than just build houses and offices; we build spaces where people feel safe and happy. With strong materials, modern technology, and clean energy, we make beautiful buildings that you will proudly call home."
                 </p>
                 <div className="flex flex-wrap gap-4 font-mono text-[10px] tracking-wider text-white/50">
                   <span className="flex items-center gap-1.5">
@@ -225,7 +224,7 @@ export default function AboutUs() {
 
         {/* ── MILESTONE TIMELINE ── */}
         <div className="about-reveal" style={{ animationDelay: '0.5s' }}>
-          <div className="flex items-center gap-3 mb-8">
+          <div className="flex items-center gap-3 mb-5">
             <div className="w-6 h-[2px] bg-black"></div>
             <span className="font-mono text-[10px] tracking-[0.3em] text-neutral-400 font-bold">JOURNEY MILESTONES</span>
           </div>
@@ -247,7 +246,7 @@ export default function AboutUs() {
                   {/* Label */}
                   <span className="font-mono text-[9px] tracking-[0.2em] text-[#ff4e00] font-bold uppercase mb-1">{m.label}</span>
                   {/* Description */}
-                  <p className="font-sans text-[11px] text-neutral-500 leading-relaxed max-w-[180px]">{m.desc}</p>
+                  <p className="font-sans text-[11px] text-neutral-500 leading-relaxed max-w-[180px] milestone-desc">{m.desc}</p>
                 </div>
               ))}
             </div>
@@ -255,7 +254,7 @@ export default function AboutUs() {
         </div>
 
         {/* Bottom revision tag */}
-        <div className="text-center mt-12 font-mono text-[9px] text-neutral-300 tracking-[0.3em]">
+        <div className="text-center mt-6 font-mono text-[9px] text-neutral-300 tracking-[0.3em]">
           DOC: NOOR_INFRA_PROFILE — REV. 03 — SHEET 2 OF 4
         </div>
 
