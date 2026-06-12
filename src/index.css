@@ -660,5 +660,72 @@ body, #root {
   }
 }
 
+/* ===================================================================
+   HUD SLIDER — Custom Range Input for Area Estimator Meter
+   =================================================================== */
 
+.hud-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 20px;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Webkit (Chrome, Safari, Edge) thumb */
+.hud-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, #ff7832, #ff4e00 60%, #c93800);
+  border: 2px solid rgba(255,255,255,0.35);
+  box-shadow: 0 2px 8px rgba(255, 78, 0, 0.55), 0 0 0 3px rgba(255,78,0,0.18);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.hud-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.18);
+  box-shadow: 0 4px 14px rgba(255, 78, 0, 0.75), 0 0 0 5px rgba(255,78,0,0.22);
+}
+
+.hud-slider:active::-webkit-slider-thumb {
+  transform: scale(1.08);
+}
+
+/* Webkit track — hidden, we use our own CSS div */
+.hud-slider::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 4px;
+}
+
+/* Firefox thumb */
+.hud-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, #ff7832, #ff4e00 60%, #c93800);
+  border: 2px solid rgba(255,255,255,0.35);
+  box-shadow: 0 2px 8px rgba(255, 78, 0, 0.55), 0 0 0 3px rgba(255,78,0,0.18);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.hud-slider:hover::-moz-range-thumb {
+  transform: scale(1.18);
+}
+
+/* Firefox track */
+.hud-slider::-moz-range-track {
+  background: transparent;
+  height: 4px;
+}
 

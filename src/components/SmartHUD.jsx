@@ -1,5 +1,5 @@
-import React from 'react';
-import { Sun, Droplet, Clock, Shield, Coins, FileSpreadsheet } from 'lucide-react';
+import React, { useState } from 'react';
+import { Sun, Droplet, Clock, Shield, Coins, FileSpreadsheet, Ruler } from 'lucide-react';
 
 const PACKAGES = {
   luminosity: {
@@ -28,15 +28,23 @@ const PACKAGES = {
   }
 };
 
+const SQFT_MIN = 1800;
+const SQFT_MAX = 4500;
+
 export default function SmartHUD({ 
   calculator, 
   updateCalculator, 
   estimates, 
   setAllocationModal 
 }) {
+  const [sliderSqft, setSliderSqft] = useState(2500);
   const currentPackage = calculator.package;
   const packageDetails = PACKAGES[currentPackage] || PACKAGES.luminosity;
   const currentRate = packageDetails.rate;
+
+  // Meter derived values
+  const sliderPrice = sliderSqft * currentRate;
+  const sliderPercent = ((sliderSqft - SQFT_MIN) / (SQFT_MAX - SQFT_MIN)) * 100;
 
   // Row total calculations
   const getGroundTotal = () => Number(calculator.groundFloor || 0) * currentRate;
@@ -131,6 +139,65 @@ export default function SmartHUD({
             <div className="flex justify-between items-baseline">
               <span className="text-white/80 uppercase tracking-widest font-bold">CARBON OFFSET</span>
               <span key={estimates.carbon} className="text-white font-bold animate-recalc">{estimates.carbon} T/Yr</span>
+            </div>
+          </div>
+
+          {/* ── SQFT / PRICE METER SLIDER ── */}
+          <div className="bg-black/15 border border-white/15 rounded p-4 backdrop-blur-sm relative overflow-hidden">
+            {/* Label row */}
+            <div className="flex items-center gap-2 mb-3">
+              <Ruler className="w-3.5 h-3.5 text-white/70" />
+              <span className="font-mono text-[9px] text-white/70 tracking-widest font-bold uppercase">// Area Estimator Meter</span>
+            </div>
+
+            {/* Live display: two big values side by side */}
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {/* SQFT */}
+              <div className="bg-black/20 rounded p-2.5 border border-white/10 text-center">
+                <div className="font-mono text-[8px] text-white/50 uppercase tracking-widest mb-1">Built Area</div>
+                <div className="font-mono font-bold text-white text-xl leading-none transition-all duration-150">
+                  {sliderSqft.toLocaleString('en-IN')}
+                </div>
+                <div className="font-mono text-[9px] text-white/60 mt-0.5">sqft</div>
+              </div>
+              {/* PRICE */}
+              <div className="bg-black/20 rounded p-2.5 border border-white/10 text-center">
+                <div className="font-mono text-[8px] text-white/50 uppercase tracking-widest mb-1">Est. Cost</div>
+                <div className="font-mono font-bold text-white text-base leading-none transition-all duration-150 break-all">
+                  ₹{(sliderPrice / 100000).toFixed(1)}L
+                </div>
+                <div className="font-mono text-[9px] text-white/60 mt-0.5">approx</div>
+              </div>
+            </div>
+
+            {/* Slider track + thumb */}
+            <div className="relative">
+              {/* Filled bar behind the range input */}
+              <div className="absolute top-1/2 left-0 h-[4px] rounded-full bg-white/20 w-full -translate-y-1/2 pointer-events-none" />
+              <div
+                className="absolute top-1/2 left-0 h-[4px] rounded-full -translate-y-1/2 pointer-events-none transition-all duration-150"
+                style={{
+                  width: `${sliderPercent}%`,
+                  background: 'linear-gradient(90deg, #ff4e00, #ffb347)'
+                }}
+              />
+              <input
+                id="sqft-meter-slider"
+                type="range"
+                min={SQFT_MIN}
+                max={SQFT_MAX}
+                step={50}
+                value={sliderSqft}
+                onChange={(e) => setSliderSqft(Number(e.target.value))}
+                className="hud-slider w-full relative z-10"
+                style={{ background: 'transparent' }}
+              />
+            </div>
+
+            {/* Min / Max labels */}
+            <div className="flex justify-between font-mono text-[8px] text-white/40 mt-1.5">
+              <span>{SQFT_MIN.toLocaleString()} sqft</span>
+              <span>{SQFT_MAX.toLocaleString()} sqft</span>
             </div>
           </div>
 
