@@ -53,32 +53,6 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll Reveal Animations
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const handleIntersect = (entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersect, observerOptions);
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
-    revealElements.forEach(el => observer.observe(el));
-
-    return () => {
-      revealElements.forEach(el => observer.unobserve(el));
-    };
-  }, []);
-
   // Real Estate Projects Database — sourced from shared data
   const projects = PROJECTS_BY_CATEGORY;
 
@@ -213,16 +187,40 @@ function HomePage({
 }) {
   // Fix layout overlap: reset scroll and force ScrollStack to remeasure
   useLayoutEffect(() => {
-    if (window.scrollY !== 0) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      
-      // Dispatching a resize event forces ScrollStack to run measureLayout() with the correct scroll position
-      requestAnimationFrame(() => {
-        window.dispatchEvent(new Event('resize'));
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // Dispatching a resize event forces ScrollStack to run measureLayout() with the correct scroll position
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+  }, []);
+
+  // Scroll Reveal Animations (runs when HomePage mounts)
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const handleIntersect = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
       });
-    }
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+    const revealElements = document.querySelectorAll('.reveal-on-scroll');
+    revealElements.forEach(el => observer.observe(el));
+
+    return () => {
+      revealElements.forEach(el => observer.unobserve(el));
+    };
   }, []);
 
   return (
