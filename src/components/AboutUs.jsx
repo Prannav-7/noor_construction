@@ -91,7 +91,7 @@ export default function AboutUs() {
                 </span>
               </h2>
 
-              <p className="font-sans text-[13px] text-neutral-500 leading-relaxed">
+              <p className="font-sans text-[13px] text-neutral-500 leading-relaxed ">
                 At Noor Infrastructure, your peace of mind is our highest priority. Since 2010, we've partnered with families and businesses to deliver high-quality, safe, and beautiful spaces. We believe in complete transparency, rigorous safety standards, and keeping our promises.
               </p>
             </div>

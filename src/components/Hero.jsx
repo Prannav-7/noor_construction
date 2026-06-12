@@ -5,11 +5,11 @@ import Carousel from './Carousel';
 
 export default function Hero({ timeText, setAllocationModal }) {
   return (
-    <section id="hero" className="relative py-8 lg:py-12 px-6 min-h-screen flex items-center justify-center w-full z-10 overflow-hidden">
+    <section id="hero" className="relative py-8 lg:py-12 px-6 min-h-screen flex items-center justify-center w-full z-10 overflow-hidden bg-[#0d0d11] text-white">
 
       {/* Real-time Construction Workers Background Overlay (Vibrant & Prominent) */}
       <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.5]"
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.38]"
         style={{
           backgroundImage: "url('/hero_bg_local_construction.png')"
         }}
@@ -20,8 +20,8 @@ export default function Hero({ timeText, setAllocationModal }) {
 
       {/* Grid container */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:items-center h-full w-full max-w-7xl mx-auto relative z-10">
-        {/* Hero Left Content — Dark transparent glassmorphic card overlay for texts */}
-        <div className="lg:col-span-7 flex flex-col justify-start lg:justify-center reveal-on-scroll relative z-10 bg-black/60 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl pt-6 text-white">
+        {/* Hero Left Content — In open space without the card overlay */}
+        <div className="lg:col-span-7 flex flex-col justify-start lg:justify-center reveal-on-scroll relative z-10 text-white lg:pr-6">
 
           {/* Social Proof Badge Bar */}
           <div className="inline-flex flex-wrap gap-x-4 gap-y-2 px-3.5 py-2 rounded border border-white/10 bg-white/5 text-neutral-200 font-mono text-[10px] sm:text-[11px] tracking-wider mb-5 w-fit relative z-10 items-center">
@@ -41,7 +41,7 @@ export default function Hero({ timeText, setAllocationModal }) {
           <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-[1.02] tracking-tight mb-5 text-white relative z-10">
             BUILDING <br />
             TRUST. <br />
-            <span className="font-serif italic font-normal text-neutral-300">
+            <span className="font-serif italic font-normal text-[#ff4e00]">
               <TypewriterText
                 words={['Creating the Future.', 'Building Dreams.', 'Building Homes.']}
                 speed={100}
