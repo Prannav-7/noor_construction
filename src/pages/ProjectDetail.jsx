@@ -60,10 +60,9 @@ export default function ProjectDetail() {
   return (
     <div className="min-h-screen bg-[#f8f6f2] font-sans">
 
-      {/* ── STICKY NAVBAR ── */}
+      {/* ── ABSOLUTE TRANSPARENT OVERLAY NAVBAR ── */}
       <header
-        className="sticky top-0 z-50 w-full px-6 py-3 flex items-center gap-4 shadow-lg"
-        style={{ background: 'linear-gradient(135deg, #2c1810 0%, #4a1a10 50%, #2c1810 100%)' }}
+        className="absolute top-0 left-0 right-0 z-50 w-full px-6 py-4 flex items-center justify-between gap-4 bg-gradient-to-b from-black/80 via-black/35 to-transparent"
       >
         {/* Logo */}
         <a href="/" className="flex items-center shrink-0">
@@ -80,14 +79,14 @@ export default function ProjectDetail() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleBack}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/20 text-white font-mono text-[10px] font-bold tracking-wider hover:bg-white/10 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/25 text-white bg-black/20 backdrop-blur-sm font-mono text-[10px] font-bold tracking-wider hover:bg-white/10 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">BACK TO HOME</span>
           </button>
           <button
             onClick={handleBack}
-            className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-white"
+            className="w-9 h-9 flex items-center justify-center rounded-lg bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-colors text-white"
             title="Close"
           >
             <X className="w-4 h-4" />
@@ -172,16 +171,20 @@ export default function ProjectDetail() {
                 <div className="w-6 h-[2px] bg-[#8b0000]" />
                 <span className="font-mono text-[10px] tracking-[0.3em] text-[#8b0000] font-bold uppercase">Key Features</span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {project.features.map((f, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-3 p-4 bg-white rounded-xl border border-black/6 shadow-sm hover:shadow-md hover:border-[#8b0000]/20 transition-all"
+                    className="flex items-start gap-3.5 p-4.5 bg-white rounded-xl border border-black/6 shadow-sm hover:shadow-md hover:border-[#8b0000]/20 transition-all animate-card-reveal"
+                    style={{ animationDelay: `${i * 0.1}s` }}
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#8b0000]/10 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-[#8b0000]/10 flex items-center justify-center shrink-0 mt-0.5">
                       <ChevronRight className="w-4 h-4 text-[#8b0000]" />
                     </div>
-                    <span className="font-sans text-sm font-semibold text-neutral-800">{f}</span>
+                    <div className="flex flex-col">
+                      <span className="font-sans text-sm font-bold text-neutral-800 leading-snug">{f.title}</span>
+                      <span className="font-sans text-[11.5px] text-neutral-500 leading-relaxed mt-1">{f.desc}</span>
+                    </div>
                   </div>
                 ))}
               </div>

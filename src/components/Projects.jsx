@@ -123,7 +123,7 @@ function ProjectCard({ project }) {
               key={i}
               className="bg-[#8b0000]/8 text-[#8b0000] font-mono text-[9px] tracking-wide px-2 py-0.5 rounded font-bold border border-[#8b0000]/15"
             >
-              {f}
+              {f.title}
             </span>
           ))}
         </div>
