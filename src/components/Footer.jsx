@@ -1,144 +1,239 @@
 import React from 'react';
-import { Building2, MapPin, Phone, Clock, FileText, ArrowUpRight, Shield } from 'lucide-react';
+import { MapPin, Phone, Clock, ArrowUpRight, Shield } from 'lucide-react';
 
 export default function Footer({ timeText }) {
   const mapUrl = "https://maps.google.com/?q=Noor+Infrastructure+Kalpakkam";
 
   return (
-    <footer id="contact" className="py-8 lg:py-12 px-6 h-full relative z-10 border-t border-white/5 bg-black text-white flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 relative z-10">
-        
-        {/* Brand/Contact Details */}
+    <footer
+      id="contact"
+      className="py-12 lg:py-16 px-6 h-full relative z-10 flex flex-col justify-center luxury-grain"
+      style={{
+        background: '#18181b',
+        borderTop: '1px solid rgba(255, 98, 0, 0.2)',
+      }}
+    >
+      {/* Top gold hairline accent */}
+      <div className="hairline absolute top-0 left-0 right-0" />
+
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 relative z-10">
+
+        {/* ── Brand / Contact ── */}
         <div className="lg:col-span-5 reveal-on-scroll">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="relative w-8 h-8 rounded bg-white p-[1px] flex items-center justify-center">
-              <Building2 className="w-4 h-4 text-black" />
-            </div>
-            <span className="font-display font-extrabold text-xl tracking-wider text-white">
-              NOOR<span className="font-serif italic font-normal text-lg text-neutral-400">.infra</span>
-            </span>
+
+          {/* Brand logo */}
+          <div className="mb-8">
+            <img
+              src="/logo.png.png"
+              alt="NCS Noor Constructions"
+              className="h-10 md:h-12 w-auto object-contain opacity-95"
+            />
+            <div
+              className="h-[1px] w-24 mt-3"
+              style={{ background: 'linear-gradient(90deg, #ff6200, transparent)' }}
+            />
           </div>
-          <p className="text-neutral-300 text-sm mb-8 leading-relaxed max-w-sm font-sans">
-            Constructing premium sustainable smart properties on the East Coast Road, Pudupattinam. Certified A-Grade infrastructure developers.
+
+          <p
+            className="font-sans text-[13px] mb-8 leading-relaxed max-w-sm"
+            style={{ color: 'rgba(255, 255, 255, 0.7)' }}
+          >
+            Premium sustainable properties on the East Coast Road, Pudupattinam. Certified A-Grade infrastructure developers since 2010.
           </p>
 
-          <div className="space-y-4 font-mono text-[12px]">
+          {/* Contact details */}
+          <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-[#ff4e00] shrink-0 mt-0.5" />
-              <span className="text-neutral-300">
+              <MapPin className="w-4 h-4 shrink-0 mt-0.5" style={{ color: '#ff6200' }} />
+              <span
+                className="text-[12px] leading-relaxed"
+                style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: 'var(--font-mono)' }}
+              >
                 5, East Coast Rd, Pudupattinam,<br />
-                Dhawood Nagar, Kalpakkam, Meiyur,<br />
-                Tamil Nadu 603102
+                Kalpakkam, Tamil Nadu 603102
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <Phone className="w-4 h-4 text-[#ff4e00]" />
-              <a href="tel:+917305130207" className="text-neutral-300 hover:text-white transition-colors font-medium">
+              <Phone className="w-4 h-4 shrink-0" style={{ color: '#ff6200' }} />
+              <a
+                href="tel:+917305130207"
+                className="text-[12px] font-medium transition-colors"
+                style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: 'var(--font-mono)' }}
+                onMouseEnter={e => e.target.style.color = '#ff6200'}
+                onMouseLeave={e => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+              >
                 073051 30207
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <Clock className="w-4 h-4 text-neutral-550" />
-              <span className="text-neutral-400">
-                Open · Closes 7:30 pm
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] text-neutral-300 bg-neutral-900 px-2 py-0.5 rounded border border-white/10 font-mono font-medium">
-                PLUS CODE: G46W+J8 Kalpakkam, Tamil Nadu
+              <Clock className="w-4 h-4 shrink-0" style={{ color: 'rgba(255, 98, 0,0.4)' }} />
+              <span className="text-[12px]" style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}>
+                Open · Closes 7:30 pm · {timeText} IST
               </span>
             </div>
           </div>
 
-          {/* Construction Permit Badges */}
-          <div className="flex flex-wrap gap-3 mt-6">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 border-2 border-white/10 bg-neutral-950 font-mono text-[8px] font-bold tracking-widest text-neutral-300 uppercase">
-              <Shield className="w-3 h-3 text-[#ff4e00]" />
-              RERA REGISTERED
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 border-2 border-white/10 bg-neutral-950 font-mono text-[8px] font-bold tracking-widest text-neutral-300 uppercase">
-              <Shield className="w-3 h-3 text-[#ff4e00]" />
-              ISO 9001:2015
-            </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 border-2 border-white/10 bg-neutral-950 font-mono text-[8px] font-bold tracking-widest text-neutral-300 uppercase">
-              <Shield className="w-3 h-3 text-green-500" />
-              IGBC GREEN
-            </div>
+          {/* Certification badges */}
+          <div className="flex flex-wrap gap-2.5 mt-7">
+            {[
+              { icon: <Shield className="w-3 h-3" />, label: 'RERA Registered' },
+              { icon: <Shield className="w-3 h-3" />, label: 'ISO 9001:2015' },
+              { icon: <Shield className="w-3 h-3 text-green-400" />, label: 'IGBC Green' },
+            ].map((badge, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-[9px] font-bold tracking-[0.15em] uppercase"
+                style={{
+                  border: '1px solid rgba(255, 98, 0,0.25)',
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontFamily: 'var(--font-mono)',
+                }}
+              >
+                <span style={{ color: i === 2 ? '#4ade80' : '#ff6200' }}>{badge.icon}</span>
+                {badge.label}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Links */}
-        <div className="lg:col-span-3 grid grid-cols-2 gap-8 font-mono text-[11px] tracking-wider reveal-on-scroll">
+        {/* ── Navigation Links ── */}
+        <div className="lg:col-span-3 grid grid-cols-2 gap-8 reveal-on-scroll">
           <div>
-            <div className="text-white font-bold tracking-widest mb-4">// CORE_LINKS</div>
-            <ul className="space-y-2.5 text-neutral-400">
-              <li><a href="#projects" className="hover:text-white transition-colors">PROJECTS</a></li>
-              <li><a href="#ecosystem" className="hover:text-white transition-colors">PROCESS</a></li>
-              <li><a href="#estimator" className="hover:text-white transition-colors">HUD ESTIMATOR</a></li>
-              <li><a href="#reviews" className="hover:text-white transition-colors">REVIEWS</a></li>
+            <div
+              className="text-[10px] tracking-[0.3em] font-bold uppercase mb-5"
+              style={{ color: '#ff6200', fontFamily: 'var(--font-mono)' }}
+            >
+              Navigation
+            </div>
+            <ul className="space-y-3">
+              {[
+                { label: 'Projects', href: '#projects' },
+                { label: 'Process', href: '#ecosystem' },
+                { label: 'Estimator', href: '#estimator' },
+                { label: 'Reviews', href: '#reviews' },
+              ].map((link, i) => (
+                <li key={i}>
+                  <a
+                    href={link.href}
+                    className="text-[11px] tracking-[0.1em] uppercase transition-colors duration-200"
+                    style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: 'var(--font-mono)' }}
+                    onMouseEnter={e => e.target.style.color = '#ff6200'}
+                    onMouseLeave={e => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <div className="text-white font-bold tracking-widest mb-4">// TELEMETRY</div>
-            <ul className="space-y-2.5 text-neutral-400">
-              <li>
-                <a 
-                  href={mapUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:text-white flex items-center gap-1 transition-colors"
-                >
-                  GOOGLE MAPS <ArrowUpRight className="w-3 h-3 text-[#ff4e00]" />
-                </a>
-              </li>
-              <li><a href="#contact" className="hover:text-white transition-colors">SUPPORT_DECK</a></li>
-              <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1">WHITEPAPER <FileText className="w-3 h-3" /></a></li>
+            <div
+              className="text-[10px] tracking-[0.3em] font-bold uppercase mb-5"
+              style={{ color: '#ff6200', fontFamily: 'var(--font-mono)' }}
+            >
+              Legal
+            </div>
+            <ul className="space-y-3">
+              {[
+                { label: 'Google Maps', href: mapUrl, external: true },
+                { label: 'Privacy Policy', href: '#' },
+                { label: 'Terms of Use', href: '#' },
+              ].map((link, i) => (
+                <li key={i}>
+                  <a
+                    href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
+                    className="text-[11px] tracking-[0.1em] uppercase transition-colors duration-200 flex items-center gap-1"
+                    style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: 'var(--font-mono)' }}
+                    onMouseEnter={e => e.currentTarget.style.color = '#ff6200'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)'}
+                  >
+                    {link.label}
+                    {link.external && <ArrowUpRight className="w-3 h-3" style={{ color: '#ff6200' }} />}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        {/* Real Embedded Google Map */}
+        {/* ── Map ── */}
         <div className="lg:col-span-4 reveal-on-scroll">
-          <div className="group rounded p-1 border border-white/10 relative bg-neutral-950 aspect-square flex flex-col overflow-hidden hover:border-[#ff4e00]/50 transition-all duration-300">
-            <div className="absolute top-3 left-3 z-20 text-[10px] font-mono text-white font-semibold bg-black/60 px-2 py-1 rounded backdrop-blur-sm border border-white/10 flex items-center gap-1.5 pointer-events-none">
-              <span>// REGIONAL_MAP_LINK</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#ff4e00]" />
+          <div
+            className="relative overflow-hidden aspect-square group"
+            style={{ border: '1px solid rgba(255, 98, 0, 0.25)', transition: 'border-color 0.3s ease' }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255, 98, 0,0.5)'}
+            onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 98, 0,0.25)'}
+          >
+            {/* Map label */}
+            <div
+              className="absolute top-3 left-3 z-20 text-[9px] font-semibold px-2 py-1 flex items-center gap-1.5 pointer-events-none"
+              style={{
+                background: 'rgba(8,8,8,0.75)',
+                border: '1px solid rgba(255, 98, 0,0.25)',
+                color: '#ff6200',
+                fontFamily: 'var(--font-mono)',
+                backdropFilter: 'blur(8px)',
+              }}
+            >
+              <MapPin className="w-3 h-3" />
+              Kalpakkam, TN
             </div>
 
-            {/* Embedded Google Map */}
-            <div className="flex-1 w-full relative bg-[#0a1628] rounded-sm overflow-hidden pointer-events-auto">
-              <iframe
-                title="Google Maps Location"
-                src="https://maps.google.com/maps?q=East+Coast+Road,+Kalpakkam,+Tamil+Nadu&t=m&z=13&output=embed&iwloc=near"
-                className="absolute inset-0 w-full h-full border-0"
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                style={{ filter: 'grayscale(1) invert(1) contrast(1.2)' }}
-              ></iframe>
-            </div>
+            {/* Google Map iframe */}
+            <iframe
+               title="Noor Infrastructure Location"
+               src="https://maps.google.com/maps?q=East+Coast+Road,+Kalpakkam,+Tamil+Nadu&t=m&z=13&output=embed&iwloc=near"
+               className="absolute inset-0 w-full h-full border-0"
+               allowFullScreen=""
+               loading="lazy"
+               referrerPolicy="no-referrer-when-downgrade"
+               style={{ filter: 'grayscale(0.4) contrast(1.05) brightness(1.0)' }}
+             />
 
-            {/* Coordinate telemetry metadata */}
-            <div className="p-3 font-mono text-[10px] text-neutral-300 flex justify-between font-medium bg-neutral-950">
-              <span>COORDS: G46W+J8 KALPAKKAM</span>
-              <span className="text-neutral-400">PUDUPATTINAM SEC</span>
+            {/* Bottom coords strip */}
+            <div
+              className="absolute bottom-0 inset-x-0 p-2 flex justify-between items-center text-[9px]"
+              style={{
+                background: 'rgba(8,8,8,0.85)',
+                borderTop: '1px solid rgba(255, 98, 0,0.15)',
+                color: 'rgba(255, 255, 255, 0.5)',
+                fontFamily: 'var(--font-mono)',
+              }}
+            >
+              <span>G46W+J8 Kalpakkam</span>
+              <span style={{ color: '#ff6200' }}>ECR</span>
             </div>
           </div>
         </div>
+
       </div>
 
-      {/* Safety-Stripe Bottom Border */}
-      <div className="construction-tape w-full mt-6 relative z-10"></div>
-
-      {/* Copyright/Contract details */}
-      <div className="max-w-7xl mx-auto w-full mt-4 pt-4 flex flex-col md:flex-row justify-between items-center font-mono text-[10px] text-neutral-400 gap-3 tracking-widest relative z-10">
-        <div>
-          © 2026 NOOR INFRASTRUCTURE FOUNDATION, LTD. ALL SYSTEM DATA SECURED.
+      {/* ── Bottom Bar ── */}
+      <div
+        className="max-w-7xl mx-auto w-full mt-12 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 relative z-10"
+        style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}
+      >
+        <div
+          className="text-[10px] tracking-[0.2em]"
+          style={{ color: 'rgba(255, 255, 255, 0.4)', fontFamily: 'var(--font-mono)' }}
+        >
+          © 2026 Noor Infrastructure Pvt. Ltd. All rights reserved.
         </div>
         <div className="flex gap-6">
-          <a href="#" className="hover:text-white transition-colors">PRIVACY_LEDGER</a>
-          <a href="#" className="hover:text-white transition-colors">TERMS_OF_GRID</a>
-          <span className="text-neutral-500">DEED_CONTRACT: 0x5d6...ba4</span>
+          {['Privacy', 'Terms', 'Contact'].map((item, i) => (
+            <a
+              key={i}
+              href="#"
+              className="text-[10px] tracking-[0.15em] uppercase transition-colors duration-200"
+              style={{ color: 'rgba(255, 255, 255, 0.6)', fontFamily: 'var(--font-mono)' }}
+              onMouseEnter={e => e.target.style.color = '#ff6200'}
+              onMouseLeave={e => e.target.style.color = 'rgba(255, 255, 255, 0.6)'}
+            >
+              {item}
+            </a>
+          ))}
         </div>
       </div>
     </footer>

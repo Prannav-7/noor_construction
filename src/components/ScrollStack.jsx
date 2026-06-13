@@ -3,7 +3,7 @@ import Lenis from 'lenis';
 
 export const ScrollStackItem = ({ children, itemClassName = '', ...props }) => (
     <div
-        className={`scroll-stack-card relative w-full lg:w-[98vw] mx-auto h-auto lg:h-[98vh] my-0 lg:my-4 p-0 rounded-none lg:rounded-[32px] shadow-none lg:shadow-[0_30px_90px_rgba(0,0,0,0.12)] box-border origin-top will-change-transform overflow-hidden ${itemClassName}`.trim()}
+        className={`scroll-stack-card relative w-full h-screen my-0 p-0 rounded-none shadow-none box-border origin-top will-change-transform overflow-hidden ${itemClassName}`.trim()}
         style={{
             backfaceVisibility: 'hidden',
             transformStyle: 'preserve-3d'

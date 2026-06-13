@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sun, Droplet, Clock, Shield, Coins, FileSpreadsheet, Ruler } from 'lucide-react';
+import { Sun, Droplet, Clock, Shield, Coins, FileSpreadsheet, Ruler, Leaf } from 'lucide-react';
 
 const PACKAGES = {
   luminosity: {
@@ -27,6 +27,14 @@ const PACKAGES = {
     image: '/coastal_villa.png'
   }
 };
+
+function BentoCard({ children, className = '' }) {
+  return (
+    <div className={`relative h-full w-full overflow-hidden rounded-2xl p-4 bg-white border border-neutral-200 shadow-sm transition-all duration-300 hover:shadow-md hover:border-[#ff6200]/20 ${className}`}>
+      {children}
+    </div>
+  );
+}
 
 const SQFT_MIN = 1500;
 const SQFT_MAX = 4500;
@@ -62,7 +70,7 @@ export default function SmartHUD({
   const totalCost = estimates.totalCostInRs;
 
   return (
-    <section id="estimator" className="bg-[#ff4e00] text-white lg:h-full flex flex-col justify-center py-10 lg:py-12 px-4 md:px-8 relative overflow-hidden">
+    <section id="estimator" className="text-[#1c1c1f] lg:min-h-screen flex flex-col justify-center py-10 lg:py-12 px-4 md:px-8 relative" style={{ background: '#FED8B1' }}>
 
       {/* Safety Stripe Header Bar */}
       <div className="safety-stripe-thin w-full h-[6px] absolute top-0 left-0 right-0 z-20"></div>
@@ -86,161 +94,145 @@ export default function SmartHUD({
       <div className="absolute inset-0 rebar-pattern opacity-30 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-
-        {/* LEFT COLUMN: Section Title, Project Spotlight & Telemetry (Span 4) */}
-        <div className="lg:col-span-4 space-y-4 reveal-on-scroll">
+        {/* LEFT COLUMN: Bento grid & HUD controls (Span 5) */}
+        <div className="lg:col-span-5 space-y-5 reveal-on-scroll">
           <div>
-            <h2 className="font-display font-bold text-4xl md:text-5xl tracking-tight text-[#4c1300] leading-none mb-1">
+            <h2 className="font-display font-bold text-4xl md:text-5xl tracking-tight text-[#ff6200] leading-none mb-1">
               Smart HUD
             </h2>
-            <h2 className="font-serif italic font-normal text-3xl md:text-4xl text-[#4c1300] leading-none">
+            <h2 className="font-serif italic font-normal text-3xl md:text-4xl text-neutral-800 leading-none">
               estimator.
             </h2>
           </div>
 
-          {/* Project Spotlight linked to selected package */}
-          <div className="bg-[#4c1300]/10 border border-[#4c1300]/20 rounded p-4 relative overflow-hidden backdrop-blur-sm">
-            <span className="font-mono text-[9px] text-white/70 tracking-widest block mb-2 font-bold uppercase">// ACTIVE PROJECT ALIGNMENT</span>
-
-            <div className="flex gap-4 items-center">
-              <div className="w-20 h-20 rounded bg-neutral-900 border border-white/10 overflow-hidden shrink-0 relative pin-mark">
-                <img
-                  src={packageDetails.image}
-                  alt={packageDetails.label}
-                  className="w-full h-full object-cover opacity-90 transition-all duration-500"
-                />
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* FeatureOne: Slider & Active Project Alignment (Row span 2) */}
+            <BentoCard className="sm:row-span-2 flex flex-col justify-between">
+              {/* Active Project Alignment */}
+              <div className="mb-4">
+                <span className="font-mono text-[8px] text-neutral-500 tracking-widest block mb-2 font-bold uppercase">// ACTIVE PROJECT</span>
+                <div className="flex gap-3 items-center">
+                  <div className="w-12 h-12 rounded bg-neutral-100 border border-neutral-200 overflow-hidden shrink-0 relative">
+                    <img src={packageDetails.image} alt={packageDetails.name} className="w-full h-full object-cover opacity-90" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="font-sans font-bold text-[11px] text-neutral-900 truncate">{packageDetails.name}</h4>
+                    <p className="font-mono text-[9px] text-[#ff6200] font-bold mt-0.5">₹{currentRate.toLocaleString('en-IN')}/SQFT</p>
+                  </div>
+                </div>
               </div>
+
+              <div className="h-px bg-neutral-100 my-3" />
+
+              {/* Area Estimator Meter */}
               <div>
-                <h4 className="font-sans font-bold text-sm text-white">{packageDetails.label}</h4>
-                <p className="font-sans text-[11px] text-white/80 leading-snug mt-1">{packageDetails.desc}</p>
-              </div>
-            </div>
-
-            <div className="mt-2.5 pt-2.5 border-t border-white/10 font-mono text-[10px] text-white/70 flex justify-between">
-              <span>UNIT SPEC RATE:</span>
-              <span className="font-bold text-white">₹{currentRate.toLocaleString('en-IN')}/SQFT</span>
-            </div>
-          </div>
-
-          {/* Live Telemetry Display */}
-          <div className="bg-black/10 border border-white/10 rounded p-4 font-mono text-[10px] space-y-2.5 backdrop-blur-sm">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-white/70 uppercase tracking-wider font-bold shrink-0">EST. VALUATION</span>
-              <span key={estimates.cost} className="text-lg font-bold text-white animate-recalc whitespace-nowrap">₹{estimates.cost} Lakhs</span>
-            </div>
-            <div className="flex items-center justify-between gap-2 border-t border-white/10 pt-2">
-              <span className="text-white/70 uppercase tracking-wider font-bold shrink-0">TIMELINE</span>
-              <span key={estimates.timeline} className="text-white font-bold animate-recalc whitespace-nowrap">{estimates.timeline} Months</span>
-            </div>
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-white/70 uppercase tracking-wider font-bold shrink-0">SOLAR YIELD</span>
-              <span key={estimates.energy} className="text-white font-bold animate-recalc whitespace-nowrap">{estimates.energy} kWp</span>
-            </div>
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-white/70 uppercase tracking-wider font-bold shrink-0">CARBON OFFSET</span>
-              <span key={estimates.carbon} className="text-white font-bold animate-recalc whitespace-nowrap">{estimates.carbon} T/Yr</span>
-            </div>
-          </div>
-
-          {/* ── SQFT / PRICE METER SLIDER ── */}
-          <div className="bg-black/15 border border-white/15 rounded p-4 backdrop-blur-sm relative overflow-hidden">
-            {/* Label row */}
-            <div className="flex items-center gap-2 mb-3">
-              <Ruler className="w-3.5 h-3.5 text-white/70" />
-              <span className="font-mono text-[9px] text-white/70 tracking-widest font-bold uppercase">// Area Estimator Meter</span>
-            </div>
-
-            {/* Live display: two big values side by side */}
-            <div className="grid grid-cols-2 gap-2 mb-4">
-              {/* SQFT */}
-              <div className="bg-black/20 rounded p-3 border border-white/10 text-center flex flex-col items-center justify-center gap-0.5">
-                <div className="font-mono text-[8px] text-white/50 uppercase tracking-widest">Built Area</div>
-                <div className="font-mono font-bold text-white text-2xl leading-none">
-                  {sliderSqft.toLocaleString('en-IN')}
+                <span className="font-mono text-[8px] text-neutral-500 tracking-widest block mb-2 font-bold uppercase">// AREA ESTIMATOR METER</span>
+                <div className="flex justify-between items-baseline mb-2">
+                  <div>
+                    <span className="font-mono text-lg font-extrabold text-neutral-800 leading-none">{sliderSqft.toLocaleString()}</span>
+                    <span className="font-mono text-[9px] text-neutral-500 ml-0.5">SQFT</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="font-mono text-sm font-bold text-[#ff6200]">₹{((sliderSqft * currentRate) / 100000).toFixed(2)}</span>
+                    <span className="font-mono text-[9px] text-neutral-500 ml-0.5">LAKHS</span>
+                  </div>
                 </div>
-                <div className="font-mono text-[9px] text-white/60">sqft</div>
-              </div>
-              {/* PRICE */}
-              <div className="bg-black/20 rounded p-3 border border-white/10 text-center flex flex-col items-center justify-center gap-0.5">
-                <div className="font-mono text-[8px] text-white/50 uppercase tracking-widest">Est. Cost</div>
-                <div className="font-mono font-bold text-white text-xl leading-none">
-                  ₹{(sliderPrice / 100000).toFixed(1)}L
+
+                <div className="relative flex items-center mb-2">
+                  <div className="absolute left-0 right-0 h-1 rounded bg-neutral-200"></div>
+                  <div className="absolute left-0 h-1 rounded" style={{ width: `${sliderPercent}%`, background: 'linear-gradient(90deg, #ff8c39, #ff6200)' }}></div>
+                  <input
+                    type="range"
+                    min={SQFT_MIN}
+                    max={SQFT_MAX}
+                    step="50"
+                    value={sliderSqft}
+                    onChange={(e) => setSliderSqft(Number(e.target.value))}
+                    className="hud-slider relative z-10 w-full"
+                  />
                 </div>
-                <div className="font-mono text-[9px] text-white/60">approx</div>
+
+                <div className="flex justify-between font-mono text-[8px] text-neutral-500">
+                  <span>{SQFT_MIN.toLocaleString()} sqft</span>
+                  <span>{SQFT_MAX.toLocaleString()} sqft</span>
+                </div>
               </div>
-            </div>
+            </BentoCard>
 
-            {/* Slider track + thumb */}
-            <div className="relative h-5 flex items-center">
-              {/* Background track */}
-              <div className="absolute inset-x-0 top-1/2 h-[4px] rounded-full bg-white/20 -translate-y-1/2 pointer-events-none" />
-              {/* Filled track */}
-              <div
-                className="absolute left-0 top-1/2 h-[4px] rounded-full -translate-y-1/2 pointer-events-none transition-all duration-100"
-                style={{
-                  width: `${sliderPercent}%`,
-                  background: 'linear-gradient(90deg, #ff7832, #ffb347)'
-                }}
-              />
-              <input
-                id="sqft-meter-slider"
-                type="range"
-                min={SQFT_MIN}
-                max={SQFT_MAX}
-                step={50}
-                value={sliderSqft}
-                onChange={(e) => setSliderSqft(Number(e.target.value))}
-                className="hud-slider w-full relative z-10"
-                style={{ background: 'transparent' }}
-              />
-            </div>
+            {/* FeatureTwo: Total Valuation */}
+            <BentoCard className="flex flex-col justify-between">
+              <span className="font-mono text-[8px] font-bold uppercase tracking-wider text-neutral-500">// EST. VALUATION</span>
+              <div className="mt-2 text-2xl font-black text-[#ff6200] leading-none whitespace-nowrap animate-recalc">
+                ₹{estimates.cost} <span className="text-[10px] font-mono font-bold text-neutral-500">LAKHS</span>
+              </div>
+              <div className="mt-2 text-[9px] font-mono text-neutral-550">
+                Total: ₹{estimates.totalCostInRs.toLocaleString('en-IN')}
+              </div>
+            </BentoCard>
 
-            {/* Min / Max labels */}
-            <div className="flex justify-between font-mono text-[8px] text-white/40 mt-1">
-              <span>{SQFT_MIN.toLocaleString()} sqft</span>
-              <span>{SQFT_MAX.toLocaleString()} sqft</span>
-            </div>
+            {/* FeatureThree: Telemetry Breakdown */}
+            <BentoCard className="flex flex-col gap-2">
+              <span className="font-mono text-[8px] font-semibold uppercase tracking-wider text-neutral-500">// TELEMETRY</span>
+              <div className="space-y-1.5">
+                <div className="flex w-full items-center gap-1.5">
+                  <Clock size={11} className="text-[#ff6200]" />
+                  <span className="text-[9px] text-neutral-650 font-mono">Timeline</span>
+                  <span className="ml-auto text-[10px] font-black text-neutral-900 font-mono">{estimates.timeline} Mos</span>
+                </div>
+                <div className="flex w-full items-center gap-1.5">
+                  <Sun size={11} className="text-amber-500" />
+                  <span className="text-[9px] text-neutral-650 font-mono">Solar Yield</span>
+                  <span className="ml-auto text-[10px] font-black text-neutral-900 font-mono">{estimates.energy} kWp</span>
+                </div>
+                <div className="flex w-full items-center gap-1.5">
+                  <Leaf size={11} className="text-green-500" />
+                  <span className="text-[9px] text-neutral-650 font-mono">Carbon Offset</span>
+                  <span className="ml-auto text-[10px] font-black text-neutral-900 font-mono">{estimates.carbon} T/Yr</span>
+                </div>
+              </div>
+            </BentoCard>
           </div>
 
-          {/* ── Mini Trust Stats ── */}
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-black/15 border border-white/15 rounded p-3 text-center backdrop-blur-sm">
-              <div className="font-mono font-bold text-white text-2xl leading-none">12+</div>
-              <div className="font-mono text-[8px] text-white/50 uppercase tracking-widest mt-1">Certified Engineers</div>
+          {/* Mini Trust Stats */}
+          <div className="grid grid-cols-2 gap-2 mt-4">
+            <div className="bg-white border border-neutral-200 rounded p-2.5 text-center shadow-sm">
+              <div className="font-mono font-bold text-neutral-900 text-lg leading-none">12+</div>
+              <div className="font-mono text-[8px] text-neutral-450 uppercase tracking-widest mt-0.5">Certified Engineers</div>
             </div>
-            <div className="bg-black/15 border border-white/15 rounded p-3 text-center backdrop-blur-sm">
-              <div className="font-mono font-bold text-white text-2xl leading-none">6+</div>
-              <div className="font-mono text-[8px] text-white/50 uppercase tracking-widest mt-1">Happy Customers</div>
+            <div className="bg-white border border-neutral-200 rounded p-2.5 text-center shadow-sm">
+              <div className="font-mono font-bold text-neutral-900 text-lg leading-none">6+</div>
+              <div className="font-mono text-[8px] text-neutral-450 uppercase tracking-widest mt-0.5">Happy Customers</div>
             </div>
-            <div className="bg-black/15 border border-white/15 rounded p-3 text-center backdrop-blur-sm">
-              <div className="font-mono font-bold text-white text-2xl leading-none">10yr</div>
-              <div className="font-mono text-[8px] text-white/50 uppercase tracking-widest mt-1">Structure Warranty</div>
+            <div className="bg-white border border-neutral-200 rounded p-2.5 text-center shadow-sm">
+              <div className="font-mono font-bold text-neutral-900 text-lg leading-none">10yr</div>
+              <div className="font-mono text-[8px] text-neutral-450 uppercase tracking-widest mt-0.5">Structure Warranty</div>
             </div>
-            <div className="bg-black/15 border border-white/15 rounded p-3 text-center backdrop-blur-sm">
-              <div className="font-mono font-bold text-white text-2xl leading-none">ISO</div>
-              <div className="font-mono text-[8px] text-white/50 uppercase tracking-widest mt-1">Quality Certified</div>
+            <div className="bg-white border border-neutral-200 rounded p-2.5 text-center shadow-sm">
+              <div className="font-mono font-bold text-neutral-900 text-lg leading-none">ISO</div>
+              <div className="font-mono text-[8px] text-neutral-450 uppercase tracking-widest mt-0.5">Quality Certified</div>
             </div>
           </div>
 
           {/* CTA Action */}
           <button
             onClick={() => setAllocationModal(true)}
-            className="w-full py-4 bg-white text-[#ff4e00] hover:bg-neutral-50 transition-all font-mono text-xs font-bold tracking-widest rounded-none shadow-lg hover:shadow-xl active:scale-[0.98] transition-transform steel-beam-border border-white flex items-center justify-center gap-2"
+            className="w-full py-4 bg-[#ff6200] text-white hover:bg-[#e05600] transition-all font-mono text-xs font-bold tracking-widest rounded shadow-md hover:shadow-lg active:scale-[0.98] transition-transform steel-beam-border border-transparent flex items-center justify-center gap-2 cursor-pointer"
           >
             <Coins className="w-4 h-4" />
             TRANSMIT ALLOCATION DEED
           </button>
 
           {/* Approved Stamp Watermark */}
-          <div className="flex justify-center pt-2">
-            <div className="stamp-seal border-white text-white opacity-85">
+          <div className="flex justify-center pt-1">
+            <div className="stamp-seal border-[#ff6200] text-[#ff6200] opacity-85">
               APPROVED<br />FOR<br />CONSTRUCTION
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Construction Cost Calculator Spreadsheet (Span 8) */}
-        <div className="lg:col-span-8 reveal-on-scroll">
+        {/* RIGHT COLUMN: Construction Cost Calculator Spreadsheet (Span 7) */}
+        <div className="lg:col-span-7 reveal-on-scroll">
           <div className="bg-white text-black rounded shadow-2xl p-4 md:p-5 border border-black/10 relative overflow-hidden rivet-corners">
 
             {/* Corner Ticks inside the sheet */}
@@ -675,7 +667,7 @@ export default function SmartHUD({
                     <td colSpan="4" className="py-3 px-3 text-right font-mono text-xs uppercase tracking-wider text-neutral-800">
                       Grand Total:
                     </td>
-                    <td className="py-3 px-3 text-right font-mono text-sm text-[#ff4e00]">
+                    <td className="py-3 px-3 text-right font-mono text-sm text-[#ff6200]">
                       ₹{totalCost.toLocaleString('en-IN')} <span className="text-[10px] text-neutral-500 font-normal">({estimates.cost} Lakhs)</span>
                     </td>
                   </tr>

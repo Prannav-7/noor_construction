@@ -49,13 +49,13 @@ export default function Ecosystem() {
                 />
                 {/* Bottom text overlay */}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a1628]/95 via-[#0a1628]/60 to-transparent p-4 flex flex-col justify-end">
-                  <span className="font-mono text-[11px] text-[#ff4e00] tracking-widest font-bold mb-1">STAGE_{stage.step}</span>
+                  <span className="font-mono text-[11px] text-[#ff6200] tracking-widest font-bold mb-1">STAGE_{stage.step}</span>
                   <h4 className="font-mono text-[11px] text-white font-bold tracking-widest uppercase">{stage.title}</h4>
                 </div>
               </div>
 
               {/* Circled Step Number */}
-              <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-[#ff4e00] border-2 border-[#0a1628] flex items-center justify-center text-white font-mono text-[10px] font-bold z-10 shadow-lg shadow-orange-500/20">
+              <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-[#ff6200] border-2 border-[#0a1628] flex items-center justify-center text-white font-mono text-[10px] font-bold z-10 shadow-lg shadow-orange-500/20">
                 {stage.step}
               </div>
 
@@ -65,7 +65,7 @@ export default function Ecosystem() {
                   {/* Desktop Horizontal Connector */}
                   <div className="hidden md:block absolute top-1/2 -right-2 w-4 border-t-2 border-dashed border-[#1a3a5c] z-5"></div>
                   {/* Mobile Vertical Connector */}
-                  <div className="block md:hidden absolute left-1 -bottom-4 h-4 border-l-2 border-dashed border-[#ff4e00]/60 z-5"></div>
+                  <div className="block md:hidden absolute left-1 -bottom-4 h-4 border-l-2 border-dashed border-[#ff6200]/60 z-5"></div>
                 </>
               )}
             </div>
@@ -74,7 +74,7 @@ export default function Ecosystem() {
 
         {/* Row 2: Large Display Serif Title */}
         <div className="text-center mb-8">
-          <h2 className="font-serif italic font-normal text-4xl md:text-5xl text-[#ff4e00] tracking-tight">
+          <h2 className="font-serif italic font-normal text-4xl md:text-5xl text-[#ff6200] tracking-tight">
             Infrastructure Ecosystem
           </h2>
           <div className="w-24 h-[2px] bg-[#1a3a5c] mx-auto mt-4"></div>

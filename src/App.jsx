@@ -12,8 +12,11 @@ import AllocationModal from './components/AllocationModal';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
 import ProjectDetail from './pages/ProjectDetail';
 import { PROJECTS_BY_CATEGORY } from './data/projects';
+import IntroSection from './components/IntroSection';
 
 function App() {
+  // 'playing' -> intro active; 'unfolding' -> curtain splits and website fades/scales in; 'completed' -> intro unmounted
+  const [introState, setIntroState] = useState('playing');
   // Navigation & Modal States
   const [allocationModal, setAllocationModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -160,30 +163,48 @@ function App() {
   const estimates = calculateEstimates();
 
   return (
-    <Routes>
-      <Route path="/project/:id" element={<ProjectDetail />} />
-      <Route path="/*" element={
-        <HomePage
-          timeText={timeText}
-          allocationModal={allocationModal}
-          setAllocationModal={setAllocationModal}
-          selectedProject={selectedProject}
-          setSelectedProject={setSelectedProject}
-          projects={projects}
-          calculator={calculator}
-          updateCalculator={updateCalculator}
-          estimates={estimates}
-          reviews={reviews}
+    <>
+      {introState !== 'completed' && (
+        <IntroSection
+          onStartReveal={() => setIntroState('unfolding')}
+          onComplete={() => setIntroState('completed')}
         />
-      } />
-    </Routes>
+      )}
+      <div
+        className={`transition-all duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) ${
+          introState === 'playing'
+            ? 'opacity-0 scale-95 pointer-events-none'
+            : 'opacity-100 scale-100'
+        }`}
+      >
+        <Routes>
+          <Route path="/project/:id" element={<ProjectDetail />} />
+          <Route path="/*" element={
+            <HomePage
+              timeText={timeText}
+              allocationModal={allocationModal}
+              setAllocationModal={setAllocationModal}
+              selectedProject={selectedProject}
+              setSelectedProject={setSelectedProject}
+              projects={projects}
+              calculator={calculator}
+              updateCalculator={updateCalculator}
+              estimates={estimates}
+              reviews={reviews}
+              showIntro={introState === 'playing'}
+            />
+          } />
+        </Routes>
+      </div>
+    </>
   );
 }
 
 function HomePage({
   timeText, allocationModal, setAllocationModal,
   selectedProject, setSelectedProject,
-  projects, calculator, updateCalculator, estimates, reviews
+  projects, calculator, updateCalculator, estimates, reviews,
+  showIntro
 }) {
   // Fix layout overlap: reset scroll and force ScrollStack to remeasure
   useLayoutEffect(() => {
@@ -196,6 +217,16 @@ function HomePage({
       window.dispatchEvent(new Event('resize'));
     });
   }, []);
+
+  // Force ScrollStack to remeasure once the intro transitions out and homepage content is scale-100
+  useEffect(() => {
+    if (!showIntro) {
+      const timer = setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+      }, 1250); // Matches transition-all duration-[1200ms]
+      return () => clearTimeout(timer);
+    }
+  }, [showIntro]);
 
   // Scroll Reveal Animations (runs when HomePage mounts)
   useEffect(() => {
@@ -224,7 +255,7 @@ function HomePage({
   }, []);
 
   return (
-    <div className="tech-grid-container min-h-screen text-[#111115] font-sans selection:bg-black selection:text-white">
+    <div className="tech-grid-container min-h-screen text-[#111827] font-sans selection:bg-[#ff6200] selection:text-white">
 
       {/* Grid Border Ticks */}
       <div className="grid-ticks">
@@ -238,20 +269,30 @@ function HomePage({
       <Header setAllocationModal={setAllocationModal} />
 
       {/* ScrollStack for sections */}
-      <ScrollStack useWindowScroll={true} itemDistance={0} baseScale={1} itemScale={0} itemStackDistance={0} stackPosition="1%" scaleEndPosition="0%" blurAmount={0}>
+      <ScrollStack
+        showIntro={showIntro}
+        useWindowScroll={true}
+        itemDistance={0}
+        baseScale={1}
+        itemScale={0}
+        itemStackDistance={0}
+        stackPosition="1%"
+        scaleEndPosition="0%"
+        blurAmount={0}
+      >
         <ScrollStackItem>
           <Hero timeText={timeText} setAllocationModal={setAllocationModal} />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="!overflow-y-auto">
+        <ScrollStackItem>
           <AboutUs />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="!overflow-y-auto">
+        <ScrollStackItem>
           <Projects projects={projects} />
         </ScrollStackItem>
-        <ScrollStackItem data-margin-bottom="85vh" itemClassName="!overflow-y-auto">
+        <ScrollStackItem data-margin-bottom="85vh">
           <WhyUs />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="!overflow-y-auto" data-margin-bottom="85vh">
+        <ScrollStackItem data-margin-bottom="85vh">
           <SmartHUD
             calculator={calculator}
             updateCalculator={updateCalculator}
@@ -259,10 +300,10 @@ function HomePage({
             setAllocationModal={setAllocationModal}
           />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="!overflow-y-auto" data-margin-bottom="85vh">
+        <ScrollStackItem data-margin-bottom="85vh">
           <Reviews reviews={reviews} />
         </ScrollStackItem>
-        <ScrollStackItem itemClassName="!bg-black !overflow-y-auto">
+        <ScrollStackItem style={{ background: '#18181b' }}>
           <Footer timeText={timeText} />
         </ScrollStackItem>
       </ScrollStack>

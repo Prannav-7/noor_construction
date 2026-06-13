@@ -137,7 +137,7 @@ export default function Stack({
                         disableDrag={shouldDisableDrag}
                     >
                         <motion.div
-                            className="rounded-2xl overflow-hidden w-full h-full bg-[#131316] border border-white/10 shadow-2xl"
+                            className="rounded-2xl overflow-hidden w-full h-full bg-[#ffffff] border border-black/5 shadow-2xl"
                             onClick={() => shouldEnableClick && sendToBack(card.id)}
                             animate={{
                                 rotateZ: (stack.length - index - 1) * 3 + randomRotate,
@@ -179,10 +179,10 @@ export default function Stack({
                             }}
                             className="absolute top-1/2 left-1/4 -translate-y-1/2"
                         >
-                            <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full border border-white/40 flex items-center justify-center">
+                            <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full border border-black/20 flex items-center justify-center">
                                 <div className="w-3.5 h-3.5 bg-white rounded-full animate-ping" />
                             </div>
-                            <p className="text-white font-mono font-bold text-[8px] mt-2 text-center uppercase tracking-widest bg-black/60 px-2 py-0.5 rounded border border-white/10">Drag or Click Card</p>
+                            <p className="text-white font-mono font-bold text-[8px] mt-2 text-center uppercase tracking-widest bg-black/60 px-2 py-0.5 rounded border border-black/5">Drag or Click Card</p>
                         </motion.div>
                     </div>
                 </motion.div>

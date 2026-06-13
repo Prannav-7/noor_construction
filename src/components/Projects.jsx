@@ -1,147 +1,171 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, CheckCircle2, Clock, ChevronRight, Zap, Leaf, Home, Building2, Waves } from 'lucide-react';
-import { ALL_PROJECTS, PROJECTS_BY_CATEGORY } from '../data/projects';
+import { MapPin, CheckCircle2, Clock, ArrowRight, Zap, Leaf, Ruler, Shield, X } from 'lucide-react';
+import { gsap } from 'gsap';
+import { PROJECTS_BY_CATEGORY } from '../data/projects';
 
 const TAB_CONFIG = [
-  { key: 'all', label: 'All Projects', icon: <Home className="w-3.5 h-3.5" /> },
-  { key: 'residential', label: 'Residential', icon: <Home className="w-3.5 h-3.5" /> },
-  { key: 'commercial', label: 'Commercial', icon: <Building2 className="w-3.5 h-3.5" /> },
-  { key: 'coastal', label: 'Coastal', icon: <Waves className="w-3.5 h-3.5" /> },
+  { key: 'all',         label: 'All' },
+  { key: 'residential', label: 'Residential' },
+  { key: 'commercial',  label: 'Commercial' },
+  { key: 'coastal',     label: 'Coastal' },
 ];
 
 function ProgressBar({ value }) {
-  const color = value === 100 ? '#22c55e' : value >= 70 ? '#8b0000' : '#cc6600';
+  const color = value === 100 ? '#4ade80' : value >= 70 ? '#ff6200' : '#cc4e00';
   return (
-    <div className="w-full h-1.5 bg-black/8 rounded-full overflow-hidden">
+    <div className="w-full h-[2px] rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.08)' }}>
       <div
         className="h-full rounded-full transition-all duration-700"
-        style={{ width: `${value}%`, backgroundColor: color }}
+        style={{ width: `${value}%`, background: color }}
       />
     </div>
   );
 }
 
-function ProjectCard({ project }) {
-  const [expanded, setExpanded] = useState(false);
-  const navigate = useNavigate();
-  const isDone = project.progress === 100;
+function MenuItem({
+  project,
+  speed = 15,
+  textColor = '#1c1c1f',
+  marqueeBgColor = '#ff6200',
+  marqueeTextColor = '#ffffff',
+  borderColor = 'rgba(0, 0, 0, 0.08)',
+  isFirst,
+  onHover,
+  onClick
+}) {
+  const itemRef = useRef(null);
+  const marqueeRef = useRef(null);
+  const marqueeInnerRef = useRef(null);
+  const animationRef = useRef(null);
+  const [repetitions, setRepetitions] = useState(4);
+
+  const animationDefaults = { duration: 0.5, ease: 'power2.out' };
+
+  const findClosestEdge = (mouseX, mouseY, width, height) => {
+    const topEdgeDist = (mouseX - width / 2) ** 2 + mouseY ** 2;
+    const bottomEdgeDist = (mouseX - width / 2) ** 2 + (mouseY - height) ** 2;
+    return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom';
+  };
+
+  useEffect(() => {
+    const calculateRepetitions = () => {
+      if (!marqueeInnerRef.current) return;
+      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
+      if (!marqueeContent) return;
+      const contentWidth = marqueeContent.offsetWidth;
+      const viewportWidth = window.innerWidth;
+      const needed = Math.ceil(viewportWidth / contentWidth) + 2;
+      setRepetitions(Math.max(4, needed));
+    };
+
+    calculateRepetitions();
+    window.addEventListener('resize', calculateRepetitions);
+    return () => window.removeEventListener('resize', calculateRepetitions);
+  }, [project]);
+
+  useEffect(() => {
+    const setupMarquee = () => {
+      if (!marqueeInnerRef.current) return;
+      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
+      if (!marqueeContent) return;
+      const contentWidth = marqueeContent.offsetWidth;
+      if (contentWidth === 0) return;
+
+      if (animationRef.current) {
+        animationRef.current.kill();
+      }
+
+      animationRef.current = gsap.to(marqueeInnerRef.current, {
+        x: -contentWidth,
+        duration: speed,
+        ease: 'none',
+        repeat: -1
+      });
+    };
+
+    const timer = setTimeout(setupMarquee, 50);
+    return () => {
+      clearTimeout(timer);
+      if (animationRef.current) {
+        animationRef.current.kill();
+      }
+    };
+  }, [project, repetitions, speed]);
+
+  const tlRef = useRef(null);
+
+  const handleMouseEnter = ev => {
+    onHover();
+    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
+    const rect = itemRef.current.getBoundingClientRect();
+    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
+
+    if (tlRef.current) {
+      tlRef.current.kill();
+    }
+
+    tlRef.current = gsap
+      .timeline({ defaults: animationDefaults })
+      .set(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+      .set(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0)
+      .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0);
+  };
+
+  const handleMouseLeave = ev => {
+    if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
+    const rect = itemRef.current.getBoundingClientRect();
+    const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
+
+    if (tlRef.current) {
+      tlRef.current.kill();
+    }
+
+    tlRef.current = gsap
+      .timeline({ defaults: animationDefaults })
+      .to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
+      .to(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0);
+  };
 
   return (
-    <div className="group bg-white border border-black/8 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col">
-
-      {/* Image */}
-      <div
-        className="relative h-52 overflow-hidden cursor-pointer"
-        onClick={() => navigate(`/project/${project.id}`)}
-      >
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-        {/* Status badge */}
-        <div className={`absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold font-mono tracking-wider ${isDone ? 'bg-green-500 text-white' : 'bg-[#8b0000] text-white'}`}>
-          {isDone ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-          {isDone ? 'COMPLETED' : `${project.progress}% DONE`}
-        </div>
-
-        {/* Year badge */}
-        <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white font-mono text-[10px] tracking-wider px-2 py-1 rounded">
-          {project.year}
-        </div>
-
-        {/* Bottom title area */}
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <p className="font-mono text-[9px] tracking-[0.3em] text-[#ff9999] font-bold mb-0.5 uppercase">
-            {project.tagline}
-          </p>
-          <h3 className="font-display font-extrabold text-white text-[1.05rem] leading-tight">
-            {project.title}
-          </h3>
-        </div>
-
-        {/* Survey corner ticks */}
-        <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-white/30 pointer-events-none" />
-        <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-white/30 pointer-events-none" />
+    <div
+      className="flex-1 min-h-[65px] relative overflow-hidden flex items-center justify-start transition-colors duration-300"
+      ref={itemRef}
+      style={{ borderTop: isFirst ? 'none' : `1px solid ${borderColor}` }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={onClick}
+    >
+      <div className="w-full flex items-center justify-between px-6 py-4 cursor-pointer no-underline select-none">
+        <span
+          className="font-display font-extrabold text-[2.2vh] lg:text-[2.6vh] tracking-tight uppercase transition-transform duration-300 text-left shrink-0 max-w-[70%]"
+          style={{ color: textColor }}
+        >
+          {project.title}
+        </span>
+        <span className="font-mono text-[9px] tracking-widest text-neutral-500 uppercase font-bold text-right shrink-0">
+          {project.category} // {project.year}
+        </span>
       </div>
 
-      {/* Body */}
-      <div className="p-5 flex flex-col flex-1">
-
-        {/* Location + area */}
-        <div className="flex items-center justify-between gap-2 mb-4">
-          <div className="flex items-center gap-1.5 text-neutral-500">
-            <MapPin className="w-3.5 h-3.5 text-[#8b0000] shrink-0" />
-            <span className="font-sans text-[12px]">{project.location}</span>
-          </div>
-          <span className="font-mono text-[10px] text-neutral-400 shrink-0">{project.area}</span>
-        </div>
-
-        {/* Progress */}
-        <div className="mb-4">
-          <div className="flex justify-between items-center mb-1.5">
-            <span className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 uppercase">Construction Progress</span>
-            <span className="font-mono text-[10px] font-bold text-neutral-700">{project.progress}%</span>
-          </div>
-          <ProgressBar value={project.progress} />
-        </div>
-
-        {/* Specs grid */}
-        <div className="grid grid-cols-2 gap-2 mb-4">
-          <div className="bg-[#faf9f6] rounded p-2.5 border border-black/5">
-            <span className="font-mono text-[8px] text-neutral-400 tracking-wider block mb-0.5 uppercase">Built-up Area</span>
-            <span className="font-mono text-[11px] font-bold text-black">{project.specifications.sqFt}</span>
-          </div>
-          <div className="bg-[#faf9f6] rounded p-2.5 border border-black/5">
-            <div className="flex items-center gap-1 mb-0.5">
-              <Zap className="w-2.5 h-2.5 text-amber-500" />
-              <span className="font-mono text-[8px] text-neutral-400 tracking-wider uppercase">Solar</span>
+      {/* Marquee hover layer */}
+      <div
+        className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none translate-y-[101%] z-20 flex items-center"
+        ref={marqueeRef}
+        style={{ backgroundColor: marqueeBgColor }}
+      >
+        <div className="h-full w-fit flex items-center" ref={marqueeInnerRef}>
+          {[...Array(repetitions)].map((_, idx) => (
+            <div className="marquee-part flex items-center flex-shrink-0" key={idx} style={{ color: marqueeTextColor }}>
+              <span className="whitespace-nowrap uppercase font-display font-extrabold text-[2.2vh] lg:text-[2.6vh] leading-none px-[2vw]">
+                {project.title}
+              </span>
+              <div
+                className="w-[100px] h-[4vh] my-1 mx-[1vw] rounded bg-cover bg-center border border-white/20 shrink-0"
+                style={{ backgroundImage: `url(${project.image})` }}
+              />
             </div>
-            <span className="font-mono text-[11px] font-bold text-black">{project.specifications.solarCapacity}</span>
-          </div>
-          <div className="bg-[#faf9f6] rounded p-2.5 border border-black/5">
-            <div className="flex items-center gap-1 mb-0.5">
-              <Leaf className="w-2.5 h-2.5 text-green-500" />
-              <span className="font-mono text-[8px] text-neutral-400 tracking-wider uppercase">Carbon</span>
-            </div>
-            <span className="font-mono text-[11px] font-bold text-black">{project.specifications.carbonReduction}</span>
-          </div>
-          <div className="bg-[#faf9f6] rounded p-2.5 border border-black/5">
-            <span className="font-mono text-[8px] text-neutral-400 tracking-wider block mb-0.5 uppercase">Smart Index</span>
-            <span className="font-mono text-[11px] font-bold text-black">{project.specifications.smartIndex}</span>
-          </div>
-        </div>
-
-        {/* Features */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {project.features.map((f, i) => (
-            <span
-              key={i}
-              className="bg-[#8b0000]/8 text-[#8b0000] font-mono text-[9px] tracking-wide px-2 py-0.5 rounded font-bold border border-[#8b0000]/15"
-            >
-              {f.title}
-            </span>
           ))}
-        </div>
-
-        {/* Expandable description */}
-        <div className="mt-auto">
-          <button
-            onClick={() => setExpanded(e => !e)}
-            className="flex items-center gap-1.5 text-[#8b0000] font-mono text-[10px] font-bold tracking-wider hover:underline transition-all"
-          >
-            <ChevronRight className={`w-3.5 h-3.5 transition-transform ${expanded ? 'rotate-90' : ''}`} />
-            {expanded ? 'HIDE DETAILS' : 'VIEW DETAILS'}
-          </button>
-          {expanded && (
-            <p className="mt-3 font-sans text-[12px] text-neutral-600 leading-relaxed border-t border-black/6 pt-3">
-              {project.description}
-            </p>
-          )}
         </div>
       </div>
     </div>
@@ -149,6 +173,7 @@ function ProjectCard({ project }) {
 }
 
 export default function Projects({ projects }) {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const resolvedProjects = projects || PROJECTS_BY_CATEGORY;
 
@@ -162,88 +187,326 @@ export default function Projects({ projects }) {
   const totalCount = allProjects.length;
   const completedCount = allProjects.filter(p => p.progress === 100).length;
 
+  const [hoveredProject, setHoveredProject] = useState(displayed[0] || null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+
+  // Sync selected hovered project when filter tab changes
+  useEffect(() => {
+    if (displayed.length > 0) {
+      setHoveredProject(displayed[0]);
+    } else {
+      setHoveredProject(null);
+    }
+  }, [activeTab]);
+
   return (
     <section
       id="projects"
-      className="relative py-10 lg:py-14 px-6 min-h-screen flex flex-col justify-center"
-      style={{ background: 'linear-gradient(180deg, #faf9f6 0%, #f0ece3 50%, #faf9f6 100%)' }}
+      className="relative w-full h-screen flex flex-col p-6 lg:p-12 overflow-hidden tech-grid-light"
+      style={{ background: '#FED8B1' }}
     >
-      {/* Blueprint rebar pattern */}
-      <div className="rebar-pattern absolute inset-0 pointer-events-none z-0" />
-
-      <div className="max-w-7xl w-full mx-auto relative z-10">
-
-        {/* ── SECTION HEADER ── */}
-        <div className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-[2px] bg-[#8b0000]" />
-            <span className="font-mono text-[10px] tracking-[0.35em] text-[#8b0000] font-bold uppercase">
+      <div className="max-w-7xl w-full mx-auto z-10 flex flex-col justify-between h-full">
+        {/* Header Block */}
+        <div className="shrink-0">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-8 h-[1px]" style={{ background: '#ff6200' }} />
+            <span
+              className="text-[10px] tracking-[0.35em] font-bold uppercase"
+              style={{ color: '#ff6200', fontFamily: 'var(--font-mono)' }}
+            >
               Our Portfolio
             </span>
           </div>
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-4">
             <div>
-              <h2 className="font-display font-extrabold text-4xl md:text-5xl lg:text-[3.5rem] leading-[1.05] tracking-tight text-black mb-2">
+              <h2
+                className="font-display font-extrabold leading-[1.05] tracking-tight mb-1"
+                style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', color: '#1c1c1f' }}
+              >
                 Projects{' '}
-                <span className="font-serif italic font-normal text-neutral-400">We've Built</span>
+                <span className="font-serif italic font-normal" style={{ color: '#6e6e73' }}>
+                  We've Built
+                </span>
               </h2>
-              <p className="font-sans text-base text-neutral-500 max-w-lg leading-relaxed">
-                From smart residential villas to eco-coastal retreats — every project reflects our commitment to precision and sustainability.
+              <p className="font-sans text-[13px] max-w-lg leading-relaxed" style={{ color: '#6e6e73' }}>
+                From smart residential villas to eco-coastal retreats — hover to explore details.
               </p>
             </div>
 
-            {/* Stats bar */}
-            <div className="flex items-center gap-6 shrink-0">
-              <div className="text-center">
-                <div className="font-display font-extrabold text-3xl text-black">{totalCount}</div>
-                <div className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 uppercase">Projects</div>
-              </div>
-              <div className="w-px h-10 bg-black/10" />
-              <div className="text-center">
-                <div className="font-display font-extrabold text-3xl text-green-600">{completedCount}</div>
-                <div className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 uppercase">Completed</div>
-              </div>
-              <div className="w-px h-10 bg-black/10" />
-              <div className="text-center">
-                <div className="font-display font-extrabold text-3xl text-[#8b0000]">{totalCount - completedCount}</div>
-                <div className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 uppercase">Active</div>
-              </div>
+            {/* Stat bar */}
+            <div className="flex items-center gap-6 shrink-0 bg-white/40 backdrop-blur-sm border border-black/5 px-4 py-2 rounded">
+              {[
+                { num: totalCount, label: 'Projects' },
+                { num: completedCount, label: 'Completed', gold: true },
+                { num: totalCount - completedCount, label: 'Active' },
+              ].map((s, i) => (
+                <React.Fragment key={i}>
+                  <div className="text-center">
+                    <div
+                      className="font-display font-extrabold text-2xl mb-0.5"
+                      style={{ color: s.gold ? '#ff6200' : '#1c1c1f' }}
+                    >
+                      {s.num}
+                    </div>
+                    <div
+                      className="text-[8px] tracking-[0.2em] uppercase"
+                      style={{ color: '#6e6e73', fontFamily: 'var(--font-mono)' }}
+                    >
+                      {s.label}
+                    </div>
+                  </div>
+                  {i < 2 && <div className="w-px h-6" style={{ background: 'rgba(0,0,0,0.08)' }} />}
+                </React.Fragment>
+              ))}
             </div>
+          </div>
+
+          {/* Tab buttons */}
+          <div
+            className="flex flex-wrap gap-0 mb-4"
+            style={{ borderBottom: '1px solid rgba(0,0,0,0.08)' }}
+          >
+            {TAB_CONFIG.map(tab => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className="relative px-4 py-2 text-[10px] font-bold tracking-[0.15em] uppercase transition-all duration-300"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  color: activeTab === tab.key ? '#ff6200' : '#9A9080',
+                  background: 'transparent',
+                }}
+              >
+                {tab.label}
+                <span
+                  className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-300"
+                  style={{ background: activeTab === tab.key ? '#ff6200' : 'transparent' }}
+                />
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* ── TABS ── */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {TAB_CONFIG.map(tab => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full font-mono text-[11px] font-bold tracking-wider transition-all border ${activeTab === tab.key
-                  ? 'bg-[#8b0000] text-white border-[#8b0000] shadow-md'
-                  : 'bg-white text-neutral-600 border-black/10 hover:border-[#8b0000]/40 hover:text-[#8b0000]'
-                }`}
-            >
-              {tab.icon}
-              {tab.label.toUpperCase()}
-              <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-bold ${activeTab === tab.key ? 'bg-white/20 text-white' : 'bg-black/6 text-neutral-500'}`}>
-                {tab.key === 'all' ? totalCount : (projects[tab.key] || []).length}
-              </span>
-            </button>
-          ))}
-        </div>
+        {/* Main Split Layout */}
+        <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-4">
+          {/* LEFT: Flowing Menu (Span 7) */}
+          <div className="lg:col-span-7 flex flex-col bg-white/25 backdrop-blur-sm border border-black/5 rounded-xl lg:overflow-hidden min-h-0">
+            <div className="w-full lg:h-full lg:overflow-y-auto">
+              <nav className="flex flex-col h-full divide-y divide-black/5">
+                {displayed.map((project, idx) => (
+                  <MenuItem
+                    key={project.id}
+                    project={project}
+                    speed={15}
+                    textColor="#1c1c1f"
+                    marqueeBgColor="#ff6200"
+                    marqueeTextColor="#ffffff"
+                    borderColor="rgba(0, 0, 0, 0.05)"
+                    isFirst={idx === 0}
+                    onHover={() => setHoveredProject(project)}
+                    onClick={() => {
+                      if (window.innerWidth < 1024) {
+                        setHoveredProject(project);
+                        setMobileDrawerOpen(true);
+                      } else {
+                        navigate(`/project/${project.id}`);
+                      }
+                    }}
+                  />
+                ))}
+                {displayed.length === 0 && (
+                  <div className="flex items-center justify-center p-12 text-neutral-500 font-mono text-xs">
+                    NO PROJECTS IN THIS CATEGORY
+                  </div>
+                )}
+              </nav>
+            </div>
+          </div>
 
-        {/* ── PROJECT GRID ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {displayed.map(project => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+          {/* RIGHT: Dynamic HUD Detail Panel (Span 5) */}
+          <div className="hidden lg:flex lg:col-span-5 flex-col justify-between p-6 bg-white border border-neutral-200/80 rounded-xl shadow-lg relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-neutral-100 rounded-full blur-2xl opacity-50" />
+            
+            {hoveredProject ? (
+              <div className="h-full flex flex-col justify-between z-10 relative">
+                <div className="flex-1 overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
+                  {/* Category + Status Pill */}
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="font-mono text-[9px] tracking-widest text-[#ff6200] font-bold uppercase">
+                      {hoveredProject.category} // {hoveredProject.year}
+                    </span>
+                    <span
+                      className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-[8px] font-bold tracking-wider"
+                      style={{
+                        background: hoveredProject.progress === 100 ? 'rgba(74,222,128,0.15)' : 'rgba(255, 98, 0, 0.15)',
+                        color: hoveredProject.progress === 100 ? '#22c55e' : '#ff6200',
+                        border: `1px solid ${hoveredProject.progress === 100 ? 'rgba(74,222,128,0.25)' : 'rgba(255, 98, 0, 0.25)'}`
+                      }}
+                    >
+                      {hoveredProject.progress === 100 ? 'Completed' : `${hoveredProject.progress}% Progress`}
+                    </span>
+                  </div>
 
-        {/* Bottom tag */}
-        <div className="text-center mt-10 font-mono text-[9px] text-neutral-300 tracking-[0.3em]">
-          DOC: NOOR_PROJECT_PORTFOLIO — REV. 01 — SHEET 1 OF 1
+                  {/* Title & Tagline */}
+                  <h3 className="font-display font-extrabold text-2xl text-neutral-900 leading-tight mb-1">
+                    {hoveredProject.title}
+                  </h3>
+                  <p className="font-mono text-[10px] tracking-wider text-neutral-400 uppercase mb-4">
+                    {hoveredProject.tagline}
+                  </p>
+
+                  {/* Image Preview */}
+                  <div className="w-full h-32 rounded-lg overflow-hidden border border-neutral-200 mb-4 relative">
+                    <img src={hoveredProject.image} alt={hoveredProject.title} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-white">
+                      <MapPin className="w-3.5 h-3.5 text-[#ff6200]" />
+                      <span className="text-[11px] font-sans">{hoveredProject.location}</span>
+                    </div>
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="mb-4 bg-neutral-50 p-3 rounded-lg border border-neutral-100">
+                    <div className="flex justify-between items-center mb-1.5">
+                      <span className="font-mono text-[8px] tracking-wider text-neutral-500 uppercase">Construction Progress</span>
+                      <span className="font-mono text-[9px] font-bold text-neutral-800">{hoveredProject.progress}%</span>
+                    </div>
+                    <ProgressBar value={hoveredProject.progress} />
+                  </div>
+
+                  {/* Specifications Grid */}
+                  <div className="grid grid-cols-2 gap-2.5 mb-4">
+                    {[
+                      { icon: <Ruler className="w-3.5 h-3.5 text-[#ff6200]" />, label: 'Built-up Area', val: hoveredProject.specifications.sqFt },
+                      { icon: <Zap className="w-3.5 h-3.5 text-amber-500" />, label: 'Solar Capacity', val: hoveredProject.specifications.solarCapacity },
+                      { icon: <Leaf className="w-3.5 h-3.5 text-green-500" />, label: 'Carbon Reduction', val: hoveredProject.specifications.carbonReduction },
+                      { icon: <Shield className="w-3.5 h-3.5 text-blue-500" />, label: 'Smart Index', val: hoveredProject.specifications.smartIndex },
+                    ].map((spec, i) => (
+                      <div key={i} className="flex items-center gap-2.5 p-2 bg-neutral-50 rounded border border-neutral-100">
+                        {spec.icon}
+                        <div>
+                          <div className="text-[8px] tracking-wider text-neutral-400 uppercase font-mono">{spec.label}</div>
+                          <div className="text-[10px] font-bold text-neutral-800 font-mono">{spec.val}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Features Bullet List */}
+                  <div className="space-y-1.5">
+                    <div className="font-mono text-[8px] tracking-widest text-neutral-400 uppercase mb-1">// MAIN ASSURANCE KEYSTONES</div>
+                    {hoveredProject.features.slice(0, 2).map((feat, i) => (
+                      <div key={i} className="text-[10px] leading-snug">
+                        <span className="font-bold text-[#ff6200] font-sans">✓ {feat.title}</span>: <span className="text-neutral-500">{feat.desc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* View Details CTA */}
+                <button
+                  onClick={() => navigate(`/project/${hoveredProject.id}`)}
+                  className="w-full mt-4 py-3 bg-[#ff6200] hover:bg-[#e05600] text-white font-mono text-xs font-bold tracking-widest rounded flex items-center justify-center gap-2 shadow-sm transition-all duration-300 hover:shadow cursor-pointer"
+                >
+                  OPEN BLUEPRINT DETAILS
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center text-center text-neutral-400 font-mono text-xs">
+                HOVER OVER A PROJECT TO LOAD TELEMETRY
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Mobile Details Drawer */}
+      {mobileDrawerOpen && hoveredProject && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center lg:hidden bg-black/60 backdrop-blur-sm">
+          <div className="absolute inset-0" onClick={() => setMobileDrawerOpen(false)} />
+          
+          <div className="w-full bg-white rounded-t-2xl p-6 relative z-10 max-h-[85vh] overflow-y-auto shadow-2xl border-t border-neutral-200 animate-card-reveal">
+            <div className="w-12 h-1 bg-neutral-300 rounded-full mx-auto mb-4" />
+            
+            <button
+              onClick={() => setMobileDrawerOpen(false)}
+              className="absolute top-4 right-4 p-1 rounded-full bg-neutral-100 text-neutral-500 hover:text-black"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex justify-between items-center mb-3">
+              <span className="font-mono text-[9px] tracking-widest text-[#ff6200] font-bold uppercase">
+                {hoveredProject.category} // {hoveredProject.year}
+              </span>
+              <span
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-[8px] font-bold tracking-wider"
+                style={{
+                  background: hoveredProject.progress === 100 ? 'rgba(74,222,128,0.15)' : 'rgba(255, 98, 0, 0.15)',
+                  color: hoveredProject.progress === 100 ? '#22c55e' : '#ff6200',
+                  border: `1px solid ${hoveredProject.progress === 100 ? 'rgba(74,222,128,0.25)' : 'rgba(255, 98, 0, 0.25)'}`
+                }}
+              >
+                {hoveredProject.progress === 100 ? 'Completed' : `${hoveredProject.progress}% Progress`}
+              </span>
+            </div>
+
+            <h3 className="font-display font-extrabold text-xl text-neutral-900 leading-tight mb-1">
+              {hoveredProject.title}
+            </h3>
+            <p className="font-mono text-[10px] tracking-wider text-neutral-450 uppercase mb-4">
+              {hoveredProject.tagline}
+            </p>
+
+            <div className="w-full h-40 rounded-lg overflow-hidden border border-neutral-200 mb-4 relative">
+              <img src={hoveredProject.image} alt={hoveredProject.title} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-white">
+                <MapPin className="w-3.5 h-3.5 text-[#ff6200]" />
+                <span className="text-[11px] font-sans">{hoveredProject.location}</span>
+              </div>
+            </div>
+
+            <div className="mb-4 bg-neutral-50 p-3 rounded-lg border border-neutral-100">
+              <div className="flex justify-between items-center mb-1">
+                <span className="font-mono text-[8px] tracking-wider text-[#ff6200] uppercase">Construction Progress</span>
+                <span className="font-mono text-[9px] font-bold text-neutral-800">{hoveredProject.progress}%</span>
+              </div>
+              <ProgressBar value={hoveredProject.progress} />
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              {[
+                { icon: <Ruler className="w-3.5 h-3.5 text-[#ff6200]" />, label: 'Built-up Area', val: hoveredProject.specifications.sqFt },
+                { icon: <Zap className="w-3.5 h-3.5 text-amber-500" />, label: 'Solar Capacity', val: hoveredProject.specifications.solarCapacity },
+                { icon: <Leaf className="w-3.5 h-3.5 text-green-500" />, label: 'Carbon Reduction', val: hoveredProject.specifications.carbonReduction },
+                { icon: <Shield className="w-3.5 h-3.5 text-blue-500" />, label: 'Smart Index', val: hoveredProject.specifications.smartIndex },
+              ].map((spec, i) => (
+                <div key={i} className="flex items-center gap-2 p-2 bg-neutral-50 rounded border border-neutral-100">
+                  {spec.icon}
+                  <div>
+                    <div className="text-[8px] tracking-wider text-neutral-450 uppercase font-mono">{spec.label}</div>
+                    <div className="text-[10px] font-bold text-neutral-800 font-mono">{spec.val}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => {
+                setMobileDrawerOpen(false);
+                navigate(`/project/${hoveredProject.id}`);
+              }}
+              className="w-full py-3 bg-[#ff6200] text-white font-mono text-xs font-bold tracking-widest rounded flex items-center justify-center gap-2"
+            >
+              OPEN BLUEPRINT DETAILS
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

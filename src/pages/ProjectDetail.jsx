@@ -11,7 +11,7 @@ function ProgressRing({ value, size = 90 }) {
   const r = (size - strokeWidth) / 2;
   const circ = 2 * Math.PI * r;
   const offset = circ - (value / 100) * circ;
-  const color = value === 100 ? '#22c55e' : value >= 70 ? '#8b0000' : '#d97706';
+  const color = value === 100 ? '#22c55e' : value >= 70 ? '#ff6200' : '#ffa166';
   return (
     <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
       <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#e5e7eb" strokeWidth={strokeWidth} />
@@ -42,7 +42,7 @@ export default function ProjectDetail() {
         <h2 className="font-display font-extrabold text-3xl text-black">Project Not Found</h2>
         <button
           onClick={() => { window.scrollTo(0, 0); navigate('/'); }}
-          className="flex items-center gap-2 px-5 py-2.5 bg-[#8b0000] text-white rounded-lg font-mono text-xs font-bold tracking-wider"
+          className="flex items-center gap-2 px-5 py-2.5 bg-[#ff6200] hover:bg-[#e05600] text-white rounded-lg font-mono text-xs font-bold tracking-wider"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </button>
@@ -58,7 +58,7 @@ export default function ProjectDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f6f2] font-sans">
+    <div className="min-h-screen bg-[#f9fafb] font-sans">
 
       {/* ── ABSOLUTE TRANSPARENT OVERLAY NAVBAR ── */}
       <header
@@ -79,14 +79,14 @@ export default function ProjectDetail() {
         <div className="flex items-center gap-3">
           <button
             onClick={handleBack}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/25 text-white bg-black/20 backdrop-blur-sm font-mono text-[10px] font-bold tracking-wider hover:bg-white/10 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/25 text-white bg-black/5 backdrop-blur-sm font-mono text-[10px] font-bold tracking-wider hover:bg-white/10 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">BACK TO HOME</span>
           </button>
           <button
             onClick={handleBack}
-            className="w-9 h-9 flex items-center justify-center rounded-lg bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-colors text-white"
+            className="w-9 h-9 flex items-center justify-center rounded-lg bg-black/5 backdrop-blur-sm hover:bg-white/20 transition-colors text-white"
             title="Close"
           >
             <X className="w-4 h-4" />
@@ -105,14 +105,14 @@ export default function ProjectDetail() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
         {/* Corner survey marks */}
-        <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-white/30 pointer-events-none" />
-        <div className="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-white/30 pointer-events-none" />
+        <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-black/15 pointer-events-none" />
+        <div className="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-black/15 pointer-events-none" />
 
         {/* Text overlay - bottom left */}
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-wrap items-center gap-3 mb-3">
-              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-[10px] font-bold tracking-wider ${isDone ? 'bg-green-500 text-white' : 'bg-[#8b0000] text-white'}`}>
+              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-[10px] font-bold tracking-wider ${isDone ? 'bg-green-500 text-white' : 'bg-[#ff6200] text-white'}`}>
                 {isDone ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
                 {isDone ? 'COMPLETED' : `${project.progress}% IN PROGRESS`}
               </span>
@@ -122,7 +122,7 @@ export default function ProjectDetail() {
                 </span>
               )}
             </div>
-            <p className="font-mono text-[10px] tracking-[0.3em] text-red-300 font-bold uppercase mb-2">{project.tagline}</p>
+            <p className="font-mono text-[10px] tracking-[0.3em] text-orange-400 font-bold uppercase mb-2">{project.tagline}</p>
             <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white leading-tight tracking-tight">
               {project.title}
             </h1>
@@ -136,15 +136,15 @@ export default function ProjectDetail() {
         {/* Meta strip */}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-10 pb-6 border-b border-black/10">
           <div className="flex items-center gap-2 text-neutral-600">
-            <MapPin className="w-4 h-4 text-[#8b0000] shrink-0" />
+            <MapPin className="w-4 h-4 text-[#ff6200] shrink-0" />
             <span className="font-sans text-sm">{project.location}</span>
           </div>
           <div className="flex items-center gap-2 text-neutral-600">
-            <Calendar className="w-4 h-4 text-[#8b0000] shrink-0" />
+            <Calendar className="w-4 h-4 text-[#ff6200] shrink-0" />
             <span className="font-sans text-sm">Est. {project.year}</span>
           </div>
           <div className="flex items-center gap-2 text-neutral-600">
-            <Ruler className="w-4 h-4 text-[#8b0000] shrink-0" />
+            <Ruler className="w-4 h-4 text-[#ff6200] shrink-0" />
             <span className="font-sans text-sm">{project.area}</span>
           </div>
         </div>
@@ -157,8 +157,8 @@ export default function ProjectDetail() {
             {/* Overview */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-[2px] bg-[#8b0000]" />
-                <span className="font-mono text-[10px] tracking-[0.3em] text-[#8b0000] font-bold uppercase">Project Overview</span>
+                <div className="w-6 h-[2px] bg-[#ff6200]" />
+                <span className="font-mono text-[10px] tracking-[0.3em] text-[#ff6200] font-bold uppercase">Project Overview</span>
               </div>
               <p className="font-sans text-base text-neutral-700 leading-[1.85]">
                 {project.description}
@@ -168,18 +168,18 @@ export default function ProjectDetail() {
             {/* Features */}
             <div>
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-6 h-[2px] bg-[#8b0000]" />
-                <span className="font-mono text-[10px] tracking-[0.3em] text-[#8b0000] font-bold uppercase">Key Features</span>
+                <div className="w-6 h-[2px] bg-[#ff6200]" />
+                <span className="font-mono text-[10px] tracking-[0.3em] text-[#ff6200] font-bold uppercase">Key Features</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {project.features.map((f, i) => (
                   <div
                     key={i}
-                    className="flex items-start gap-3.5 p-4.5 bg-white rounded-xl border border-black/6 shadow-sm hover:shadow-md hover:border-[#8b0000]/20 transition-all animate-card-reveal"
+                    className="flex items-start gap-3.5 p-4.5 bg-white rounded-xl border border-black/6 shadow-sm hover:shadow-md hover:border-[#ff6200]/20 transition-all animate-card-reveal"
                     style={{ animationDelay: `${i * 0.1}s` }}
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#8b0000]/10 flex items-center justify-center shrink-0 mt-0.5">
-                      <ChevronRight className="w-4 h-4 text-[#8b0000]" />
+                    <div className="w-8 h-8 rounded-full bg-[#ff6200]/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <ChevronRight className="w-4 h-4 text-[#ff6200]" />
                     </div>
                     <div className="flex flex-col">
                       <span className="font-sans text-sm font-bold text-neutral-800 leading-snug">{f.title}</span>
@@ -192,23 +192,23 @@ export default function ProjectDetail() {
 
             {/* Quality Assurance Block */}
             <div
-              className="p-6 rounded-xl text-white relative overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #1a0a06 0%, #3d1208 100%)' }}
+              className="p-6 rounded-xl text-neutral-800 relative overflow-hidden"
+              style={{ background: 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)', border: '1px solid rgba(255, 98, 0, 0.15)' }}
             >
               <div
                 className="absolute inset-0 opacity-10"
                 style={{
-                  backgroundImage: 'linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)',
+                  backgroundImage: 'linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)',
                   backgroundSize: '28px 28px'
                 }}
               />
               <div className="relative z-10 flex items-start gap-4">
-                <div className="w-11 h-11 rounded-full bg-[#8b0000] flex items-center justify-center shrink-0 mt-0.5">
-                  <HardHat className="w-5 h-5 text-white" />
+                <div className="w-11 h-11 rounded-full bg-[#ff6200]/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <HardHat className="w-5 h-5 text-[#ff6200]" />
                 </div>
                 <div>
-                  <p className="font-mono text-[9px] tracking-[0.3em] text-red-300 font-bold mb-2 uppercase">Quality Assurance — NCS Standard</p>
-                  <p className="font-serif italic text-white/90 leading-relaxed text-sm md:text-base">
+                  <p className="font-mono text-[9px] tracking-[0.3em] text-[#ff6200] font-bold mb-2 uppercase">Quality Assurance — NCS Standard</p>
+                  <p className="font-serif italic text-neutral-800 leading-relaxed text-sm md:text-base">
                     "All NCS projects are built with grade-A cement, rust-resistant TMT steel, and undergo certified structural inspections at every milestone."
                   </p>
                 </div>
@@ -218,7 +218,7 @@ export default function ProjectDetail() {
             {/* Back button */}
             <button
               onClick={handleBack}
-              className="flex items-center gap-3 px-6 py-3.5 border-2 border-[#8b0000] text-[#8b0000] rounded-xl font-mono text-[11px] font-bold tracking-widest hover:bg-[#8b0000] hover:text-white transition-all"
+              className="flex items-center gap-3 px-6 py-3.5 border-2 border-[#ff6200] text-[#ff6200] rounded-xl font-mono text-[11px] font-bold tracking-widest hover:bg-[#ff6200] hover:text-white transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
               BACK TO ALL PROJECTS
@@ -230,7 +230,7 @@ export default function ProjectDetail() {
 
             {/* Progress Ring */}
             <div className="bg-white rounded-2xl border border-black/8 p-6 shadow-sm text-center">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-[#8b0000] font-bold uppercase mb-5">Construction Status</p>
+              <p className="font-mono text-[9px] tracking-[0.3em] text-[#ff6200] font-bold uppercase mb-5">Construction Status</p>
               <div className="flex items-center justify-center mb-2 relative">
                 <ProgressRing value={project.progress} size={100} />
                 <div className="absolute flex flex-col items-center justify-center">
@@ -244,7 +244,7 @@ export default function ProjectDetail() {
 
             {/* Specs */}
             <div className="bg-white rounded-2xl border border-black/8 p-6 shadow-sm">
-              <p className="font-mono text-[9px] tracking-[0.3em] text-[#8b0000] font-bold uppercase mb-5">Specifications</p>
+              <p className="font-mono text-[9px] tracking-[0.3em] text-[#ff6200] font-bold uppercase mb-5">Specifications</p>
               <div className="divide-y divide-black/6">
                 {[
                   { icon: <Home className="w-4 h-4 text-neutral-400" />, label: 'Built-up Area', value: project.specifications.sqFt },
@@ -267,7 +267,7 @@ export default function ProjectDetail() {
             <button
               onClick={handleBack}
               className="w-full py-4 rounded-xl font-mono text-[11px] font-bold tracking-widest flex items-center justify-center gap-2 shadow-md hover:shadow-xl transition-all text-white"
-              style={{ background: 'linear-gradient(135deg, #8b0000 0%, #5a0000 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #ff6200 0%, #d35400 100%)' }}
             >
               <Building2 className="w-4 h-4" />
               VIEW ALL PROJECTS

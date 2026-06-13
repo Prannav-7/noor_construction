@@ -102,7 +102,7 @@ export default function AllocationModal({
 
           <button 
             type="submit"
-            className="w-full py-3 bg-black text-white hover:bg-neutral-850 transition-all font-mono text-[11px] font-bold tracking-widest rounded mt-2"
+            className="w-full py-3 bg-[#ff6200] text-white hover:bg-[#e05600] transition-all font-mono text-[11px] font-bold tracking-widest rounded mt-2"
           >
             TRANSMIT SECURE APPLICATION
           </button>
