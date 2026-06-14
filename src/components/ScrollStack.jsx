@@ -3,7 +3,7 @@ import Lenis from 'lenis';
 
 export const ScrollStackItem = ({ children, itemClassName = '', ...props }) => (
     <div
-        className={`scroll-stack-card relative w-full h-screen my-0 p-0 rounded-none shadow-none box-border origin-top will-change-transform overflow-hidden ${itemClassName}`.trim()}
+        className={`scroll-stack-card relative w-full min-h-screen h-auto my-0 p-0 rounded-none shadow-none box-border origin-top will-change-transform ${itemClassName}`.trim()}
         style={{
             backfaceVisibility: 'hidden',
             transformStyle: 'preserve-3d'
@@ -27,6 +27,7 @@ const ScrollStack = ({
     rotationAmount = 0,
     blurAmount = 0,
     useWindowScroll = false,
+    disableStacking = true,
     onStackComplete
 }) => {
     const scrollerRef = useRef(null);
@@ -118,6 +119,16 @@ const ScrollStack = ({
 
     const updateCardTransforms = useCallback(() => {
         if (!cardsRef.current.length || isUpdatingRef.current) return;
+
+        if (disableStacking) {
+            cardsRef.current.forEach((card) => {
+                if (card) {
+                    card.style.transform = 'none';
+                    card.style.filter = 'none';
+                }
+            });
+            return;
+        }
 
         const endElementTop = endElementOffsetRef.current || 0;
 
@@ -429,7 +440,7 @@ const ScrollStack = ({
 
     return (
         <div className={containerClassName} ref={scrollerRef} style={containerStyles}>
-            <div className="scroll-stack-inner px-0 lg:px-[1vw] pb-0 lg:pb-[2vh] min-h-screen">
+            <div className="scroll-stack-inner px-0 pb-0 min-h-screen">
                 {children}
                 {/* Spacer so the last pin can release cleanly */}
                 <div className="scroll-stack-end w-full h-px" />

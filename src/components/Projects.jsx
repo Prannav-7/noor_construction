@@ -205,7 +205,7 @@ export default function Projects({ projects }) {
       className="relative w-full h-screen flex flex-col p-6 lg:p-12 overflow-hidden tech-grid-light"
       style={{ background: '#FED8B1' }}
     >
-      <div className="max-w-7xl w-full mx-auto z-10 flex flex-col justify-between h-full">
+      <div className="w-full mx-auto z-10 flex flex-col justify-between h-full px-4 md:px-8 lg:px-12 max-w-none">
         {/* Header Block */}
         <div className="shrink-0">
           <div className="flex items-center gap-3 mb-2">

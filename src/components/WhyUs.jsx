@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { ShieldCheck, Clock, HardHat, FileText, HeartPulse, Cpu } from 'lucide-react';
+import { ShieldCheck, Clock, HardHat, FileText, HeartPulse, Cpu, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const cards = [
   {
@@ -40,80 +40,44 @@ const cards = [
   },
 ];
 
-const getElementTranslationY = (el) => {
-  if (!el) return 0;
-  const style = window.getComputedStyle(el);
-  const transform = style.transform || style.webkitTransform;
-  if (!transform || transform === 'none') return 0;
-  const matrix = transform.match(/^matrix\((.+)\)$/);
-  if (matrix) {
-    const values = matrix[1].split(/\s*,\s*/);
-    return parseFloat(values[5]) || 0;
-  }
-  const matrix3d = transform.match(/^matrix3d\((.+)\)$/);
-  if (matrix3d) {
-    const values = matrix3d[1].split(/\s*,\s*/);
-    return parseFloat(values[13]) || 0;
-  }
-  return 0;
-};
+
 
 export default function WhyUs() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const rafRef = useRef(null);
 
   const CARD_WIDTH = 320;
   const CARD_GAP = 20;
   const TOTAL_CARDS = cards.length;
 
-  const handleScroll = useCallback(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const viewH = window.innerHeight;
-    const scrollRange = viewH * 0.8;
-    const card = section.closest('.scroll-stack-card');
-    let traveled = 0;
-    if (card) {
-      traveled = getElementTranslationY(card);
-    } else {
-      const rect = section.getBoundingClientRect();
-      const headerEl = document.querySelector('header');
-      const headerH = headerEl ? headerEl.offsetHeight : 0;
-      traveled = Math.max(0, headerH - rect.top);
-    }
-    const rawProgress = traveled / scrollRange;
-    const progress = Math.max(0, Math.min(1, rawProgress));
-    setScrollProgress(progress);
-    const idx = Math.floor(progress * TOTAL_CARDS);
-    setActiveIndex(Math.min(idx, TOTAL_CARDS - 1));
-  }, [TOTAL_CARDS]);
+  const scrollToCard = (targetIdx) => {
+    setActiveIndex(targetIdx);
+  };
 
-  useEffect(() => {
-    const onScroll = () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(handleScroll);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    handleScroll();
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [handleScroll]);
+  const handlePrev = () => {
+    if (activeIndex > 0) {
+      setActiveIndex(activeIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (activeIndex < TOTAL_CARDS - 1) {
+      setActiveIndex(activeIndex + 1);
+    }
+  };
 
   const totalTrackWidth = TOTAL_CARDS * (CARD_WIDTH + CARD_GAP) - CARD_GAP;
   const viewportPadding = 48;
   const maxTranslate = Math.max(0, totalTrackWidth - (typeof window !== 'undefined' ? window.innerWidth : 1200) + viewportPadding + 80);
+  const scrollProgress = TOTAL_CARDS > 1 ? activeIndex / (TOTAL_CARDS - 1) : 0;
   const translateX = -scrollProgress * maxTranslate;
 
   return (
     <section
       id="why-us"
       ref={sectionRef}
-      className="relative h-full flex flex-col justify-center overflow-hidden luxury-grain"
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden luxury-grain py-16 lg:py-24"
       style={{ background: '#18181b' }}
     >
       {/* Decorative oversized chapter number */}
@@ -129,6 +93,11 @@ export default function WhyUs() {
         className="absolute bottom-0 right-1/4 w-[500px] h-[500px] pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(255, 98, 0, 0.05) 0%, transparent 70%)', filter: 'blur(80px)' }}
       />
+
+      {/* Brand watermark */}
+      <div className="absolute top-8 right-8 pointer-events-none select-none z-0" aria-hidden="true">
+        <img src="/ncs-logo.png" alt="" className="h-8 md:h-10 w-auto object-contain opacity-[0.06]" />
+      </div>
 
       <div className="w-full relative z-10 flex flex-col justify-center h-full px-6">
 
@@ -151,22 +120,46 @@ export default function WhyUs() {
               </p>
             </div>
 
-            {/* Dot indicators */}
-            <div className="flex items-center gap-2">
-              {cards.map((_, i) => (
-                <div
-                  key={i}
-                  className="rounded-full transition-all duration-500"
-                  style={{
-                    width: i === activeIndex ? 20 : 6,
-                    height: 6,
-                    background: i === activeIndex ? '#ff6200' : 'rgba(255,255,255,0.1)',
-                  }}
-                />
-              ))}
+            {/* Navigation buttons and clickable indicators */}
+            <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl backdrop-blur-sm z-30">
+              {/* Prev Button */}
+              <button
+                onClick={handlePrev}
+                disabled={activeIndex === 0}
+                className="p-1 hover:bg-white/10 rounded-md transition-colors disabled:opacity-30 disabled:pointer-events-none text-white cursor-pointer border-0 bg-transparent"
+                aria-label="Previous card"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              {/* Clickable Dots */}
+              <div className="flex items-center gap-1.5 px-1">
+                {cards.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => scrollToCard(i)}
+                    className="h-1.5 rounded-full transition-all duration-500 cursor-pointer border-0 p-0"
+                    style={{
+                      width: i === activeIndex ? 16 : 6,
+                      background: i === activeIndex ? '#ff6200' : 'rgba(255,255,255,0.25)',
+                    }}
+                    aria-label={`Go to card ${i + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Next Button */}
+              <button
+                onClick={handleNext}
+                disabled={activeIndex === TOTAL_CARDS - 1}
+                className="p-1 hover:bg-white/10 rounded-md transition-colors disabled:opacity-30 disabled:pointer-events-none text-white cursor-pointer border-0 bg-transparent"
+                aria-label="Next card"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+
               <span
-                className="text-[10px] tracking-[0.2em] ml-2"
-                style={{ color: 'rgba(255, 255, 255, 0.6)', fontFamily: 'var(--font-mono)' }}
+                className="text-[10px] tracking-[0.15em] ml-1 font-mono text-white/60 select-none border-l border-white/10 pl-3"
               >
                 {String(activeIndex + 1).padStart(2, '0')} / {String(TOTAL_CARDS).padStart(2, '0')}
               </span>
@@ -197,17 +190,17 @@ export default function WhyUs() {
           <div
             ref={trackRef}
             className="flex gap-5 pl-6 pr-12 py-4"
-            style={{
-              transform: `translate3d(${translateX}px, 0, 0)`,
-              transition: 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)',
-              willChange: 'transform',
-            }}
-          >
-            {cards.map((card, i) => {
-              const distance = Math.abs(i - scrollProgress * (TOTAL_CARDS - 1));
-              const isNear = distance < 1.2;
-              const cardOpacity = isNear ? 1 : 0.5;
-              const cardScale = isNear ? 1 : 0.97;
+             style={{
+               transform: `translate3d(${translateX}px, 0, 0)`,
+               transition: 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)',
+               willChange: 'transform',
+             }}
+           >
+             {cards.map((card, i) => {
+               const distance = Math.abs(i - activeIndex);
+               const isNear = distance < 0.5;
+               const cardOpacity = isNear ? 1 : 0.5;
+               const cardScale = isNear ? 1 : 0.97;
 
               return (
                 <div

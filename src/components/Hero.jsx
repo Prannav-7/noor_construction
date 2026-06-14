@@ -13,7 +13,7 @@ export default function Hero({ timeText, setAllocationModal }) {
   return (
     <section
       id="hero"
-      className="relative py-8 lg:py-12 px-6 min-h-screen flex items-center justify-center w-full z-10 overflow-hidden luxury-grain"
+      className="relative pt-32 pb-8 lg:pt-48 lg:pb-12 px-6 min-h-screen w-full z-10 overflow-hidden luxury-grain"
       style={{ background: 'linear-gradient(160deg, #18181b 0%, #0c0c0e 100%)' }}
     >
       {/* Background Image — cinematic overlay */}
@@ -37,16 +37,31 @@ export default function Hero({ timeText, setAllocationModal }) {
       {/* Blind shadow overlay */}
       <div className="window-shadow-overlay absolute inset-0 pointer-events-none" />
 
+      {/* Background Watermark — brand identity */}
+      <div
+        className="absolute right-6 md:right-12 bottom-6 md:bottom-10 font-display font-black text-[10vw] leading-none pointer-events-none select-none z-0 text-white/[0.03] uppercase tracking-tighter"
+        aria-hidden="true"
+      >
+        NCS
+      </div>
+
+      {/* Floating brand badge */}
+      <div
+        className="absolute top-28 md:top-36 right-6 md:right-12 flex items-center gap-2 z-20 pointer-events-none"
+        aria-hidden="true"
+      >
+        <img
+          src="/ncs-logo.png"
+          alt=""
+          className="h-6 md:h-8 w-auto object-contain opacity-25 drop-shadow-[0_0_12px_rgba(255,98,0,0.1)]"
+        />
+      </div>
+
       {/* Main grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center h-full w-full max-w-7xl mx-auto relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full max-w-7xl mx-auto relative z-10 mt-12 lg:mt-24">
 
         {/* ── LEFT: Text ── */}
         <div className="lg:col-span-6 flex flex-col justify-center reveal-on-scroll relative z-10">
-
-          {/* Gold section tag */}
-          <div className="gold-tag mb-6">
-            Premium Construction
-          </div>
 
           {/* Headline */}
           <h1
@@ -64,8 +79,6 @@ export default function Hero({ timeText, setAllocationModal }) {
                 loop={true}
               />
             </span>
-            <br />
-            <span style={{ color: 'rgba(255, 255, 255, 0.08)' }}>TRUST.</span>
           </h1>
 
           <p
@@ -178,16 +191,19 @@ export default function Hero({ timeText, setAllocationModal }) {
               className="px-5 py-3 flex items-center justify-between"
               style={{ borderTop: '1px solid rgba(255, 98, 0, 0.15)' }}
             >
-              <div>
-                <span
-                  className="text-[9px] tracking-[0.25em] uppercase block mb-0.5"
-                  style={{ color: '#ff6200', fontFamily: 'var(--font-mono)' }}
-                >
-                  Live Preview
-                </span>
-                <span className="text-[11px] font-medium" style={{ color: '#e5e7eb' }}>
-                  Current Portfolio
-                </span>
+              <div className="flex items-center gap-2">
+                <img src="/ncs-logo.png" alt="NCS" className="h-4 w-auto object-contain opacity-60" />
+                <div>
+                  <span
+                    className="text-[9px] tracking-[0.25em] uppercase block mb-0.5"
+                    style={{ color: '#ff6200', fontFamily: 'var(--font-mono)' }}
+                  >
+                    Live Preview
+                  </span>
+                  <span className="text-[11px] font-medium" style={{ color: '#e5e7eb' }}>
+                    Current Portfolio
+                  </span>
+                </div>
               </div>
               <div
                 className="text-[10px] font-mono"

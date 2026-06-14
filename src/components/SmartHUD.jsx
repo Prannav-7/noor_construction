@@ -93,7 +93,7 @@ export default function SmartHUD({
       {/* Rebar pattern behind everything */}
       <div className="absolute inset-0 rebar-pattern opacity-30 pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div className="w-full mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center px-4 md:px-8 lg:px-12 max-w-none">
         {/* LEFT COLUMN: Bento grid & HUD controls (Span 5) */}
         <div className="lg:col-span-5 space-y-5 reveal-on-scroll">
           <div>

@@ -7,7 +7,7 @@ export default function Footer({ timeText }) {
   return (
     <footer
       id="contact"
-      className="py-12 lg:py-16 px-6 h-full relative z-10 flex flex-col justify-center luxury-grain"
+      className="py-12 lg:py-16 px-6 min-h-screen relative z-10 flex flex-col justify-center luxury-grain"
       style={{
         background: '#18181b',
         borderTop: '1px solid rgba(255, 98, 0, 0.2)',
@@ -24,7 +24,7 @@ export default function Footer({ timeText }) {
           {/* Brand logo */}
           <div className="mb-8">
             <img
-              src="/logo.png.png"
+              src="/ncs-logo.png"
               alt="NCS Noor Constructions"
               className="h-10 md:h-12 w-auto object-contain opacity-95"
             />

@@ -181,7 +181,7 @@ export default function IntroSection({ onStartReveal, onComplete }) {
           className="flex flex-col items-center gap-4 text-center px-6 pointer-events-auto"
         >
           <img
-            src="/logo.png.png"
+            src="/ncs-logo.png"
             alt="NCS Logo"
             className="h-20 md:h-32 w-auto object-contain filter drop-shadow-[0_0_30px_rgba(255,98,0,0.15)]"
           />
@@ -240,7 +240,7 @@ export default function IntroSection({ onStartReveal, onComplete }) {
             <Circle bgColor="bg-white" />
             <Cylinder
               text="NCS Noor Constructions"
-              logo="/logo.png.png"
+              logo="/ncs-logo.png"
               bgColor="bg-[#ff6200]"
               width="w-[280px] md:w-[780px]"
               textColor="text-white font-extrabold"
