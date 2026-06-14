@@ -156,7 +156,7 @@ const CardNav = ({
 
   return (
     <div
-      className={`card-nav-container fixed left-4 md:left-8 z-[950] top-[1.2em] md:top-[1.8em] w-[280px] sm:w-[320px] ${className}`}
+      className={`card-nav-container fixed left-4 md:left-8 z-[950] top-[1.2em] md:top-[1.8em] w-[calc(100vw-2rem)] sm:w-[320px] ${className}`}
     >
       <nav
         ref={navRef}

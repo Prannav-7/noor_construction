@@ -551,7 +551,7 @@ body, #root {
 
   .scroll-stack-card {
     min-height: calc(100vh - var(--header-height, 65px)) !important;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 0 !important;
     will-change: transform, filter;
   }
 

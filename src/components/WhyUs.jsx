@@ -46,10 +46,18 @@ export default function WhyUs() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
-  const CARD_WIDTH = 320;
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const CARD_GAP = 20;
   const TOTAL_CARDS = cards.length;
+  const isMobile = windowWidth < 640;
+  const CARD_WIDTH = isMobile ? Math.min(280, windowWidth - 48) : 320;
 
   const scrollToCard = (targetIdx) => {
     setActiveIndex(targetIdx);
