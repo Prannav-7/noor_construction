@@ -9,7 +9,7 @@ export default function AllocationModal({
   calculator
 }) {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
+    <div className="fixed inset-0 z-[1100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
       <div className="relative w-full max-w-lg glass-panel rounded border-black/10 p-6 md:p-8 overflow-hidden bg-white shadow-xl">
         {/* Telemetry Corner Borders */}
         <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t border-l border-black/20"></div>
@@ -102,7 +102,7 @@ export default function AllocationModal({
 
           <button 
             type="submit"
-            className="w-full py-3 bg-black text-white hover:bg-neutral-850 transition-all font-mono text-[11px] font-bold tracking-widest rounded mt-2"
+            className="w-full py-3 bg-[#ff6200] text-white hover:bg-[#e05600] transition-all font-mono text-[11px] font-bold tracking-widest rounded mt-2"
           >
             TRANSMIT SECURE APPLICATION
           </button>

@@ -24,7 +24,7 @@ function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, trans
       backgroundSize: 'cover',
       backgroundPosition: 'center'
     }
-    : { background: 'linear-gradient(135deg, #2d2d35 0%, #222227 50%, #18181c 100%)' };
+    : { background: 'linear-gradient(135deg, #2d2d35 0%, #222227 50%, #f8f9fa 100%)' };
 
   return (
     <motion.div

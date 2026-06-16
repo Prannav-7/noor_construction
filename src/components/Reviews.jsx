@@ -1,175 +1,374 @@
-import React, { useState } from 'react';
-import { Star, Quote } from 'lucide-react';
-import Stack from './Stack';
-import TextTransition from './TextTransition';
+import React, { useState, useEffect, useRef } from 'react';
+import { Star } from 'lucide-react';
 
-export default function Reviews({ reviews }) {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const activeReview = reviews[activeIdx] || reviews[0];
+const darkenColor = (hex, percent) => {
+  let color = hex.startsWith('#') ? hex.slice(1) : hex;
+  if (color.length === 3) {
+    color = color
+      .split('')
+      .map(c => c + c)
+      .join('');
+  }
+  const num = parseInt(color, 16);
+  let r = (num >> 16) & 0xff;
+  let g = (num >> 8) & 0xff;
+  let b = num & 0xff;
+  r = Math.max(0, Math.min(255, Math.floor(r * (1 - percent))));
+  g = Math.max(0, Math.min(255, Math.floor(g * (1 - percent))));
+  b = Math.max(0, Math.min(255, Math.floor(b * (1 - percent))));
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+};
 
-  // Build review cards for the stack
-  const cards = reviews.map((review, idx) => (
-    <div 
-      key={idx}
-      className="relative h-full w-full rounded-2xl overflow-hidden select-none cursor-grab active:cursor-grabbing"
-      style={{
-        background: 'linear-gradient(135deg, #2d2d35 0%, #222227 50%, #18181c 100%)'
-      }}
-    >
-      {/* Card Cover Image (top half) */}
-      <div className="w-full h-[55%] relative overflow-hidden">
-        <img 
-          src={review.image} 
-          alt={review.title} 
-          className="w-full h-full object-cover select-none pointer-events-none opacity-90" 
-        />
-        {/* Gradient fade into card bottom */}
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#222227] to-transparent"></div>
-        
-        {/* Project name badge floating on image */}
-        <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm border border-white/10 font-mono text-[10px] text-white/90 tracking-widest uppercase font-semibold">
-          {review.title}
+function ReviewPaper({ review }) {
+  if (!review) return null;
+  return (
+    <div className="w-full h-full p-4 flex flex-col justify-between text-left select-text pointer-events-auto">
+      {/* Top Header */}
+      <div>
+        <div className="flex justify-between items-center mb-1">
+          <span className="font-sans font-bold text-[10.5px] text-neutral-800 truncate max-w-[130px]" title={review.name}>
+            {review.name}
+          </span>
+          <span className="font-mono text-[7px] text-neutral-400 shrink-0">
+            {review.date}
+          </span>
         </div>
-      </div>
-
-      {/* Card Details (bottom half) */}
-      <div className="px-5 pb-5 -mt-4 relative z-10">
-        {/* Stars Row */}
-        <div className="flex items-center gap-0.5 mb-2">
-          {[...Array(review.rating)].map((_, i) => (
-            <Star key={i} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+        {/* Stars */}
+        <div className="flex gap-0.5 mb-1.5">
+          {[...Array(5)].map((_, idx) => (
+            <Star key={idx} className="w-2.5 h-2.5 fill-current text-orange-500" />
           ))}
         </div>
-
-        {/* Quote excerpt */}
-        <p className="text-white/90 text-[12px] leading-relaxed font-sans mb-3 line-clamp-3">
+        {/* Comment */}
+        <p className="font-serif italic text-[9.5px] text-neutral-600 leading-relaxed line-clamp-4">
           "{review.comment}"
         </p>
+      </div>
 
-        {/* Client row */}
-        <div className="flex items-center gap-3 pt-3 border-t border-white/10">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff4e00] to-[#ec9f05] flex items-center justify-center text-white text-[11px] font-bold shrink-0">
-            {review.name.split(' ').map(n => n[0]).join('')}
-          </div>
-          <div>
-            <div className="text-white text-[12px] font-semibold">{review.name}</div>
-            <div className="text-white/60 text-[10px] font-mono">{review.role}</div>
-          </div>
-        </div>
+      {/* Footer Info */}
+      <div className="pt-1.5 border-t border-neutral-100 flex justify-between items-center text-[7px] font-mono text-neutral-400">
+        <span className="truncate max-w-[110px]" title={review.metadata}>{review.metadata}</span>
+        <span className="text-[#ff6200] font-bold shrink-0">{review.authTag}</span>
       </div>
     </div>
-  ));
+  );
+}
+
+const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], className = '' }) => {
+  const maxItems = 3;
+  const papers = items.slice(0, maxItems);
+  while (papers.length < maxItems) {
+    papers.push(null);
+  }
+
+  const [open, setOpen] = useState(false);
+  const [paperOffsets, setPaperOffsets] = useState(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const folderBackColor = darkenColor(color, 0.12);
+  const paper1 = darkenColor('#ffffff', 0.08);
+  const paper2 = darkenColor('#ffffff', 0.04);
+  const paper3 = '#ffffff';
+
+  const handleMouseEnter = () => {
+    if (!isMobile) setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setOpen(false);
+      setPaperOffsets(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
+    }
+  };
+
+  const handlePaperMouseMove = (e, index) => {
+    if (!open || isMobile) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const offsetX = (e.clientX - centerX) * 0.18;
+    const offsetY = (e.clientY - centerY) * 0.18;
+    setPaperOffsets(prev => {
+      const newOffsets = [...prev];
+      newOffsets[index] = { x: offsetX, y: offsetY };
+      return newOffsets;
+    });
+  };
+
+  const handlePaperMouseLeave = (e, index) => {
+    if (isMobile) return;
+    setPaperOffsets(prev => {
+      const newOffsets = [...prev];
+      newOffsets[index] = { x: 0, y: 0 };
+      return newOffsets;
+    });
+  };
+
+  const getOpenTransform = index => {
+    if (isMobile) {
+      // Stack rising straight up vertically like index cards on mobile
+      if (index === 0) return 'translate(-50%, -75%) rotate(-4deg) scale(1.05)';
+      if (index === 1) return 'translate(-50%, -48%) rotate(3deg) scale(1.05)';
+      if (index === 2) return 'translate(-50%, -20%) rotate(-1deg) scale(1.05)';
+    } else {
+      // Fan out horizontally on desktop
+      if (index === 0) return 'translate(-112%, -58%) rotate(-12deg) scale(1.15)';
+      if (index === 1) return 'translate(12%, -58%) rotate(12deg) scale(1.15)';
+      if (index === 2) return 'translate(-50%, -95%) rotate(2deg) scale(1.18)';
+    }
+    return '';
+  };
 
   return (
-    <section 
-      id="reviews" 
-      className="h-full relative overflow-hidden flex flex-col justify-center"
-      style={{
-        background: 'linear-gradient(160deg, #3d3d45 0%, #2a2a30 50%, #1e1e24 100%)'
-      }}
-    >
-      <div className="max-w-7xl mx-auto w-full px-6 lg:px-12 py-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
-          
-          {/* Left Column: Clipboard Document Style */}
-          <div className="flex flex-col justify-center">
-            
-            {/* Clipboard Document Panel */}
-            <div className="clipboard-doc rounded-lg p-6 pt-8 relative">
-              
-              {/* Tiny label */}
-              <div className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#ff4e00] mb-4 font-semibold">
-                CLIENT SIGN-OFF
-              </div>
+    <div className={`relative ${className}`} style={{ perspective: '1000px' }}>
+      <div
+        className={`group relative transition-all duration-300 ease-out cursor-pointer ${
+          !open ? 'hover:-translate-y-2' : ''
+        }`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => setOpen(prev => !prev)}
+        style={{
+          transform: open ? 'translateY(-8px)' : undefined
+        }}
+      >
+        <div
+          className="relative w-[240px] h-[170px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px]"
+          style={{ backgroundColor: folderBackColor }}
+        >
+          {/* Top Folder Tab */}
+          <span
+            className="absolute bottom-[98%] left-0 w-[70px] h-[15px] rounded-tl-[6px] rounded-tr-[6px]"
+            style={{ backgroundColor: folderBackColor }}
+          ></span>
 
-              {/* Big Project Title */}
-              <h2 className="font-display font-extrabold text-3xl md:text-4xl text-[#111115] tracking-tight leading-none mb-6">
-                <TextTransition>{activeReview.title}</TextTransition>
-              </h2>
-
-              {/* Star Rating Row */}
-              <div className="flex items-center gap-1 mb-6">
-                {[...Array(activeReview.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 text-[#ff4e00] fill-[#ff4e00]" />
-                ))}
-                <span className="ml-2 font-mono text-[11px] text-neutral-500 font-medium">5.0 RATED</span>
-              </div>
-
-              {/* Big Quote Block */}
-              <div className="relative mb-8">
-                <Quote className="absolute -top-2 -left-1 w-8 h-8 text-[#ff4e00]/20" />
-                <blockquote className="pl-8 text-neutral-700 font-serif italic text-base md:text-lg leading-relaxed">
-                  <TextTransition duration={250}>
-                    {activeReview.comment}
-                  </TextTransition>
-                </blockquote>
-              </div>
-
-              {/* Client Info Bar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg bg-white border border-neutral-200">
-                <div className="flex items-center gap-4">
-                  {/* Avatar */}
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ff4e00] to-[#ec9f05] flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-lg shadow-orange-500/20">
-                    <TextTransition duration={150}>
-                      {activeReview.name.split(' ').map(n => n[0]).join('')}
-                    </TextTransition>
-                  </div>
-                  <div>
-                    <div className="text-[#111115] font-semibold text-sm">
-                      <TextTransition duration={180}>{activeReview.name}</TextTransition>
-                    </div>
-                    <div className="text-neutral-500 text-xs font-medium">
-                      <TextTransition duration={200}>{activeReview.role}</TextTransition>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex sm:flex-col justify-between sm:text-right items-center sm:items-end border-t sm:border-t-0 border-neutral-100 pt-3 sm:pt-0">
-                  <div className="font-mono text-[10px] text-neutral-400 tracking-wider font-medium">
-                    <TextTransition duration={200}>{activeReview.date}</TextTransition>
-                  </div>
-                  {/* Document Reference Number */}
-                  <div className="font-mono text-[9px] text-[#ff4e00] tracking-wider mt-1 font-bold border border-[#ff4e00]/30 px-2 py-0.5 rounded inline-block">
-                    <TextTransition duration={220}>REF: {activeReview.authTag}</TextTransition>
-                  </div>
-                </div>
-              </div>
-
-              {/* Verification Stamp (absolute positioned) */}
-              <div className="absolute top-6 right-6 stamp-seal">
-                VERIFIED<br/>✓
-              </div>
-
-              {/* "Signed & Approved" watermark */}
-              <div className="absolute bottom-4 right-6 font-serif italic text-[10px] text-neutral-300 rotate-[-8deg] pointer-events-none select-none">
-                SIGNED & APPROVED
-              </div>
-            </div>
-
+          {/* Folder Stencil Label */}
+          <div className="absolute inset-x-0 bottom-4 px-5 z-40 pointer-events-none flex flex-col items-start select-none">
+            <span className="font-mono text-[9px] tracking-widest text-white/30 mb-0.5 uppercase">// NCS_VERIFIED_DEED</span>
+            <span className="font-display font-extrabold text-xl text-white tracking-widest uppercase">{category}</span>
           </div>
 
-          {/* Right Column: Card Stack */}
-          <div className="flex justify-center items-center">
-            <div className="w-full max-w-[300px] h-[420px] relative">
-              <Stack 
-                cards={cards}
-                randomRotation={false}
-                sensitivity={130}
-                autoplay={false}
-                pauseOnHover={true}
-                sendToBackOnClick={true}
-                onChange={setActiveIdx}
-                enableTutorial={false}
-              />
-            </div>
-          </div>
+          {/* Papers nested inside */}
+          {papers.map((item, i) => {
+            let sizeClasses = '';
+            if (i === 0) sizeClasses = 'w-[88%] h-[92%]';
+            if (i === 1) sizeClasses = 'w-[88%] h-[92%]';
+            if (i === 2) sizeClasses = 'w-[90%] h-[92%]';
 
+            const transformStyle = open
+              ? `${getOpenTransform(i)} translate(${paperOffsets[i].x}px, ${paperOffsets[i].y}px)`
+              : 'translate(-50%, 0)';
+
+            return (
+              <div
+                key={i}
+                onMouseMove={e => handlePaperMouseMove(e, i)}
+                onMouseLeave={e => handlePaperMouseLeave(e, i)}
+                className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-350 ease-out border border-neutral-100 ${
+                  !open ? 'transform translate-y-[5%] group-hover:translate-y-0' : 'hover:scale-[1.3] hover:z-50 hover:rotate-0'
+                } ${sizeClasses}`}
+                style={{
+                  transform: transformStyle,
+                  backgroundColor: i === 0 ? paper1 : i === 1 ? paper2 : paper3,
+                  borderRadius: '12px',
+                  boxShadow: open ? '0 12px 32px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.08)',
+                  transformOrigin: 'center center'
+                }}
+              >
+                {item}
+              </div>
+            );
+          })}
+
+          {/* Folder front flap 1 */}
+          <div
+            className={`absolute inset-0 origin-bottom transition-all duration-300 ease-out z-30 ${
+              !open ? 'group-hover:[transform:skew(12deg)_scaleY(0.55)]' : ''
+            }`}
+            style={{
+              backgroundColor: color,
+              borderRadius: '5px 12px 12px 12px',
+              transform: open ? 'skew(12deg) scaleY(0.55)' : undefined
+            }}
+          ></div>
+
+          {/* Folder front flap 2 */}
+          <div
+            className={`absolute inset-0 origin-bottom transition-all duration-300 ease-out z-30 ${
+              !open ? 'group-hover:[transform:skew(-12deg)_scaleY(0.55)]' : ''
+            }`}
+            style={{
+              backgroundColor: color,
+              borderRadius: '5px 12px 12px 12px',
+              transform: open ? 'skew(-12deg) scaleY(0.55)' : undefined
+            }}
+          ></div>
         </div>
       </div>
 
-      {/* Decorative ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neutral-400/5 rounded-full blur-[180px] pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-neutral-300/5 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* Tutorial Label under the folder */}
+      <div className="text-center mt-5 h-5 select-none pointer-events-none">
+        <span
+          className="font-mono text-[9px] tracking-[0.25em] uppercase transition-all duration-300"
+          style={{
+            color: open ? '#ff6200' : 'rgba(255, 255, 255, 0.4)',
+            opacity: open ? 0.95 : 0.7,
+            animation: !open ? 'pulseText 2s infinite ease-in-out' : 'none'
+          }}
+        >
+          {open ? (isMobile ? 'Tap folder to close' : '← Hover papers to expand →') : (isMobile ? 'Tap to Explore' : 'Click to Explore')}
+        </span>
+      </div>
+
+      <style>{`
+        @keyframes pulseText {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.8; }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default function Reviews() {
+  const residentialReviews = [
+    {
+      name: "Yesrin Julias",
+      date: "3 months ago",
+      comment: "Professional craftsmanship. They constructed our dream residential villa with amazing smart features and completed it on-schedule. Excellent project management!",
+      authTag: "DEED#0326-YSR",
+      metadata: "1 review · Verified Owner"
+    },
+    {
+      name: "Batra Kannaalan",
+      date: "4 months ago",
+      comment: "Professional design, itemized blueprints, and excellent execution. Every milestone was met with detailed digital twins.",
+      authTag: "DEED#0426-BTR",
+      metadata: "5 reviews · Client ID: RA2552001020236"
+    },
+    {
+      name: "Senthil Kumar",
+      date: "May 2026",
+      comment: "Noor Infrastructure built a masterpiece for our family. The smart home integration is light years ahead of standard builders. Every wall feels engineered.",
+      authTag: "DEED#0924-ECR",
+      metadata: "5.0 RATED · Villa Owner"
+    }
+  ];
+
+  const commercialReviews = [
+    {
+      name: "Kingpin Rental cars",
+      date: "4 months ago",
+      comment: "Noor Infrastructure provided excellent service. The quality of work was very good and the project was completed on time. The team was professional and cooperative. Highly recommended.",
+      authTag: "DEED#0426-KPG",
+      metadata: "4 reviews · 5 photos"
+    },
+    {
+      name: "abdul wadood",
+      date: "7 months ago",
+      comment: "Great communication, premium finishing, and on-time completion. Recommended for commercial and high-end residential works.",
+      authTag: "DEED#0725-ABD",
+      metadata: "1 review · 4 photos"
+    },
+    {
+      name: "Farhan Dhawood",
+      date: "March 2026",
+      comment: "The digital twin technology allowed us to walk through our commercial park before a single block was cast. Milestone transparency is unmatched.",
+      authTag: "DEED#1102-DHW",
+      metadata: "Managing Director"
+    }
+  ];
+
+  const coastalReviews = [
+    {
+      name: "Afru Dheen",
+      date: "4 months ago",
+      comment: "Excellent response time and build quality. Noor's salt-resistant materials are perfect for coastal properties. Very satisfied!",
+      authTag: "DEED#0426-AFR",
+      metadata: "3 reviews · 3 photos"
+    },
+    {
+      name: "Sarah Joshua",
+      date: "Jan 2026",
+      comment: "Building along ECR demands salt resistance and wind-rated structures. Noor's advanced materials and elevated architecture have kept our coastal home pristine.",
+      authTag: "DEED#0442-ECR",
+      metadata: "Coastal Resident"
+    },
+    {
+      name: "Dr. Ananya Ramakrishnan",
+      date: "April 2026",
+      comment: "The structural precision and eco-concrete choices reflect genuine engineering excellence. Their BIM digital twin let us inspect every beam before it was poured.",
+      authTag: "DEED#0714-KAL",
+      metadata: "Scientific Consultant"
+    }
+  ];
+
+  return (
+    <section
+      id="reviews"
+      className="relative w-full lg:min-h-screen flex flex-col justify-center py-12 px-6 luxury-grain"
+      style={{ background: '#18181b' }}
+    >
+      {/* Subtle orange radial glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(255, 98, 0, 0.05) 0%, transparent 65%)', filter: 'blur(80px)' }}
+      />
+
+      <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col justify-center h-full">
+        {/* Header Block */}
+        <div className="text-center mb-24 shrink-0">
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <div className="w-8 h-[1px]" style={{ background: '#ff6200' }} />
+            <span
+              className="text-[10px] tracking-[0.35em] font-bold uppercase"
+              style={{ color: '#ff6200', fontFamily: 'var(--font-mono)' }}
+            >
+              Client Reviews
+            </span>
+            <div className="w-8 h-[1px]" style={{ background: '#ff6200' }} />
+          </div>
+
+          <h2
+            className="font-display font-extrabold leading-none mb-3 text-white"
+            style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}
+          >
+            Client{' '}
+            <span className="font-serif italic font-normal text-gold-gradient">
+              Sign-Off
+            </span>
+          </h2>
+          <p className="font-sans text-[13px] leading-relaxed max-w-md mx-auto" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+            Hover over the category folders to open verified client feedback for each project section.
+          </p>
+        </div>
+
+        {/* Folders Layout Grid */}
+        <div className="flex flex-col lg:flex-row justify-center items-center gap-20 lg:gap-28 mt-8 w-full overflow-visible">
+          <Folder
+            color="#ff6200"
+            category="Residential"
+            items={residentialReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
+          />
+          <Folder
+            color="#27272a"
+            category="Commercial"
+            items={commercialReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
+          />
+          <Folder
+            color="#cc4e00"
+            category="Coastal"
+            items={coastalReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
+          />
+        </div>
+      </div>
     </section>
   );
 }
