@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
-function Circle({ bgColor = 'bg-zinc-700', borderRadius = 'rounded-full' }) {
+function Circle({ bgColor = 'bg-neutral-200', borderRadius = 'rounded-full' }) {
   return (
     <div className={`h-12 w-12 md:h-20 md:w-20 shrink-0 ${borderRadius} ${bgColor}`} />
   );
 }
 
-function Cylinder({ text, logo, bgColor = 'bg-zinc-800', width = 'w-24 md:w-48', textColor = 'text-white', textRef }) {
+function Cylinder({ text, logo, bgColor = 'bg-neutral-900', width = 'w-24 md:w-48', textColor = 'text-white', textRef }) {
   return (
     <div
       className={`h-12 md:h-20 shrink-0 relative flex items-center justify-center rounded-full overflow-hidden px-5 md:px-8 ${width} ${bgColor}`}
@@ -150,26 +150,26 @@ export default function IntroSection({ onStartReveal, onComplete }) {
     <div
       ref={containerRef}
       className="fixed inset-0 w-screen h-screen z-[99999] overflow-hidden"
-      style={{ backgroundColor: '#121214' }}
+      style={{ backgroundColor: '#faf9f6' }}
     >
       {/* Left Curtain half */}
       <div
         ref={curtainLeftRef}
-        className="absolute top-0 bottom-0 left-0 w-[50vw] luxury-grain border-r border-zinc-800/20 z-10"
-        style={{ backgroundColor: '#121214' }}
+        className="absolute top-0 bottom-0 left-0 w-[50vw] luxury-grain border-r border-black/5 z-10"
+        style={{ backgroundColor: '#faf9f6' }}
       />
 
       {/* Right Curtain half */}
       <div
         ref={curtainRightRef}
-        className="absolute top-0 bottom-0 right-0 w-[50vw] luxury-grain border-l border-zinc-800/20 z-10"
-        style={{ backgroundColor: '#121214' }}
+        className="absolute top-0 bottom-0 right-0 w-[50vw] luxury-grain border-l border-black/5 z-10"
+        style={{ backgroundColor: '#faf9f6' }}
       />
 
       {/* Center split glow line */}
       <div
         ref={glowLineRef}
-        className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[1.5px] bg-gradient-to-b from-transparent via-[#ff6200] to-transparent z-20 shadow-[0_0_10px_rgba(255,98,0,0.6)]"
+        className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-[1.5px] bg-gradient-to-b from-transparent via-[#8b0000] to-transparent z-20 shadow-[0_0_10px_rgba(139,0,0,0.4)]"
       />
 
       {/* Centered Content Wrapper */}
@@ -181,15 +181,15 @@ export default function IntroSection({ onStartReveal, onComplete }) {
           className="flex flex-col items-center gap-4 text-center px-6 pointer-events-auto"
         >
           <img
-            src="/ncs-logo.png"
+            src="/logo.png"
             alt="NCS Logo"
-            className="h-20 md:h-32 w-auto object-contain filter drop-shadow-[0_0_30px_rgba(255,98,0,0.15)]"
+            className="h-20 md:h-32 w-auto object-contain filter drop-shadow-[0_0_30px_rgba(139,0,0,0.1)]"
           />
           <div className="flex flex-col gap-1 items-center">
-            <span className="font-display font-extrabold text-2xl md:text-4xl text-white tracking-widest uppercase">
+            <span className="font-display font-extrabold text-2xl md:text-4xl text-[#111115] tracking-widest uppercase">
               NOOR
             </span>
-            <span className="font-mono text-[9px] md:text-[11px] text-[#ff6200] font-bold tracking-[0.4em] uppercase">
+            <span className="font-mono text-[9px] md:text-[11px] text-[#8b0000] font-bold tracking-[0.4em] uppercase">
               Constructions
             </span>
           </div>
@@ -200,16 +200,16 @@ export default function IntroSection({ onStartReveal, onComplete }) {
           ref={linesWrapperRef}
           className="w-full flex flex-col gap-3 md:gap-5 items-center justify-center hidden pointer-events-auto"
         >
-          {/* Line 1: Orange/Grey Accents */}
+          {/* Line 1: Brand Red/Grey Accents */}
           <div
             ref={el => { lineRefs.current[0] = el; }}
             className={commonLineClass}
           >
-            <Circle bgColor="bg-[#ff6200]" />
+            <Circle bgColor="bg-[#8b0000]" />
             <Circle bgColor="bg-white" />
-            <Cylinder bgColor="bg-zinc-800" width="w-24 md:w-44" />
-            <Cylinder bgColor="bg-[#ff6200]" width="w-36 md:w-72" />
-            <Cylinder bgColor="bg-zinc-800" width="w-24 md:w-44" />
+            <Cylinder bgColor="bg-neutral-900" width="w-24 md:w-44" />
+            <Cylinder bgColor="bg-[#8b0000]" width="w-36 md:w-72" />
+            <Cylinder bgColor="bg-neutral-200" width="w-24 md:w-44" />
           </div>
 
           {/* Line 2: Introducing Text */}
@@ -217,7 +217,7 @@ export default function IntroSection({ onStartReveal, onComplete }) {
             ref={el => { lineRefs.current[1] = el; }}
             className={commonLineClass}
           >
-            <Circle bgColor="bg-zinc-700" />
+            <Circle bgColor="bg-neutral-200" />
             <Cylinder
               text="Introducing"
               bgColor="bg-white"
@@ -225,9 +225,9 @@ export default function IntroSection({ onStartReveal, onComplete }) {
               textColor="text-zinc-950"
               textRef={el => { textRefs.current[0] = el; }}
             />
-            <Circle bgColor="bg-[#ff6200]" />
-            <Circle bgColor="bg-zinc-700" />
-            <Cylinder bgColor="bg-[#ff6200]" width="w-24 md:w-52" />
+            <Circle bgColor="bg-[#8b0000]" />
+            <Circle bgColor="bg-neutral-200" />
+            <Cylinder bgColor="bg-[#8b0000]" width="w-24 md:w-52" />
           </div>
 
           {/* Line 3: Brand Logo + NCS Noor Constructions */}
@@ -235,19 +235,19 @@ export default function IntroSection({ onStartReveal, onComplete }) {
             ref={el => { lineRefs.current[2] = el; }}
             className={commonLineClass}
           >
-            <Cylinder bgColor="bg-zinc-800" width="w-24 md:w-44" />
-            <Circle bgColor="bg-[#ff6200]" />
+            <Cylinder bgColor="bg-neutral-200" width="w-24 md:w-44" />
+            <Circle bgColor="bg-[#8b0000]" />
             <Circle bgColor="bg-white" />
             <Cylinder
               text="NCS Noor Constructions"
-              logo="/ncs-logo.png"
-              bgColor="bg-[#ff6200]"
+              logo="/logo.png"
+              bgColor="bg-[#8b0000]"
               width="w-[280px] md:w-[780px]"
               textColor="text-white font-extrabold"
               textRef={el => { textRefs.current[1] = el; }}
             />
-            <Circle bgColor="bg-[#ff6200]" />
-            <Cylinder bgColor="bg-zinc-800" width="w-24 md:w-44" />
+            <Circle bgColor="bg-[#8b0000]" />
+            <Cylinder bgColor="bg-neutral-900" width="w-24 md:w-44" />
           </div>
 
           {/* Line 4: Premium Eco-Living Tagline */}
@@ -263,7 +263,7 @@ export default function IntroSection({ onStartReveal, onComplete }) {
               textColor="text-zinc-950"
               textRef={el => { textRefs.current[2] = el; }}
             />
-            <Circle bgColor="bg-[#ff6200]" />
+            <Circle bgColor="bg-[#8b0000]" />
           </div>
 
           {/* Line 5: Closing shapes */}
@@ -271,10 +271,10 @@ export default function IntroSection({ onStartReveal, onComplete }) {
             ref={el => { lineRefs.current[4] = el; }}
             className={commonLineClass}
           >
-            <Cylinder bgColor="bg-[#ff6200]" width="w-28 md:w-56" />
-            <Cylinder bgColor="bg-zinc-800" width="w-40 md:w-[480px]" />
+            <Cylinder bgColor="bg-[#8b0000]" width="w-28 md:w-56" />
+            <Cylinder bgColor="bg-neutral-200" width="w-40 md:w-[480px]" />
             <Circle bgColor="bg-white" />
-            <Cylinder bgColor="bg-[#ff6200]" width="w-24 md:w-52" />
+            <Cylinder bgColor="bg-[#8b0000]" width="w-24 md:w-52" />
           </div>
         </div>
 
