@@ -83,7 +83,7 @@ export default function Header({ setAllocationModal }) {
         {/* Left: Brand Logo (Order-1) */}
         <a href="#hero" className="flex items-center gap-3 group z-50 shrink-0 order-1">
           <img
-            src="/logo.png.png"
+            src="/logo.png"
             alt="NCS Logo"
             className="h-11 md:h-12 w-auto object-contain drop-shadow-md group-hover:opacity-80 transition-opacity"
           />

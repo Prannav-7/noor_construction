@@ -66,7 +66,7 @@ export default function ProjectDetail() {
       >
         {/* Logo */}
         <a href="/" className="flex items-center shrink-0">
-          <img src="/logo.png.png" alt="NCS" className="h-11 w-auto object-contain" />
+          <img src="/logo.png" alt="NCS" className="h-11 w-auto object-contain" />
         </a>
 
         {/* Title in center */}

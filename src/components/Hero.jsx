@@ -5,11 +5,11 @@ import Carousel from './Carousel';
 
 export default function Hero({ timeText, setAllocationModal }) {
   return (
-    <section id="hero" className="relative py-8 lg:py-12 px-6 min-h-screen flex items-center justify-center w-full z-10 overflow-hidden bg-[#0d0d11] text-white">
+    <section id="hero" className="relative py-8 lg:py-12 px-6 min-h-screen flex items-center justify-center w-full z-10 overflow-hidden text-[#111115]" style={{ background: 'linear-gradient(180deg, #f7f0ee 0%, #faf9f6 100%)' }}>
 
-      {/* Real-time Construction Workers Background Overlay (Vibrant & Prominent) */}
+      {/* Real-time Construction Workers Background Overlay (Subtle Watermark for Light Theme) */}
       <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.38]"
+        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.06] mix-blend-multiply"
         style={{
           backgroundImage: "url('/hero_bg_local_construction.png')"
         }}
@@ -21,27 +21,27 @@ export default function Hero({ timeText, setAllocationModal }) {
       {/* Grid container */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start lg:items-center h-full w-full max-w-7xl mx-auto relative z-10">
         {/* Hero Left Content — In open space without the card overlay */}
-        <div className="lg:col-span-7 flex flex-col justify-start lg:justify-center reveal-on-scroll relative z-10 text-white lg:pr-6">
+        <div className="lg:col-span-7 flex flex-col justify-start lg:justify-center reveal-on-scroll relative z-10 text-[#111115] lg:pr-6">
 
           {/* Social Proof Badge Bar */}
-          <div className="inline-flex flex-wrap gap-x-4 gap-y-2 px-3.5 py-2 rounded border border-white/10 bg-white/5 text-neutral-200 font-mono text-[10px] sm:text-[11px] tracking-wider mb-5 w-fit relative z-10 items-center">
+          <div className="inline-flex flex-wrap gap-x-4 gap-y-2 px-3.5 py-2 rounded border border-black/10 bg-black/5 text-[#111115] font-mono text-[10px] sm:text-[11px] tracking-wider mb-5 w-fit relative z-10 items-center">
             <div className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
               <span className="font-bold">6+</span>
-              <span className="text-neutral-400">HAPPY CUSTOMERS</span>
+              <span className="text-neutral-500 font-medium">HAPPY CUSTOMERS</span>
             </div>
-            <div className="w-[1px] h-3 bg-white/10"></div>
+            <div className="w-[1px] h-3 bg-black/10"></div>
             <div className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#ff4e00]"></span>
               <span className="font-bold">12+</span>
-              <span className="text-neutral-400">ENGINEERS</span>
+              <span className="text-neutral-500 font-medium">ENGINEERS</span>
             </div>
           </div>
           {/* Mixed Uppercase & Lowercase Italic Serif Header */}
-          <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-[1.02] tracking-tight mb-5 text-white relative z-10">
+          <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-[1.02] tracking-tight mb-5 text-[#111115] relative z-10">
             BUILDING <br />
             TRUST. <br />
-            <span className="font-serif italic font-normal text-[#ff4e00]">
+            <span className="font-serif italic font-normal text-[#8b0000]">
               <TypewriterText
                 words={['Creating the Future.', 'Building Dreams.', 'Building Homes.']}
                 speed={100}
@@ -52,7 +52,7 @@ export default function Hero({ timeText, setAllocationModal }) {
             </span>
           </h1>
 
-          <p className="font-sans text-base md:text-lg text-neutral-300 max-w-xl mb-6 leading-relaxed relative z-10">
+          <p className="font-sans text-base md:text-lg text-neutral-600 max-w-xl mb-6 leading-relaxed relative z-10">
             Premium Construction Solutions engineered with uncompromising quality, visionary innovation, and absolute structural reliability.
           </p>
 
@@ -64,14 +64,14 @@ export default function Hero({ timeText, setAllocationModal }) {
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
               style={{ cursor: 'pointer' }}
-              className="glow-btn px-6 py-3.5 rounded bg-white text-black font-bold tracking-widest flex items-center gap-2 hover:bg-neutral-100 transition-all text-[12px]"
+              className="glow-btn px-6 py-3.5 rounded bg-black text-white font-bold tracking-widest flex items-center gap-2 hover:bg-neutral-800 transition-all text-[12px] steel-beam-border"
             >
               Projects
-              <ChevronRight className="w-4 h-4 text-black" />
+              <ChevronRight className="w-4 h-4 text-white" />
             </a>
             <a
               href="#estimator"
-              className="px-6 py-3.5 rounded border border-white/15 text-neutral-300 hover:text-white hover:border-white/30 tracking-widest flex items-center gap-2 transition-all bg-white/5 text-[12px]"
+              className="px-6 py-3.5 rounded border border-black/15 text-neutral-600 hover:text-black hover:border-black/30 tracking-widest flex items-center gap-2 transition-all bg-black/5 text-[12px]"
             >
               CALCULATE ESTIMATE [HUD]
             </a>
