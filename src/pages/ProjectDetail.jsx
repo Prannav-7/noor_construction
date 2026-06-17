@@ -26,7 +26,7 @@ function ProgressRing({ value, size = 90 }) {
   );
 }
 
-export default function ProjectDetail() {
+export default function ProjectDetail({ setAllocationModal, setSelectedProject }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = ALL_PROJECTS.find(p => p.id === id);
@@ -264,12 +264,15 @@ export default function ProjectDetail() {
 
             {/* CTA Button */}
             <button
-              onClick={handleBack}
-              className="w-full py-4 rounded-xl font-mono text-[11px] font-bold tracking-widest flex items-center justify-center gap-2 shadow-md hover:shadow-xl transition-all text-white"
+              onClick={() => {
+                setSelectedProject(project);
+                setAllocationModal(true);
+              }}
+              className="w-full py-4 rounded-xl font-mono text-[11px] font-bold tracking-widest flex items-center justify-center gap-2 shadow-md hover:shadow-xl transition-all text-white cursor-pointer"
               style={{ background: 'linear-gradient(135deg, #ff6200 0%, #d35400 100%)' }}
             >
               <Building2 className="w-4 h-4" />
-              VIEW ALL PROJECTS
+              INQUIRE NOW
             </button>
 
             {/* Doc tag */}

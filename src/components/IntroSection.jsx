@@ -183,7 +183,7 @@ export default function IntroSection({ onStartReveal, onComplete }) {
           <img
             src="/ncs-logo.png"
             alt="NCS Logo"
-            className="h-20 md:h-32 w-auto object-contain filter drop-shadow-[0_0_30px_rgba(255,98,0,0.25)]"
+            className="h-14 md:h-22 w-auto object-contain filter drop-shadow-[0_0_30px_rgba(255,98,0,0.25)]"
           />
           <div className="flex flex-col gap-1 items-center">
             <span className="font-display font-extrabold text-2xl md:text-4xl text-white tracking-widest uppercase">

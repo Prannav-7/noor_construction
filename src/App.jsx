@@ -1,5 +1,5 @@
 import { useState, useEffect, useLayoutEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutUs from './components/AboutUs';
@@ -16,7 +16,15 @@ import IntroSection from './components/IntroSection';
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isProjectDetail = location.pathname.startsWith('/project/');
+
+  // Redirect to home page on initial load/refresh if path is not '/'
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      navigate('/', { replace: true });
+    }
+  }, []);
 
   // 'playing' -> intro active; 'unfolding' -> curtain splits and website fades/scales in; 'completed' -> intro unmounted
   const [introState, setIntroState] = useState('playing');
@@ -174,17 +182,21 @@ function App() {
         />
       )}
       <div
-        className={`transition-all duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) ${
-          introState === 'playing'
+        className={`transition-all duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) ${introState === 'playing'
             ? 'opacity-0 scale-95 pointer-events-none'
             : 'opacity-100 scale-100'
-        }`}
+          }`}
       >
         {/* Global sticky header navigation */}
         {!isProjectDetail && <Header setAllocationModal={setAllocationModal} />}
 
         <Routes>
-          <Route path="/project/:id" element={<ProjectDetail />} />
+          <Route path="/project/:id" element={
+            <ProjectDetail 
+              setAllocationModal={setAllocationModal}
+              setSelectedProject={setSelectedProject}
+            />
+          } />
           <Route path="/*" element={
             <HomePage
               timeText={timeText}
@@ -202,6 +214,17 @@ function App() {
           } />
         </Routes>
       </div>
+
+      {/* Allocation Modal */}
+      {allocationModal && (
+        <AllocationModal
+          selectedProject={selectedProject}
+          setAllocationModal={setAllocationModal}
+          setSelectedProject={setSelectedProject}
+          estimates={estimates}
+          calculator={calculator}
+        />
+      )}
     </>
   );
 }
@@ -231,7 +254,7 @@ function HomePage({
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     }
-    
+
     // Dispatching a resize event forces ScrollStack to run measureLayout() with the correct scroll position
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event('resize'));
@@ -291,13 +314,14 @@ function HomePage({
         <ScrollStack
           showIntro={showIntro}
           useWindowScroll={true}
-          itemDistance={0}
-          baseScale={1}
-          itemScale={0}
-          itemStackDistance={0}
+          itemDistance={100}
+          baseScale={0.88}
+          itemScale={0.02}
+          itemStackDistance={20}
           stackPosition="1%"
           scaleEndPosition="0%"
-          blurAmount={0}
+          blurAmount={1}
+          disableStacking={false}
         >
           <ScrollStackItem style={{ background: 'linear-gradient(160deg, #18181b 0%, #0c0c0e 100%)' }}>
             <Hero timeText={timeText} setAllocationModal={setAllocationModal} />
@@ -327,17 +351,6 @@ function HomePage({
           </ScrollStackItem>
         </ScrollStack>
       </div>
-
-      {/* Allocation Modal */}
-      {allocationModal && (
-        <AllocationModal
-          selectedProject={selectedProject}
-          setAllocationModal={setAllocationModal}
-          setSelectedProject={setSelectedProject}
-          estimates={estimates}
-          calculator={calculator}
-        />
-      )}
     </div>
   );
 }
