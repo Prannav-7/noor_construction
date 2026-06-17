@@ -4,7 +4,7 @@ import CardNav from './CardNav';
 export default function Header({ setAllocationModal }) {
   return (
     <CardNav
-      logo="/logo.png"
+      logo="/ncs-logo.png"
       logoAlt="NCS Logo"
       onCtaClick={() => setAllocationModal(true)}
     />

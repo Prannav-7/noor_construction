@@ -60,10 +60,8 @@ const CardNav = ({
 
   const navLinks = [
     { label: 'About Us', href: '#about' },
-    { label: 'Why Choose Us', href: '#why-us' },
     { label: 'Portfolio', href: '#projects' },
-    { label: 'Cost Estimator', href: '#estimator' },
-    { label: 'Reviews', href: '#reviews' },
+    { label: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -98,47 +96,50 @@ const CardNav = ({
           </a>
         </div>
 
-        {/* DESKTOP NAV LINKS (Laptop/Desktop Responsive) */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
-              className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 hover:text-[#ff6200] transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        {/* DESKTOP NAV LINKS & ACTIONS (Right aligned) */}
+        <div className="hidden lg:flex items-center gap-8">
+          <nav className="flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
+                className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 hover:text-[#ff6200] transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
 
-        {/* DESKTOP SOCIAL + CTA */}
-        <div className="hidden lg:flex items-center gap-4">
-          <a
-            href="https://wa.me/917305130207"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
-            aria-label="Contact on WhatsApp"
-          >
-            <WhatsAppIcon className="w-4 h-4" />
-          </a>
-          <a
-            href="https://www.instagram.com/noor_constructions"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
-            aria-label="Follow on Instagram"
-          >
-            <InstagramIcon className="w-4 h-4" />
-          </a>
-          
-          <button
-            onClick={() => onCtaClick?.()}
-            className="btn-gold px-6 py-2.5 rounded-lg font-mono text-[11px] font-bold tracking-widest uppercase transition-all shadow-md hover:shadow-orange-500/10 cursor-pointer"
-          >
-            INQUIRE NOW
-          </button>
+          <div className="h-4 w-px bg-white/15" />
+
+          <div className="flex items-center gap-4">
+            <a
+              href="https://wa.me/917305130207"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
+              aria-label="Contact on WhatsApp"
+            >
+              <WhatsAppIcon className="w-4 h-4" />
+            </a>
+            <a
+              href="https://www.instagram.com/noor_constructions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
+              aria-label="Follow on Instagram"
+            >
+              <InstagramIcon className="w-4 h-4" />
+            </a>
+            
+            <button
+              onClick={() => onCtaClick?.()}
+              className="btn-gold px-6 py-2.5 rounded-lg font-mono text-[11px] font-bold tracking-widest uppercase transition-all shadow-md hover:shadow-orange-500/10 cursor-pointer"
+            >
+              INQUIRE NOW
+            </button>
+          </div>
         </div>
 
         {/* MOBILE CONTROLS */}

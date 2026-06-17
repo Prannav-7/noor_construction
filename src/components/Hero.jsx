@@ -57,7 +57,7 @@ export default function Hero({ timeText, setAllocationModal }) {
         aria-hidden="true"
       >
         <img
-          src="/logo.png"
+          src="/ncs-logo.png"
           alt=""
           className="h-6 md:h-8 w-auto object-contain opacity-25"
         />
@@ -197,7 +197,7 @@ export default function Hero({ timeText, setAllocationModal }) {
               style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}
             >
               <div className="flex items-center gap-2">
-                <img src="/logo.png" alt="NCS" className="h-4 w-auto object-contain opacity-60" />
+                <img src="/ncs-logo.png" alt="NCS" className="h-4 w-auto object-contain opacity-60" />
                 <div>
                   <span
                     className="text-[9px] tracking-[0.25em] uppercase block mb-0.5"
