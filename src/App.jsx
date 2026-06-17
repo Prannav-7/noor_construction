@@ -314,14 +314,14 @@ function HomePage({
         <ScrollStack
           showIntro={showIntro}
           useWindowScroll={true}
-          itemDistance={100}
-          baseScale={0.88}
-          itemScale={0.02}
-          itemStackDistance={20}
-          stackPosition="1%"
+          itemDistance={0}
+          baseScale={1}
+          itemScale={0}
+          itemStackDistance={0}
+          stackPosition="0%"
           scaleEndPosition="0%"
-          blurAmount={1}
-          disableStacking={false}
+          blurAmount={0}
+          disableStacking={true}
         >
           <ScrollStackItem style={{ background: 'linear-gradient(160deg, #18181b 0%, #0c0c0e 100%)' }}>
             <Hero timeText={timeText} setAllocationModal={setAllocationModal} />

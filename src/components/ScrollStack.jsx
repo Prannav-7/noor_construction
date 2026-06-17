@@ -277,7 +277,9 @@ const ScrollStack = ({
                 syncTouchLerp: 0.075
             });
 
-            lenis.on('scroll', handleScroll);
+            if (!disableStacking) {
+                lenis.on('scroll', handleScroll);
+            }
 
             const raf = time => {
                 lenis.raf(time);
@@ -305,7 +307,9 @@ const ScrollStack = ({
                 syncTouchLerp: 0.075
             });
 
-            lenis.on('scroll', handleScroll);
+            if (!disableStacking) {
+                lenis.on('scroll', handleScroll);
+            }
 
             const raf = time => {
                 lenis.raf(time);
@@ -316,10 +320,12 @@ const ScrollStack = ({
             lenisRef.current = lenis;
             return lenis;
         }
-    }, [handleScroll, useWindowScroll]);
+    }, [handleScroll, useWindowScroll, disableStacking]);
 
     // Recalculate layout values on window resizing & load events
     useEffect(() => {
+        if (disableStacking) return;
+
         let lastWidth = window.innerWidth;
         const handleResize = () => {
             const currentWidth = window.innerWidth;
@@ -335,7 +341,7 @@ const ScrollStack = ({
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('load', handleResize);
         };
-    }, [measureLayout, updateCardTransforms]);
+    }, [measureLayout, updateCardTransforms, disableStacking]);
 
     useLayoutEffect(() => {
         const scroller = scrollerRef.current;
@@ -353,16 +359,35 @@ const ScrollStack = ({
         cards.forEach((card, i) => {
             if (i < cards.length - 1) {
                 const customMargin = card.getAttribute('data-margin-bottom');
-                card.style.marginBottom = customMargin ? customMargin : `${itemDistance}px`;
+                card.style.marginBottom = customMargin ? customMargin : `${disableStacking ? 0 : itemDistance}px`;
             }
-            card.style.willChange = 'transform, filter';
-            card.style.transformOrigin = 'top center';
-            card.style.backfaceVisibility = 'hidden';
-            card.style.transform = 'translateZ(0)';
-            card.style.webkitTransform = 'translateZ(0)';
-            card.style.perspective = '1000px';
-            card.style.webkitPerspective = '1000px';
+            if (!disableStacking) {
+                card.style.willChange = 'transform, filter';
+                card.style.transformOrigin = 'top center';
+                card.style.backfaceVisibility = 'hidden';
+                card.style.transform = 'translateZ(0)';
+                card.style.webkitTransform = 'translateZ(0)';
+                card.style.perspective = '1000px';
+                card.style.webkitPerspective = '1000px';
+            } else {
+                card.style.transform = 'none';
+                card.style.filter = 'none';
+            }
         });
+
+        if (disableStacking) {
+            setupLenis();
+            return () => {
+                if (animationFrameRef.current) {
+                    cancelAnimationFrame(animationFrameRef.current);
+                }
+                if (lenisRef.current) {
+                    lenisRef.current.destroy();
+                }
+                cardsRef.current = [];
+                transformsCache.clear();
+            };
+        }
 
         // Setup ResizeObserver to handle dynamic height changes and HMR adjustments
         const resizeObserver = new ResizeObserver(() => {
@@ -411,6 +436,7 @@ const ScrollStack = ({
         rotationAmount,
         blurAmount,
         useWindowScroll,
+        disableStacking,
         onStackComplete,
         setupLenis,
         updateCardTransforms,
