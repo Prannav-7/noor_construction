@@ -1,7 +1,7 @@
-import { useLayoutEffect, useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { gsap } from 'gsap';
-import { ArrowUpRight } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 const WhatsAppIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -20,121 +20,33 @@ const InstagramIcon = (props) => (
 const CardNav = ({
   logo,
   logoAlt = 'Logo',
-  items,
   className = '',
-  ease = 'power3.out',
-  menuColor = '#ff6200',
-  buttonBgColor = '#ff6200',
-  buttonTextColor = '#ffffff',
   onCtaClick
 }) => {
-  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const navRef = useRef(null);
-  const dropdownRef = useRef(null);
-  const cardsRef = useRef([]);
-  const tlRef = useRef(null);
   
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Track scroll to adapt navbar appearance on dark/light backgrounds
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 60);
+      setScrolled(window.scrollY > 40);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const calculateHeight = () => {
-    const dropdownEl = dropdownRef.current;
-    if (!dropdownEl) return 0;
-
-    const wasDisplay = dropdownEl.style.display;
-    const wasHeight = dropdownEl.style.height;
-    const wasOpacity = dropdownEl.style.opacity;
-
-    dropdownEl.style.display = 'flex';
-    dropdownEl.style.height = 'auto';
-    dropdownEl.style.opacity = '1';
-
-    const contentHeight = dropdownEl.scrollHeight;
-
-    dropdownEl.style.display = wasDisplay;
-    dropdownEl.style.height = wasHeight;
-    dropdownEl.style.opacity = wasOpacity;
-
-    return contentHeight;
-  };
-
-  const createTimeline = () => {
-    const dropdownEl = dropdownRef.current;
-    if (!dropdownEl) return null;
-
-    gsap.set(dropdownEl, { height: 0, opacity: 0, display: 'none' });
-    gsap.set(cardsRef.current, { y: 20, opacity: 0 });
-
-    const tl = gsap.timeline({ paused: true });
-
-    tl.to(dropdownEl, {
-      height: calculateHeight,
-      opacity: 1,
-      duration: 0.35,
-      ease,
-      onStart: () => {
-        gsap.set(dropdownEl, { display: 'flex' });
-      },
-      onReverseComplete: () => {
-        gsap.set(dropdownEl, { display: 'none' });
-      }
-    });
-
-    tl.to(cardsRef.current, { y: 0, opacity: 1, duration: 0.3, ease, stagger: 0.06 }, '-=0.15');
-
-    return tl;
-  };
-
-  useLayoutEffect(() => {
-    const tl = createTimeline();
-    tlRef.current = tl;
-
-    return () => {
-      tl?.kill();
-      tlRef.current = null;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ease, items]);
-
-  const toggleMenu = () => {
-    const tl = tlRef.current;
-    if (!tl) return;
-    if (!isExpanded) {
-      setIsHamburgerOpen(true);
-      setIsExpanded(true);
-      tl.play(0);
-    } else {
-      setIsHamburgerOpen(false);
-      tl.eventCallback('onReverseComplete', () => setIsExpanded(false));
-      tl.reverse();
-    }
-  };
-
-  const setCardRef = i => el => {
-    if (el) cardsRef.current[i] = el;
-  };
-
-  const handleLinkClick = (e, href) => {
+  const handleLinkClick = (e, href, isMobileClick = false) => {
     if (href === '#enquire') {
       e.preventDefault();
       onCtaClick?.();
-      toggleMenu();
+      if (isMobileClick) setIsMenuOpen(false);
     } else if (location.pathname !== '/') {
       e.preventDefault();
       navigate('/' + href);
-      toggleMenu();
+      if (isMobileClick) setIsMenuOpen(false);
     } else {
       const id = href.replace('#', '');
       const el = document.getElementById(id);
@@ -142,136 +54,198 @@ const CardNav = ({
         e.preventDefault();
         el.scrollIntoView({ behavior: 'smooth' });
       }
-      toggleMenu();
+      if (isMobileClick) setIsMenuOpen(false);
     }
   };
 
-  // Adaptive colors based on scroll position
-  const navBg = scrolled
-    ? 'rgba(24, 24, 27, 0.88)'
-    : 'rgba(24, 24, 27, 0.75)';
-  const navBorder = scrolled
-    ? 'rgba(255, 98, 0, 0.25)'
-    : 'rgba(255, 98, 0, 0.12)';
+  const navLinks = [
+    { label: 'About Us', href: '#about' },
+    { label: 'Why Choose Us', href: '#why-us' },
+    { label: 'Portfolio', href: '#projects' },
+    { label: 'Cost Estimator', href: '#estimator' },
+    { label: 'Reviews', href: '#reviews' },
+  ];
 
   return (
-    <div
-      className={`card-nav-container fixed left-4 md:left-8 z-[950] top-[1.2em] md:top-[1.8em] w-[calc(100vw-2rem)] sm:w-[320px] ${className}`}
-    >
-      <nav
-        ref={navRef}
-        className={`card-nav ${isExpanded ? 'open' : ''} block h-[56px] p-0 rounded-2xl shadow-2xl relative overflow-hidden backdrop-blur-2xl transition-all duration-500`}
-        style={{
-          backgroundColor: navBg,
-          border: `1px solid ${navBorder}`,
-          boxShadow: scrolled
-            ? '0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,98,0,0.08)'
-            : '0 4px 24px rgba(0,0,0,0.3)'
-        }}
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-[950] w-full flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${
+          scrolled 
+            ? 'h-16 bg-neutral-950/85 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)]' 
+            : 'h-20 bg-transparent border-b border-white/5'
+        } ${className}`}
       >
-        <div className="card-nav-top absolute inset-x-0 top-0 h-[56px] flex items-center gap-2.5 p-2 px-3 z-[2]">
-          {/* Hamburger Icon */}
-          <div
-            className={`hamburger-menu ${isHamburgerOpen ? 'open' : ''} group h-[36px] w-[36px] flex flex-col items-center justify-center cursor-pointer gap-[5px] shrink-0 rounded-lg transition-colors duration-200 hover:bg-white/10`}
-            onClick={toggleMenu}
-            role="button"
-            aria-label={isExpanded ? 'Close menu' : 'Open menu'}
-            tabIndex={0}
-            style={{ color: menuColor }}
+        {/* LOGO CONTAINER */}
+        <div className="flex items-center">
+          <a
+            href="#hero"
+            onClick={(e) => handleLinkClick(e, '#hero')}
+            className="flex items-center gap-2.5 group"
           >
-            <div
-              className={`hamburger-line w-[18px] h-[2px] bg-current transition-all duration-300 ease-out [transform-origin:50%_50%] ${
-                isHamburgerOpen ? 'translate-y-[3.5px] rotate-45' : ''
-              } group-hover:opacity-80`}
+            <img
+              src={logo}
+              alt={logoAlt}
+              className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
-            <div
-              className={`hamburger-line w-[18px] h-[2px] bg-current transition-all duration-300 ease-out [transform-origin:50%_50%] ${
-                isHamburgerOpen ? '-translate-y-[3.5px] -rotate-45' : ''
-              } group-hover:opacity-80`}
-            />
-          </div>
-
-          {/* Logo container — NCS logo already contains brand name */}
-          <div className="logo-container flex items-center shrink-0">
-            <a
-              href="#hero"
-              onClick={(e) => handleLinkClick(e, '#hero')}
-              className="flex items-center cursor-pointer group"
-            >
-              <img
-                src={logo}
-                alt={logoAlt}
-                className="logo h-[28px] sm:h-[32px] object-contain drop-shadow-[0_0_8px_rgba(255,98,0,0.15)] transition-transform duration-300 group-hover:scale-105"
-              />
-            </a>
-          </div>
-
-          {/* Social CTA Links */}
-          <div className="flex items-center gap-1.5 ml-auto shrink-0">
-            {/* WhatsApp */}
-            <a
-              href="https://wa.me/917305130207"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 flex items-center justify-center rounded-xl transition-all duration-350 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
-              aria-label="Contact on WhatsApp"
-            >
-              <WhatsAppIcon className="w-3.5 h-3.5" />
-            </a>
-
-            {/* Instagram */}
-            <a
-              href="https://www.instagram.com/noor_constructions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 flex items-center justify-center rounded-xl transition-all duration-350 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
-              aria-label="Follow on Instagram"
-            >
-              <InstagramIcon className="w-4 h-4" />
-            </a>
-          </div>
+            <div className="flex flex-col leading-none">
+              <span className="font-display font-extrabold text-[13px] md:text-[15px] text-white tracking-widest uppercase">
+                NOOR
+              </span>
+              <span className="font-mono text-[7px] md:text-[8px] text-[#ff6200] font-bold tracking-[0.25em] uppercase mt-0.5">
+                Infrastructure
+              </span>
+            </div>
+          </a>
         </div>
-      </nav>
 
-      {/* Floating Dropdown Menu Content Grid */}
-      <div
-        ref={dropdownRef}
-        className="card-nav-dropdown-panel mt-2 rounded-2xl shadow-2xl p-3 flex flex-col items-stretch gap-3 justify-start backdrop-blur-2xl will-change-[height,opacity]"
-        style={{
-          backgroundColor: 'rgba(24, 24, 27, 0.92)',
-          border: '1px solid rgba(255, 98, 0, 0.2)',
-          display: 'none',
-          overflow: 'hidden'
-        }}
-      >
-        {(items || []).slice(0, 3).map((item, idx) => (
-          <div
-            key={`${item.label}-${idx}`}
-            className="nav-card select-none relative flex flex-col gap-2.5 p-4 rounded-xl border border-white/8 min-w-0 transition-all duration-200 hover:border-[#ff6200]/30"
-            ref={setCardRef(idx)}
-            style={{ backgroundColor: item.bgColor, color: item.textColor }}
+        {/* DESKTOP NAV LINKS (Laptop/Desktop Responsive) */}
+        <nav className="hidden lg:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleLinkClick(e, link.href)}
+              className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 hover:text-[#ff6200] transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* DESKTOP SOCIAL + CTA */}
+        <div className="hidden lg:flex items-center gap-4">
+          <a
+            href="https://wa.me/917305130207"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
+            aria-label="Contact on WhatsApp"
           >
-            <div className="nav-card-label font-display font-bold tracking-tight text-[17px] border-b border-white/10 pb-1.5">
-              {item.label}
+            <WhatsAppIcon className="w-4 h-4" />
+          </a>
+          <a
+            href="https://www.instagram.com/noor_constructions"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
+            aria-label="Follow on Instagram"
+          >
+            <InstagramIcon className="w-4 h-4" />
+          </a>
+          
+          <button
+            onClick={() => onCtaClick?.()}
+            className="btn-gold px-6 py-2.5 rounded-lg font-mono text-[11px] font-bold tracking-widest uppercase transition-all shadow-md hover:shadow-orange-500/10 cursor-pointer"
+          >
+            INQUIRE NOW
+          </button>
+        </div>
+
+        {/* MOBILE CONTROLS */}
+        <div className="flex lg:hidden items-center gap-3">
+          <a
+            href="https://wa.me/917305130207"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-[#ff6200] border border-[#ff6200]/20 bg-white/5"
+            aria-label="Contact on WhatsApp"
+          >
+            <WhatsAppIcon className="w-3.5 h-3.5" />
+          </a>
+
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10 transition-colors"
+            aria-label="Toggle Menu"
+          >
+            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+      </header>
+
+      {/* MOBILE FULL-SCREEN MENU DRAWER */}
+      {isMenuOpen && createPortal(
+        <div className="fixed inset-0 z-[9999] lg:hidden bg-neutral-950/98 backdrop-blur-xl flex flex-col justify-center px-8">
+          {/* Top Bar inside mobile drawer to close */}
+          <div className="absolute top-0 inset-x-0 h-20 flex items-center justify-between px-6 border-b border-white/5 bg-neutral-950/50">
+            <div className="flex items-center gap-2.5">
+              <img src={logo} alt={logoAlt} className="h-8 w-auto object-contain" />
+              <div className="flex flex-col leading-none">
+                <span className="font-display font-extrabold text-[13px] text-white tracking-widest uppercase">
+                  NOOR
+                </span>
+                <span className="font-mono text-[7px] text-[#ff6200] font-bold tracking-[0.25em] uppercase mt-0.5">
+                  Infrastructure
+                </span>
+              </div>
             </div>
-            <div className="nav-card-links mt-auto flex flex-col gap-[3px]">
-              {item.links?.map((lnk, i) => (
-                <a
-                  key={`${lnk.label}-${i}`}
-                  className="nav-card-link inline-flex items-center gap-[6px] no-underline cursor-pointer transition-all duration-300 hover:translate-x-1 hover:opacity-100 opacity-80 text-[13px] font-mono tracking-wider font-semibold"
-                  href={lnk.href}
-                  onClick={(e) => handleLinkClick(e, lnk.href)}
-                  aria-label={lnk.ariaLabel}
-                >
-                  <ArrowUpRight className="nav-card-link-icon w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                  {lnk.label}
-                </a>
-              ))}
+            
+            <div className="flex items-center gap-3">
+              <a
+                href="https://wa.me/917305130207"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 flex items-center justify-center rounded-lg text-[#ff6200] border border-[#ff6200]/20 bg-white/5"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5" />
+              </a>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10 transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
           </div>
-        ))}
-      </div>
-    </div>
+
+          <nav className="flex flex-col gap-6 text-center mt-12">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href, true)}
+                className="font-display font-extrabold text-2xl tracking-tight text-white hover:text-[#ff6200] transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+
+            <div className="h-px bg-white/10 my-4" />
+
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                onCtaClick?.();
+              }}
+              className="btn-gold w-full py-3.5 rounded-xl font-mono text-xs font-bold tracking-widest uppercase"
+            >
+              INQUIRE NOW
+            </button>
+
+            <div className="flex items-center justify-center gap-4 mt-6">
+              <a
+                href="https://wa.me/917305130207"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5"
+              >
+                <WhatsAppIcon className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/noor_constructions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5"
+              >
+                <InstagramIcon className="w-5 h-5" />
+              </a>
+            </div>
+          </nav>
+        </div>,
+        document.body
+      )}
+    </>
   );
 };
 

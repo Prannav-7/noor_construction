@@ -15,6 +15,9 @@ import { PROJECTS_BY_CATEGORY } from './data/projects';
 import IntroSection from './components/IntroSection';
 
 function App() {
+  const location = useLocation();
+  const isProjectDetail = location.pathname.startsWith('/project/');
+
   // 'playing' -> intro active; 'unfolding' -> curtain splits and website fades/scales in; 'completed' -> intro unmounted
   const [introState, setIntroState] = useState('playing');
   // Navigation & Modal States
@@ -178,7 +181,7 @@ function App() {
         }`}
       >
         {/* Global sticky header navigation */}
-        <Header setAllocationModal={setAllocationModal} />
+        {!isProjectDetail && <Header setAllocationModal={setAllocationModal} />}
 
         <Routes>
           <Route path="/project/:id" element={<ProjectDetail />} />
