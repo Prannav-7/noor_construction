@@ -25,22 +25,19 @@ function ProgressBar({ value }) {
 
 function MenuItem({
   project,
-  speed = 15,
   textColor = '#1c1c1f',
   marqueeBgColor = '#ff6200',
   marqueeTextColor = '#ffffff',
   borderColor = 'rgba(0, 0, 0, 0.08)',
   isFirst,
   onHover,
-  onClick
+  onClick,
+  isActive
 }) {
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
-  const animationRef = useRef(null);
-  const [repetitions, setRepetitions] = useState(4);
-
-  const animationDefaults = { duration: 0.5, ease: 'power2.out' };
+  const tlRef = useRef(null);
 
   const findClosestEdge = (mouseX, mouseY, width, height) => {
     const topEdgeDist = (mouseX - width / 2) ** 2 + mouseY ** 2;
@@ -48,55 +45,9 @@ function MenuItem({
     return topEdgeDist < bottomEdgeDist ? 'top' : 'bottom';
   };
 
-  useEffect(() => {
-    const calculateRepetitions = () => {
-      if (!marqueeInnerRef.current) return;
-      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
-      if (!marqueeContent) return;
-      const contentWidth = marqueeContent.offsetWidth;
-      const viewportWidth = window.innerWidth;
-      const needed = Math.ceil(viewportWidth / contentWidth) + 2;
-      setRepetitions(Math.max(4, needed));
-    };
-
-    calculateRepetitions();
-    window.addEventListener('resize', calculateRepetitions);
-    return () => window.removeEventListener('resize', calculateRepetitions);
-  }, [project]);
-
-  useEffect(() => {
-    const setupMarquee = () => {
-      if (!marqueeInnerRef.current) return;
-      const marqueeContent = marqueeInnerRef.current.querySelector('.marquee-part');
-      if (!marqueeContent) return;
-      const contentWidth = marqueeContent.offsetWidth;
-      if (contentWidth === 0) return;
-
-      if (animationRef.current) {
-        animationRef.current.kill();
-      }
-
-      animationRef.current = gsap.to(marqueeInnerRef.current, {
-        x: -contentWidth,
-        duration: speed,
-        ease: 'none',
-        repeat: -1
-      });
-    };
-
-    const timer = setTimeout(setupMarquee, 50);
-    return () => {
-      clearTimeout(timer);
-      if (animationRef.current) {
-        animationRef.current.kill();
-      }
-    };
-  }, [project, repetitions, speed]);
-
-  const tlRef = useRef(null);
-
   const handleMouseEnter = ev => {
     onHover();
+    if (window.innerWidth < 1024) return;
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
     const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
@@ -106,13 +57,14 @@ function MenuItem({
     }
 
     tlRef.current = gsap
-      .timeline({ defaults: animationDefaults })
+      .timeline({ defaults: { duration: 0.5, ease: 'power2.out' } })
       .set(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
       .set(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0)
       .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0);
   };
 
   const handleMouseLeave = ev => {
+    if (window.innerWidth < 1024) return;
     if (!itemRef.current || !marqueeRef.current || !marqueeInnerRef.current) return;
     const rect = itemRef.current.getBoundingClientRect();
     const edge = findClosestEdge(ev.clientX - rect.left, ev.clientY - rect.top, rect.width, rect.height);
@@ -122,15 +74,45 @@ function MenuItem({
     }
 
     tlRef.current = gsap
-      .timeline({ defaults: animationDefaults })
+      .timeline({ defaults: { duration: 0.5, ease: 'power2.out' } })
       .to(marqueeRef.current, { y: edge === 'top' ? '-101%' : '101%' }, 0)
       .to(marqueeInnerRef.current, { y: edge === 'top' ? '101%' : '-101%' }, 0);
   };
 
+  useEffect(() => {
+    if (window.innerWidth >= 1024) return;
+    if (!marqueeRef.current || !marqueeInnerRef.current) return;
+
+    if (tlRef.current) {
+      tlRef.current.kill();
+    }
+
+    if (isActive) {
+      tlRef.current = gsap
+        .timeline({ defaults: { duration: 0.5, ease: 'power2.out' } })
+        .set(marqueeRef.current, { y: '101%' }, 0)
+        .set(marqueeInnerRef.current, { y: '-101%' }, 0)
+        .to([marqueeRef.current, marqueeInnerRef.current], { y: '0%' }, 0);
+    } else {
+      tlRef.current = gsap
+        .timeline({ defaults: { duration: 0.5, ease: 'power2.out' } })
+        .to(marqueeRef.current, { y: '101%' }, 0)
+        .to(marqueeInnerRef.current, { y: '-101%' }, 0);
+    }
+  }, [isActive]);
+
+  useEffect(() => {
+    return () => {
+      if (tlRef.current) {
+        tlRef.current.kill();
+      }
+    };
+  }, []);
+
   return (
     <div
-      className="flex-1 min-h-[65px] relative overflow-hidden flex items-center justify-start transition-colors duration-300"
       ref={itemRef}
+      className="menu-item-row flex-1 min-h-[65px] relative overflow-hidden flex items-center justify-start transition-colors duration-300"
       style={{ borderTop: isFirst ? 'none' : `1px solid ${borderColor}` }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -148,20 +130,25 @@ function MenuItem({
         </span>
       </div>
 
-      {/* Marquee hover layer */}
+      {/* Marquee hover/active layer */}
       <div
-        className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none translate-y-[101%] z-20 flex items-center"
         ref={marqueeRef}
+        className="marquee-layer absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-20 flex items-center"
         style={{ backgroundColor: marqueeBgColor }}
       >
-        <div className="h-full w-fit flex items-center" ref={marqueeInnerRef}>
-          {[...Array(repetitions)].map((_, idx) => (
-            <div className="marquee-part flex items-center flex-shrink-0" key={idx} style={{ color: marqueeTextColor }}>
-              <span className="whitespace-nowrap uppercase font-display font-extrabold text-[2.2vh] lg:text-[2.6vh] leading-none px-[2vw]">
+        <div ref={marqueeInnerRef} className="h-full w-max flex items-center animate-marquee-scroll">
+          {/* Render 4 parts to guarantee it fills the viewport and scrolls infinitely */}
+          {[...Array(4)].map((_, partIdx) => (
+            <div
+              className="flex items-center shrink-0"
+              key={partIdx}
+              style={{ color: marqueeTextColor }}
+            >
+              <span className="whitespace-nowrap uppercase font-display font-extrabold text-base md:text-lg lg:text-[2.6vh] leading-none px-4 md:px-8">
                 {project.title}
               </span>
               <div
-                className="w-[100px] h-[4vh] my-1 mx-[1vw] rounded bg-cover bg-center border border-white/20 shrink-0"
+                className="w-16 h-8 md:w-24 md:h-10 my-1 mx-2 md:mx-4 rounded bg-cover bg-center border border-white/20 shrink-0"
                 style={{ backgroundImage: `url(${project.image})` }}
               />
             </div>
@@ -205,6 +192,20 @@ export default function Projects({ projects }) {
       className="relative w-full h-screen flex flex-col p-6 lg:p-12 overflow-hidden tech-grid-light"
       style={{ background: '#FED8B1' }}
     >
+      <style>{`
+        @keyframes marquee-scroll {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+        .animate-marquee-scroll {
+          display: flex;
+          width: max-content;
+          animation: marquee-scroll 16s linear infinite;
+        }
+        .marquee-layer {
+          transform: translateY(101%);
+        }
+      `}</style>
       <div className="w-full mx-auto z-10 flex flex-col justify-between h-full px-4 md:px-8 lg:px-12 max-w-none">
         {/* Header Block */}
         <div className="shrink-0">
@@ -298,7 +299,7 @@ export default function Projects({ projects }) {
                   <MenuItem
                     key={project.id}
                     project={project}
-                    speed={15}
+                    isActive={hoveredProject?.id === project.id}
                     textColor="#1c1c1f"
                     marqueeBgColor="#ff6200"
                     marqueeTextColor="#ffffff"
@@ -307,8 +308,11 @@ export default function Projects({ projects }) {
                     onHover={() => setHoveredProject(project)}
                     onClick={() => {
                       if (window.innerWidth < 1024) {
-                        setHoveredProject(project);
-                        setMobileDrawerOpen(true);
+                        if (hoveredProject?.id === project.id) {
+                          setMobileDrawerOpen(true);
+                        } else {
+                          setHoveredProject(project);
+                        }
                       } else {
                         navigate(`/project/${project.id}`);
                       }

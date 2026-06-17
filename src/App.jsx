@@ -272,7 +272,7 @@ function HomePage({
   }, []);
 
   return (
-    <div className="tech-grid-container min-h-screen text-[#111827] font-sans selection:bg-[#ff6200] selection:text-white">
+    <div className="tech-grid-container min-h-screen text-white font-sans selection:bg-[#ff6200] selection:text-white">
 
       {/* Main page layout wrapper */}
       <div className="min-h-screen relative w-full flex flex-col">

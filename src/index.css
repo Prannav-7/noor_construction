@@ -46,13 +46,13 @@
 body {
   font-optical-sizing: auto;
   -webkit-text-size-adjust: 100%;
-  background-color: #ffffff;
-  color: #111827;
+  background-color: #18181b;
+  color: #ffffff;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: #ffffff; }
+::-webkit-scrollbar-track { background: #18181b; }
 ::-webkit-scrollbar-thumb { background: #2e2e2e; border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: #ff6200; }
 
@@ -206,7 +206,7 @@ body, #root {
    ===================================================================== */
 .tech-grid-container {
   position: relative;
-  background-color: #ffffff;
+  background-color: #18181b;
   overflow: hidden;
 }
 

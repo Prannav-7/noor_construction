@@ -13,23 +13,39 @@ export default function Hero({ timeText, setAllocationModal }) {
   return (
     <section
       id="hero"
-      className="relative pt-32 pb-8 lg:pt-48 lg:pb-12 px-6 min-h-screen w-full z-10 overflow-hidden text-[#111115] luxury-grain"
-      style={{ background: 'linear-gradient(180deg, #f7f0ee 0%, #faf9f6 100%)' }}
+      className="relative pt-32 pb-8 lg:pt-48 lg:pb-12 px-6 min-h-screen w-full z-10 overflow-hidden text-white luxury-grain"
+      style={{ background: '#18181b' }}
     >
-      {/* Real-time Construction Workers Background Overlay (Subtle Watermark for Light Theme) */}
+      {/* Real-time Construction Workers Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-[0.06] mix-blend-multiply"
+        className="absolute inset-0 bg-cover bg-center pointer-events-none z-0"
         style={{
-          backgroundImage: "url('/hero_bg_local_construction.png')"
+          backgroundImage: "url('/hero_bg_local_construction.png')",
+          filter: 'brightness(0.4) contrast(1.1) grayscale(15%)'
+        }}
+      />
+
+      {/* Dark gradient overlay to ensure text contrast and seamless footer/section transition */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(24, 24, 27, 0.3) 0%, rgba(24, 24, 27, 0.6) 60%, #18181b 100%)'
         }}
       />
 
       {/* Blind shadow overlay */}
-      <div className="window-shadow-overlay absolute inset-0 pointer-events-none" />
+      <div
+        className="absolute inset-0 pointer-events-none z-5"
+        style={{
+          background: 'repeating-linear-gradient(130deg, transparent, transparent 140px, rgba(255, 255, 255, 0.015) 140px, rgba(255, 255, 255, 0.015) 280px)',
+          mixBlendMode: 'overlay',
+          opacity: 0.8,
+        }}
+      />
 
       {/* Background Watermark — brand identity */}
       <div
-        className="absolute right-6 md:right-12 bottom-6 md:bottom-10 font-display font-black text-[10vw] leading-none pointer-events-none select-none z-0 text-black/[0.02] uppercase tracking-tighter"
+        className="absolute right-6 md:right-12 bottom-6 md:bottom-10 font-display font-black text-[10vw] leading-none pointer-events-none select-none z-0 text-white/[0.03] uppercase tracking-tighter"
         aria-hidden="true"
       >
         NCS
@@ -43,7 +59,7 @@ export default function Hero({ timeText, setAllocationModal }) {
         <img
           src="/logo.png"
           alt=""
-          className="h-6 md:h-8 w-auto object-contain opacity-15"
+          className="h-6 md:h-8 w-auto object-contain opacity-25"
         />
       </div>
 
@@ -55,12 +71,12 @@ export default function Hero({ timeText, setAllocationModal }) {
 
           {/* Headline */}
           <h1
-            className="font-display font-extrabold leading-[1.0] tracking-tight mb-5 text-[#111115]"
+            className="font-display font-extrabold leading-[1.0] tracking-tight mb-5 text-white"
             style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)' }}
           >
             BUILDING
             <br />
-            <span className="font-serif italic font-normal text-[#8b0000]">
+            <span className="font-serif italic font-normal text-[#ff6200]">
               <TypewriterText
                 words={['Excellence.', 'Your Future.', 'Dreams.', 'Legacies.']}
                 speed={95}
@@ -72,7 +88,7 @@ export default function Hero({ timeText, setAllocationModal }) {
           </h1>
 
           <p
-            className="font-sans text-base md:text-lg mb-8 leading-relaxed max-w-md text-neutral-600"
+            className="font-sans text-base md:text-lg mb-8 leading-relaxed max-w-md text-neutral-400"
           >
             Precision-engineered luxury properties on the East Coast Road — where architecture meets artistry.
           </p>
@@ -84,7 +100,7 @@ export default function Hero({ timeText, setAllocationModal }) {
                 const el = document.getElementById('projects');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="glow-btn px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2.5 bg-black text-white hover:bg-neutral-850 transition-all steel-beam-border rounded-sm cursor-pointer"
+              className="glow-btn btn-gold px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2.5 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
               View Projects
@@ -92,7 +108,7 @@ export default function Hero({ timeText, setAllocationModal }) {
             </button>
             <a
               href="#estimator"
-              className="px-7 py-3.5 text-[12px] tracking-[0.12em] uppercase flex items-center gap-2 border border-black/15 text-neutral-600 hover:text-black hover:border-black/30 bg-black/5 rounded-sm"
+              className="btn-ghost px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
               Cost Estimator
@@ -102,20 +118,20 @@ export default function Hero({ timeText, setAllocationModal }) {
           {/* Stat Strip */}
           <div
             className="flex items-center gap-0 pt-8"
-            style={{ borderTop: '1px solid rgba(0, 0, 0, 0.1)' }}
+            style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}
           >
             {stats.map((stat, i) => (
               <React.Fragment key={i}>
                 <div className="flex-1 pr-6">
                   <div
                     className="font-display font-extrabold mb-0.5"
-                    style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', color: '#8b0000', lineHeight: 1 }}
+                    style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', color: '#ff6200', lineHeight: 1 }}
                   >
                     {stat.value}
                   </div>
                   <div
                     className="text-[10px] tracking-[0.2em] uppercase"
-                    style={{ color: '#4b5563', fontFamily: 'var(--font-mono)' }}
+                    style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}
                   >
                     {stat.label}
                   </div>
@@ -123,7 +139,7 @@ export default function Hero({ timeText, setAllocationModal }) {
                 {i < stats.length - 1 && (
                   <div
                     className="w-px self-stretch mx-2 shrink-0"
-                    style={{ background: 'rgba(0, 0, 0, 0.1)' }}
+                    style={{ background: 'rgba(255, 255, 255, 0.1)' }}
                   />
                 )}
               </React.Fragment>
@@ -134,42 +150,42 @@ export default function Hero({ timeText, setAllocationModal }) {
         {/* ── RIGHT: Visual Panel ── */}
         <div className="lg:col-span-6 relative flex items-center justify-center reveal-on-scroll z-10">
 
-          {/* Ambient crimson glow behind panel */}
+          {/* Ambient gold glow behind panel */}
           <div
             className="absolute w-72 h-72 rounded-full blur-[100px] pointer-events-none z-0"
-            style={{ background: 'rgba(139, 0, 0, 0.05)' }}
+            style={{ background: 'rgba(255, 98, 0, 0.05)' }}
           />
 
           {/* Elegant thin-bordered panel */}
           <div
             className="relative w-full max-w-[440px] aspect-[4/5] overflow-hidden flex flex-col justify-center z-10 lg:-translate-y-10"
             style={{
-              border: '1px solid rgba(0, 0, 0, 0.1)',
-              background: 'rgba(255, 255, 255, 0.85)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              background: 'rgba(24, 24, 27, 0.75)',
               backdropFilter: 'blur(12px)',
-              boxShadow: '0 40px 100px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
+              boxShadow: '0 40px 100px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
             }}
           >
-            {/* Corner tick marks — crimson */}
-            <div className="absolute top-4 left-4 w-4 h-4 border-t border-l" style={{ borderColor: 'rgba(139, 0, 0, 0.25)' }} />
-            <div className="absolute top-4 right-4 w-4 h-4 border-t border-r" style={{ borderColor: 'rgba(139, 0, 0, 0.25)' }} />
-            <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l" style={{ borderColor: 'rgba(139, 0, 0, 0.25)' }} />
-            <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r" style={{ borderColor: 'rgba(139, 0, 0, 0.25)' }} />
+            {/* Corner tick marks — gold */}
+            <div className="absolute top-4 left-4 w-4 h-4 border-t border-l" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
+            <div className="absolute top-4 right-4 w-4 h-4 border-t border-r" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
+            <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
+            <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
 
             {/* Carousel */}
-            <div className="relative flex-1 overflow-hidden m-4 rounded-sm" style={{ background: '#ffffff' }}>
+            <div className="relative flex-1 overflow-hidden m-4 rounded-sm" style={{ background: '#18181b' }}>
               <Carousel baseWidth={400} autoplay={true} loop={true} autoplayDelay={3800} />
 
               {/* Subtle annotation overlays */}
               <div
                 className="absolute top-5 left-5 font-serif italic text-[9px] -rotate-6 pointer-events-none"
-                style={{ color: 'rgba(139, 0, 0, 0.6)' }}
+                style={{ color: 'rgba(255, 98, 0, 0.7)' }}
               >
                 ↖ LOAD BEARING WALL
               </div>
               <div
                 className="absolute bottom-7 right-5 font-serif italic text-[9px] rotate-3 pointer-events-none"
-                style={{ color: 'rgba(139, 0, 0, 0.6)' }}
+                style={{ color: 'rgba(255, 98, 0, 0.7)' }}
               >
                 FOUNDATION: 12.4m →
               </div>
@@ -178,25 +194,25 @@ export default function Hero({ timeText, setAllocationModal }) {
             {/* Bottom info strip */}
             <div
               className="px-5 py-3 flex items-center justify-between"
-              style={{ borderTop: '1px solid rgba(0, 0, 0, 0.08)' }}
+              style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}
             >
               <div className="flex items-center gap-2">
                 <img src="/logo.png" alt="NCS" className="h-4 w-auto object-contain opacity-60" />
                 <div>
                   <span
                     className="text-[9px] tracking-[0.25em] uppercase block mb-0.5"
-                    style={{ color: '#8b0000', fontFamily: 'var(--font-mono)' }}
+                    style={{ color: '#ff6200', fontFamily: 'var(--font-mono)' }}
                   >
                     Live Preview
                   </span>
-                  <span className="text-[11px] font-medium" style={{ color: '#111115' }}>
+                  <span className="text-[11px] font-medium" style={{ color: '#ffffff' }}>
                     Current Portfolio
                   </span>
                 </div>
               </div>
               <div
                 className="text-[10px] font-mono"
-                style={{ color: '#8b0000' }}
+                style={{ color: '#ff6200' }}
               >
                 {timeText} IST
               </div>
@@ -208,7 +224,7 @@ export default function Hero({ timeText, setAllocationModal }) {
       {/* Bottom fade into next section */}
       <div
         className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to top, #faf9f6, transparent)' }}
+        style={{ background: 'linear-gradient(to top, #18181b, transparent)' }}
       />
     </section>
   );
