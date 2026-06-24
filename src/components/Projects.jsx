@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, CheckCircle2, Clock, ArrowRight, Zap, Leaf, Ruler, Shield, X } from 'lucide-react';
+import { MapPin, CheckCircle2, Clock, ArrowRight, Home, Compass, Ruler, Car, X } from 'lucide-react';
 import { gsap } from 'gsap';
 import { PROJECTS_BY_CATEGORY } from '../data/projects';
 
@@ -382,10 +382,10 @@ export default function Projects({ projects }) {
                   {/* Specifications Grid */}
                   <div className="grid grid-cols-2 gap-2.5 mb-4">
                     {[
-                      { icon: <Ruler className="w-3.5 h-3.5 text-[#ff6200]" />, label: 'Built-up Area', val: hoveredProject.specifications.sqFt },
-                      { icon: <Zap className="w-3.5 h-3.5 text-amber-500" />, label: 'Solar Capacity', val: hoveredProject.specifications.solarCapacity },
-                      { icon: <Leaf className="w-3.5 h-3.5 text-green-500" />, label: 'Carbon Reduction', val: hoveredProject.specifications.carbonReduction },
-                      { icon: <Shield className="w-3.5 h-3.5 text-blue-500" />, label: 'Smart Index', val: hoveredProject.specifications.smartIndex },
+                      { icon: <Home className="w-3.5 h-3.5 text-[#ff6200]" />, label: 'Project Type', val: hoveredProject.specifications.type },
+                      { icon: <Ruler className="w-3.5 h-3.5 text-amber-500" />, label: 'Built-up Area', val: hoveredProject.specifications.area },
+                      { icon: <Compass className="w-3.5 h-3.5 text-green-500" />, label: 'Facing', val: hoveredProject.specifications.facing },
+                      { icon: <Car className="w-3.5 h-3.5 text-blue-500" />, label: 'Parking', val: hoveredProject.specifications.parking },
                     ].map((spec, i) => (
                       <div key={i} className="flex items-center gap-2.5 p-2 bg-neutral-50 rounded border border-neutral-100">
                         {spec.icon}
@@ -483,10 +483,10 @@ export default function Projects({ projects }) {
 
             <div className="grid grid-cols-2 gap-2 mb-4">
               {[
-                { icon: <Ruler className="w-3.5 h-3.5 text-[#ff6200]" />, label: 'Built-up Area', val: hoveredProject.specifications.sqFt },
-                { icon: <Zap className="w-3.5 h-3.5 text-amber-500" />, label: 'Solar Capacity', val: hoveredProject.specifications.solarCapacity },
-                { icon: <Leaf className="w-3.5 h-3.5 text-green-500" />, label: 'Carbon Reduction', val: hoveredProject.specifications.carbonReduction },
-                { icon: <Shield className="w-3.5 h-3.5 text-blue-500" />, label: 'Smart Index', val: hoveredProject.specifications.smartIndex },
+                { icon: <Home className="w-3.5 h-3.5 text-[#ff6200]" />, label: 'Project Type', val: hoveredProject.specifications.type },
+                { icon: <Ruler className="w-3.5 h-3.5 text-amber-500" />, label: 'Built-up Area', val: hoveredProject.specifications.area },
+                { icon: <Compass className="w-3.5 h-3.5 text-green-500" />, label: 'Facing', val: hoveredProject.specifications.facing },
+                { icon: <Car className="w-3.5 h-3.5 text-blue-500" />, label: 'Parking', val: hoveredProject.specifications.parking },
               ].map((spec, i) => (
                 <div key={i} className="flex items-center gap-2 p-2 bg-neutral-50 rounded border border-neutral-100">
                   {spec.icon}

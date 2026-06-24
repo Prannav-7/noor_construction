@@ -4,152 +4,152 @@ export const ALL_PROJECTS = [
   {
     id: 'r1',
     category: 'residential',
-    title: 'Noor Luminosity Smart Villas',
-    tagline: 'Futuristic Eco-Living Ecosystem',
+    title: 'Noor Luminosity Villas',
+    tagline: 'Beautiful & Smart Living',
     location: 'East Coast Road, Pudupattinam',
     progress: 88,
     year: '2025',
     area: '3,800 sqft',
     specifications: {
-      sqFt: '3,800 Avg',
-      solarCapacity: '12.5 kWp',
-      carbonReduction: '4.8 Tons/Yr',
-      smartIndex: '95/100'
+      type: '4 BHK Luxury Villa',
+      area: '3,800 Sq.Ft',
+      facing: 'East Facing',
+      parking: '2 Covered Cars'
     },
     image: '/local_villa_project.png',
     features: [
-      { title: 'BIM Blueprint Twin', desc: 'Millimeter-accurate 3D digital model of the structure for seamless pre-planning.' },
-      { title: 'Greywater Grid', desc: 'Advanced filtration system recycling sink and shower water for irrigation.' },
-      { title: 'Holographic Controls', desc: 'Next-gen smart home panels with intuitive gesture-based climate control.' },
-      { title: 'Off-Grid Backup', desc: 'High-capacity solar wall batteries ensuring zero power interruptions.' }
+      { title: '3D Home Preview', desc: 'See exactly how your home will look before we even start building.' },
+      { title: 'Water Saving System', desc: 'Recycles shower and sink water to keep your garden green.' },
+      { title: 'Smart Home Controls', desc: 'Turn on lights and AC easily from your smartphone.' },
+      { title: '24/7 Power Backup', desc: 'Big solar batteries ensure you never have a power cut.' }
     ],
     description:
-      'A premium eco-smart villa development along East Coast Road featuring solar-integrated rooftops, intelligent water management, and a BIM digital twin for full lifecycle monitoring. Built with M25-grade concrete and corrosion-resistant TMT steel. Each villa offers an average of 3,800 sq ft of luxurious, sustainable living space designed for the discerning homeowner.'
+      'A beautiful luxury villa built on the East Coast Road. We used strong DMD Fe-550 steel and Pure Verified M-Sand for a solid, safe foundation. We also designed and built the complete interior woodwork, modular kitchen, and modern furnishings so the house is fully ready to move in.'
   },
   {
     id: 'r2',
     category: 'residential',
     title: 'Nova Apex Smart Homes',
-    tagline: 'High-Density Decarbonized Living',
+    tagline: 'Modern & Comfortable Homes',
     location: 'Kalpakkam, Dhawood Nagar',
     progress: 100,
     year: '2024',
     area: '1,850 sqft',
     specifications: {
-      sqFt: '1,850 Avg',
-      solarCapacity: '6.2 kWp',
-      carbonReduction: '2.9 Tons/Yr',
-      smartIndex: '90/100'
+      type: '3 BHK Smart Home',
+      area: '1,850 Sq.Ft',
+      facing: 'North Facing',
+      parking: '1 Covered Car'
     },
     image: '/local_smart_home.png',
     features: [
-      { title: 'Smart Glass Facade', desc: 'Electrochromic glass that dynamically tints based on sunlight intensity.' },
-      { title: 'Micro-Ventilation', desc: 'Sensor-driven passive airflow system to maintain clean indoor air quality.' },
-      { title: 'On-Chain Deed Registry', desc: 'Tamper-proof ownership deeds stored securely on a digital ledger.' },
-      { title: 'App Mesh Network', desc: 'Low-latency local smart home connectivity independent of the internet.' }
+      { title: 'Smart Windows', desc: 'Windows that naturally darken to keep the house cool in summer.' },
+      { title: 'Fresh Air System', desc: 'Automatically brings in clean, fresh air so the house never feels stuffy.' },
+      { title: 'Secure Documents', desc: 'Your house papers are safely stored digitally so they can never be lost.' },
+      { title: 'Strong Wi-Fi', desc: 'Fast and smooth internet connection in every corner of the house.' }
     ],
     description:
-      'A completed smart residential project in Kalpakkam with automated climate control, app-based access management, and energy-efficient smart glass facades. Fully handed over to all owners with a zero-snagging certificate. The on-chain deed registry ensures tamper-proof property ownership records for every resident.'
+      'A completed smart home project in Kalpakkam built using top-quality Ultratech OPC 53 cement and Pure Verified M-Sand. We handled the complete construction and the beautiful interior woodwork, cupboards, and lighting. Everything is ready and perfectly finished for the families living there.'
   },
   {
     id: 'r3',
     category: 'residential',
     title: 'Greenwood Duplex Homes',
-    tagline: 'Twin-Unit Modern Living',
+    tagline: 'Spacious Twin Homes',
     location: 'Maraimalai Nagar, Chennai',
     progress: 72,
     year: '2026',
     area: '2,200 sqft each',
     specifications: {
-      sqFt: '2,200 Per Unit',
-      solarCapacity: '4.8 kWp',
-      carbonReduction: '2.1 Tons/Yr',
-      smartIndex: '85/100'
+      type: '4 BHK Duplex',
+      area: '2,200 Sq.Ft',
+      facing: 'East Facing',
+      parking: '2 Car Parking'
     },
     image: '/local_duplex_house.png',
     features: [
-      { title: 'Twin-Unit Layout', desc: 'Optimized duplex footprint maximizing square footage and privacy for both homes.' },
-      { title: 'Shared Solar Array', desc: 'Rooftop solar generator delivering clean energy to both family units.' },
-      { title: 'Rain Harvesting', desc: 'High-capacity filtration channels collecting and storing rainwater runoff.' },
-      { title: 'EV Charging Point', desc: 'Dedicated fast-charging stations integrated into the carports.' }
+      { title: 'Smart Floor Plan', desc: 'Designed so both families have plenty of space and privacy.' },
+      { title: 'Shared Solar Power', desc: 'Rooftop solar panels that provide free, clean electricity to both homes.' },
+      { title: 'Rainwater Saving', desc: 'Collects rainwater safely to help keep the groundwater levels high.' },
+      { title: 'Car Charging Port', desc: 'Dedicated fast charging points for your electric cars.' }
     ],
     description:
-      'Thoughtfully designed duplex units in Maraimalai Nagar sharing a solar array and rainwater harvesting system. Each unit features independent access, a private garden, and dedicated EV charging infrastructure. Ideal for joint families or as a rental investment property generating passive income.'
+      'Two beautiful duplex homes in Maraimalai Nagar. Built with trusted DMD Fe-550 steel, they are incredibly strong and safe. We also completely finished the inside of the homes with custom wardrobes, TV units, and stylish interior decoration tailored perfectly for both families.'
   },
   {
     id: 'c1',
     category: 'commercial',
-    title: 'Noor Tech-Helix Corporate Park',
-    tagline: 'Next-Gen Commercial Nexus',
+    title: 'Noor Tech Corporate Park',
+    tagline: 'Modern Office Space',
     location: 'East Coast Rd Highway',
     progress: 42,
     year: '2027',
     area: '185,000 sqft',
     specifications: {
-      sqFt: '185,000 Total',
-      solarCapacity: '250 kWp',
-      carbonReduction: '180 Tons/Yr',
-      smartIndex: '98/100'
+      type: 'Commercial Office',
+      area: '185,000 Sq.Ft',
+      facing: 'North-East Facing',
+      parking: '250+ Cars'
     },
     image: '/local_tech_office.png',
     features: [
-      { title: 'Parametric Concrete', desc: 'Digitally fabricated concrete structures for enhanced load durability.' },
-      { title: 'Pneumatic Waste Grid', desc: 'Underground high-speed tubes transporting waste cleanly to disposal.' },
-      { title: 'Dynamic Sun Shading', desc: 'Motorized solar louvers that rotate automatically to block harsh glare.' },
-      { title: 'Tokenized Lease Registry', desc: 'Smart contract-based leasing for transparent commercial occupancy.' }
+      { title: 'Extra Strong Pillars', desc: 'Special concrete design to hold the weight of a large office easily.' },
+      { title: 'Clean Waste System', desc: 'Hidden tubes that take away office waste quickly and cleanly.' },
+      { title: 'Automatic Sun Shades', desc: 'Window covers that move on their own to block hot sunlight.' },
+      { title: 'Easy Digital Renting', desc: 'Simple, clear digital agreements for anyone renting an office space.' }
     ],
     description:
-      'A landmark commercial development on the ECR Highway featuring parametric structural design, automated pneumatic waste management, and dynamic external sun-shading louvers. Targeting LEED Platinum certification upon completion in 2027. The tokenized lease registry provides full digital transparency for all commercial tenants.'
+      'A large, modern office building on the ECR Highway. Constructed with heavy-duty Fe-550 steel and premium ACC cement for maximum safety. The project also includes full interior outfitting — from elegant glass cabins and comfortable workstations to beautiful, welcoming reception areas.'
   },
   {
     id: 'c2',
     category: 'commercial',
     title: 'Sunrise Apartment Block',
-    tagline: 'Urban Vertical Living',
+    tagline: 'Safe & Beautiful Flats',
     location: 'Potheri, SRM Road',
     progress: 55,
     year: '2026',
     area: '24,000 sqft',
     specifications: {
-      sqFt: '24,000 Total',
-      solarCapacity: '18 kWp',
-      carbonReduction: '8.5 Tons/Yr',
-      smartIndex: '88/100'
+      type: '2 & 3 BHK Flats',
+      area: '1,200 Sq.Ft Avg',
+      facing: 'North & East',
+      parking: 'Stilt Parking'
     },
     image: '/local_apartment_construction.png',
     features: [
-      { title: 'Fly Ash Blocks', desc: 'High-insulation, eco-friendly bricks made from industrial byproduct.' },
-      { title: 'Common Solar Roof', desc: 'Large rooftop solar grid providing electricity to all common areas.' },
-      { title: 'CCTV Grid', desc: 'AI-assisted camera system monitoring entry points and common areas 24/7.' },
-      { title: 'Fire Suppression System', desc: 'Integrated sprinkler grids and smoke detectors on every floor.' }
+      { title: 'Cooling Bricks', desc: 'Special bricks that keep the apartments cool and save on AC bills.' },
+      { title: 'Free Common Power', desc: 'Solar panels on the roof run the lift and staircase lights for free.' },
+      { title: '24/7 Security Cameras', desc: 'Cameras at all doors and hallways so your family is always safe.' },
+      { title: 'Fire Safety', desc: 'Smoke detectors and water sprinklers installed on every single floor.' }
     ],
     description:
-      'A 4-storey residential apartment block at Potheri with 12 units across G+3 floors. Built with eco-friendly fly ash bricks and a common solar rooftop system. The project serves the growing student and working professional community near SRM University, providing affordable modern urban housing with full safety systems.'
+      'A strong 4-story apartment building in Potheri with 12 homes. Built with top-grade cement and verified clean M-Sand. We provided complete interior services for all flats, including modern modular kitchens, elegant ceiling lighting, and custom-fitted wooden wardrobes.'
   },
   {
     id: 'co1',
     category: 'coastal',
-    title: 'Oceanic Horizon Net-Zero Villa',
-    tagline: 'Off-Grid Luxury Haven',
+    title: 'Oceanic Beach Villa',
+    tagline: 'Luxury Seaside Home',
     location: 'Meiyur Coastal Stretch',
     progress: 65,
     year: '2026',
     area: '5,200 sqft',
     specifications: {
-      sqFt: '5,200',
-      solarCapacity: '22 kWp',
-      carbonReduction: '9.2 Tons/Yr',
-      smartIndex: '97/100'
+      type: '5 BHK Beach Villa',
+      area: '5,200 Sq.Ft',
+      facing: 'Sea Facing (East)',
+      parking: '3 Covered Cars'
     },
     image: '/local_coastal_home.png',
     features: [
-      { title: 'Sea-Breeze Geo Cooling', desc: 'Sub-ground tunnels cooling incoming ocean air naturally.' },
-      { title: 'Tidal Energy Micro-Hook', desc: 'Micro-generator capturing shore wave kinetic energy for power.' },
-      { title: 'Structural Health Sensors', desc: 'Embedded telemetry monitors checking building integrity continuously.' },
-      { title: 'Self-Healing Bio Concrete', desc: 'Special concrete mix that heals micro-cracks upon moisture contact.' }
+      { title: 'Natural Cooling', desc: 'Underground pipes that use cool ocean air to keep the house chill.' },
+      { title: 'Ocean Power', desc: 'A small machine that makes free electricity from the ocean waves.' },
+      { title: 'Safety Sensors', desc: 'Smart sensors hidden in the walls that make sure the house stays strong.' },
+      { title: 'Magic Concrete', desc: 'Special cement that automatically fixes tiny cracks when it gets wet.' }
     ],
     description:
-      'An off-grid coastal villa on the Meiyur Coastal Stretch, engineered for marine-grade durability against sea salt, humidity, and monsoon winds. Features self-healing bio-concrete for corrosion resistance, real-time structural health monitoring via IoT sensors, and a tidal micro-energy hook for 24/7 renewable power independence.'
+      'A luxury beach house on the Meiyur coast. Because it is near the sea, we used special rust-proof steel and sea-safe cement to protect it from the salt air. The inside is beautifully furnished with high-end interior woodwork, luxury bathrooms, and modern decor, providing the ultimate relaxing getaway.'
   }
 ];
 

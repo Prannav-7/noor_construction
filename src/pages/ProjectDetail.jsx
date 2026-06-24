@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  ArrowLeft, MapPin, Calendar, Ruler, Zap, Leaf, Shield,
+  ArrowLeft, MapPin, Calendar, Ruler, Compass, Car,
   CheckCircle2, Clock, ChevronRight, Home, Building2, X, HardHat
 } from 'lucide-react';
 import { ALL_PROJECTS } from '../data/projects';
@@ -246,10 +246,10 @@ export default function ProjectDetail({ setAllocationModal, setSelectedProject }
               <p className="font-mono text-[9px] tracking-[0.3em] text-[#ff6200] font-bold uppercase mb-5">Specifications</p>
               <div className="divide-y divide-black/6">
                 {[
-                  { icon: <Home className="w-4 h-4 text-neutral-400" />, label: 'Built-up Area', value: project.specifications.sqFt },
-                  { icon: <Zap className="w-4 h-4 text-amber-400" />, label: 'Solar Capacity', value: project.specifications.solarCapacity },
-                  { icon: <Leaf className="w-4 h-4 text-green-500" />, label: 'Carbon Reduction', value: project.specifications.carbonReduction },
-                  { icon: <Shield className="w-4 h-4 text-blue-500" />, label: 'Smart Index', value: project.specifications.smartIndex },
+                  { icon: <Home className="w-4 h-4 text-[#ff6200]" />, label: 'Project Type', value: project.specifications.type },
+                  { icon: <Ruler className="w-4 h-4 text-amber-500" />, label: 'Built-up Area', value: project.specifications.area },
+                  { icon: <Compass className="w-4 h-4 text-green-500" />, label: 'Facing', value: project.specifications.facing },
+                  { icon: <Car className="w-4 h-4 text-blue-500" />, label: 'Parking', value: project.specifications.parking },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center justify-between py-3">
                     <div className="flex items-center gap-2.5 text-neutral-600">
