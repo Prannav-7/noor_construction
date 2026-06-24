@@ -5,55 +5,57 @@ const cards = [
   {
     id: 1,
     icon: <ShieldCheck className="w-6 h-6" />,
-    title: 'Grade-A Materials',
+    title: 'Strong Steel & Cement',
     tag: 'QUALITY',
-    desc: 'Fe-550 TMT bars, ACC OPC 53 cement, and Fosroc waterproofing — same spec as IGCAR projects on ECR.',
-    brands: ['Fe-550 TMT', 'ACC OPC 53', 'Fosroc WP'],
+    desc: 'We use DMD Fe-550 TMT steel bars — the strongest available — and Ultratech OPC 53 cement. Your walls and pillars will be rock solid and last for generations.',
+    brands: ['DMD Fe-550 Steel', 'Ultratech OPC 53', 'ACC Cement'],
   },
   {
     id: 2,
     icon: <HardHat className="w-6 h-6" />,
-    title: 'Clear M-Sand & Aggregates',
+    title: 'Pure, Verified M-Sand',
     tag: 'MATERIALS',
-    desc: 'TAMIN-approved Zone-II M-Sand and 20mm blue metal — zero sea-salt contamination for lasting coastal strength.',
-    brands: ['TAMIN M-Sand', '20mm Blue Metal', 'River Sand'],
+    desc: 'We use only clean, government-approved M-Sand (manufactured sand) — no dirt, no salt, no sea sand. Combined with tested 20mm blue metal stone for extra strength.',
+    brands: ['Pure Verified M-Sand', '20mm Blue Metal', 'Clean River Sand'],
   },
   {
     id: 3,
     icon: <Cpu className="w-6 h-6" />,
-    title: 'Expert Engineering',
+    title: 'Skilled Site Engineers',
     tag: 'ENGINEERING',
-    desc: 'IIT-Madras certified engineers with BIM digital twins — walk through your home before a single beam is cast.',
-    brands: ['IIT-M Certified', 'BIM Twin', 'AutoCAD'],
+    desc: 'Our structural engineers check every column, beam and slab on-site. Before building starts, we show you a 3D model of your home so you know exactly what you are getting.',
+    brands: ['Certified Engineers', '3D Home Preview', 'AutoCAD Plans'],
   },
   {
     id: 4,
     icon: <FileText className="w-6 h-6" />,
-    title: 'Transparent Costing',
+    title: 'Clear, Fixed Pricing',
     tag: 'PROCESS',
-    desc: 'Itemized BOQ before work begins — every rod and bag of cement accounted for. Zero hidden charges.',
-    brands: ['Itemized BOQ', 'Fixed Rates', 'No Hidden Fees'],
+    desc: 'Before we start, you get a full written list of every material and its cost. No surprise bills later. What we quote is what you pay — nothing more.',
+    brands: ['Written Cost Sheet', 'Fixed Rates', 'Zero Extra Charges'],
   },
   {
     id: 5,
     icon: <Clock className="w-6 h-6" />,
-    title: 'On-Time Delivery',
+    title: 'Work Done On Time',
     tag: 'TIMELINE',
-    desc: 'Gantt-scheduled milestones, weekly WhatsApp updates, and contractual SLAs — your handover date is a guarantee.',
-    brands: ['Gantt Schedule', 'Weekly Updates', 'SLA Contract'],
+    desc: 'We give you a date and we stick to it. You will get weekly photos of your construction progress on WhatsApp so you always know what is happening on your site.',
+    brands: ['Weekly Photo Updates', 'Fixed Handover Date', 'Written Agreement'],
   },
   {
     id: 6,
     icon: <HeartPulse className="w-6 h-6" />,
-    title: 'Safety & Compliance',
+    title: 'Safe & Government Approved',
     tag: 'SAFETY',
-    desc: 'RERA-registered, OSHA-aligned protocols, and mandatory site insurance on every ECR project.',
-    brands: ['RERA Registered', 'OSHA Safety', 'Site Insurance'],
+    desc: 'All our projects are registered with RERA (Government of Tamil Nadu). Workers wear safety gear, and every site is insured. You are always protected.',
+    brands: ['RERA Registered', 'Worker Safety Gear', 'Site Insurance'],
   },
 ];
 
 export default function WhyUs() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1200
   );
@@ -61,34 +63,59 @@ export default function WhyUs() {
   const TOTAL_CARDS = cards.length;
 
   useEffect(() => {
+    setIsVisible(true);
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Card width: on mobile fill most of screen, desktop fixed
+  // ── Auto-advance every 4 s (loops back to card 0 from last) ──
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setActiveIndex(i => (i + 1) % TOTAL_CARDS);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isPaused, TOTAL_CARDS]);
+
+  // ── Responsive card width ──────────────────────────────────
+  // mobile (<640)  → fill viewport with small side peek
+  // tablet (640-1023) → 380px
+  // laptop (1024-1279) → 400px
+  // desktop (≥1280) → 440px
   const isMobile = windowWidth < 640;
-  const CARD_GAP = 16;
-  const SIDE_PEEK = isMobile ? 24 : 40; // peek of next card on edge
-  const CARD_WIDTH = Math.min(
-    isMobile ? windowWidth - SIDE_PEEK * 2 - 32 : 320,
-    isMobile ? 360 : 340
-  );
+  const CARD_GAP = 20;
+  let CARD_WIDTH;
+  if (windowWidth < 640) {
+    CARD_WIDTH = Math.min(windowWidth - 64, 340);
+  } else if (windowWidth < 1024) {
+    CARD_WIDTH = 380;
+  } else if (windowWidth < 1280) {
+    CARD_WIDTH = 400;
+  } else {
+    CARD_WIDTH = 440;
+  }
 
-  // translateX: center active card in viewport
+  // ── Alignment logic ────────────────────────
   const getTranslateX = (index) => {
-    const viewportCenter = windowWidth / 2;
-    const cardCenter = index * (CARD_WIDTH + CARD_GAP) + CARD_WIDTH / 2;
-    return viewportCenter - cardCenter;
+    if (isMobile) {
+      // Center active card on mobile
+      const viewportCenter = windowWidth / 2;
+      const cardCenter = index * (CARD_WIDTH + CARD_GAP) + CARD_WIDTH / 2;
+      return viewportCenter - cardCenter;
+    } else {
+      // Align active card with the left edge of the max-w-7xl container on desktop
+      const containerLeft = Math.max(24, (windowWidth - 1280) / 2 + 24);
+      return containerLeft - (index * (CARD_WIDTH + CARD_GAP));
+    }
   };
-
   const translateX = getTranslateX(activeIndex);
 
   const handlePrev = () => {
-    if (activeIndex > 0) setActiveIndex(i => i - 1);
+    setActiveIndex(i => (i - 1 + TOTAL_CARDS) % TOTAL_CARDS);
   };
   const handleNext = () => {
-    if (activeIndex < TOTAL_CARDS - 1) setActiveIndex(i => i + 1);
+    setActiveIndex(i => (i + 1) % TOTAL_CARDS);
   };
 
   // Touch swipe
@@ -110,6 +137,8 @@ export default function WhyUs() {
       id="why-us"
       className="relative min-h-screen flex flex-col justify-center overflow-hidden luxury-grain py-16 lg:py-24"
       style={{ background: '#18181b' }}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       {/* Decorative chapter number */}
       <div
@@ -131,7 +160,10 @@ export default function WhyUs() {
       <div className="w-full relative z-10 flex flex-col h-full">
 
         {/* ── HEADER ── */}
-        <div className="max-w-7xl w-full mx-auto px-6 mb-8 lg:mb-10">
+        <div 
+          className="max-w-7xl w-full mx-auto px-6 mb-8 lg:mb-10 transition-all duration-1000 ease-out"
+          style={{ opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(40px)' }}
+        >
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
             <div>
               <div className="gold-tag mb-4">Why Choose Us</div>
@@ -196,16 +228,20 @@ export default function WhyUs() {
 
         {/* ── CARD TRACK ── */}
         <div
-          className="relative w-full overflow-hidden"
+          className="relative w-full overflow-hidden transition-all duration-1000 ease-out"
+          style={{ 
+            opacity: isVisible ? 1 : 0, 
+            transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
+            transitionDelay: '200ms'
+          }}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Track — centered on active card */}
+          {/* Track */}
           <div
             className="flex py-4"
             style={{
               gap: `${CARD_GAP}px`,
-              paddingLeft: `${SIDE_PEEK}px`,
               transform: `translate3d(${translateX}px, 0, 0)`,
               transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
               willChange: 'transform',
