@@ -62,7 +62,6 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
   }
 
   const [open, setOpen] = useState(false);
-  const [paperOffsets, setPaperOffsets] = useState(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -82,33 +81,7 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
   };
 
   const handleMouseLeave = () => {
-    if (!isMobile) {
-      setOpen(false);
-      setPaperOffsets(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
-    }
-  };
-
-  const handlePaperMouseMove = (e, index) => {
-    if (!open || isMobile) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const offsetX = (e.clientX - centerX) * 0.18;
-    const offsetY = (e.clientY - centerY) * 0.18;
-    setPaperOffsets(prev => {
-      const newOffsets = [...prev];
-      newOffsets[index] = { x: offsetX, y: offsetY };
-      return newOffsets;
-    });
-  };
-
-  const handlePaperMouseLeave = (e, index) => {
-    if (isMobile) return;
-    setPaperOffsets(prev => {
-      const newOffsets = [...prev];
-      newOffsets[index] = { x: 0, y: 0 };
-      return newOffsets;
-    });
+    if (!isMobile) setOpen(false);
   };
 
   const getOpenTransform = index => {
@@ -163,16 +136,14 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
             if (i === 2) sizeClasses = 'w-[90%] h-[92%]';
 
             const transformStyle = open
-              ? `${getOpenTransform(i)} translate(${paperOffsets[i].x}px, ${paperOffsets[i].y}px)`
+              ? getOpenTransform(i)
               : 'translate(-50%, 0)';
 
             return (
               <div
                 key={i}
-                onMouseMove={e => handlePaperMouseMove(e, i)}
-                onMouseLeave={e => handlePaperMouseLeave(e, i)}
                 className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-350 ease-out border border-neutral-100 ${
-                  !open ? 'transform translate-y-[5%] group-hover:translate-y-0' : 'hover:scale-[1.3] hover:z-50 hover:rotate-0'
+                  !open ? 'transform translate-y-[5%] group-hover:translate-y-0' : 'hover:scale-[1.08] hover:z-50'
                 } ${sizeClasses}`}
                 style={{
                   transform: transformStyle,

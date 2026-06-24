@@ -90,7 +90,7 @@ export default function Hero({ timeText, setAllocationModal }) {
           <p
             className="font-sans text-base md:text-lg mb-8 leading-relaxed max-w-md text-neutral-400"
           >
-            Precision-engineered luxury properties on the East Coast Road — where architecture meets artistry.
+            Where every corner of the East Coast Road tells a story of craft — we build homes that stand as your greatest legacy, engineered with precision and finished with artistry.
           </p>
 
           {/* CTA Buttons */}
