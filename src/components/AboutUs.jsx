@@ -45,12 +45,13 @@ export default function AboutUs() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative lg:min-h-screen flex flex-col justify-center py-10 lg:py-14 px-6 w-full luxury-grain"
-      style={{ background: '#18181b' }}
+      className="relative lg:min-h-screen flex flex-col justify-center py-10 lg:py-14 px-6 w-full luxury-grain tech-grid-light"
+      style={{ background: '#FED8B1' }}
     >
       {/* Decorative oversized background chapter number */}
       <div
         className="section-number absolute -right-8 top-1/2 -translate-y-1/2 pointer-events-none select-none hidden lg:block"
+        style={{ WebkitTextStroke: '1px rgba(255, 98, 0, 0.12)' }}
         aria-hidden="true"
       >
         01
@@ -59,7 +60,7 @@ export default function AboutUs() {
       {/* Subtle gold radial */}
       <div
         className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(255, 98, 0,0.04) 0%, transparent 70%)', filter: 'blur(60px)' }}
+        style={{ background: 'radial-gradient(circle, rgba(255, 98, 0,0.06) 0%, transparent 70%)', filter: 'blur(60px)' }}
       />
 
       <div className="max-w-7xl w-full mx-auto relative z-10">
@@ -75,7 +76,7 @@ export default function AboutUs() {
 
             <h2
               className="font-display font-extrabold leading-[1.05] tracking-tight mb-4"
-              style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', color: '#ffffff' }}
+              style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', color: '#1c1c1f' }}
             >
               Building Your Vision
               <br />
@@ -84,13 +85,13 @@ export default function AboutUs() {
               </span>
             </h2>
 
-            <p className="font-sans text-[14px] leading-relaxed mb-7" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+            <p className="font-sans text-[14px] leading-relaxed mb-7" style={{ color: 'rgba(28, 28, 31, 0.8)' }}>
               Since 2010, we've partnered with families and businesses to create spaces that feel as exceptional as they look — blending precision engineering with timeless design.
             </p>
 
             {/* Image */}
             <div
-              className="relative overflow-hidden group"
+              className="relative overflow-hidden group rounded-lg"
               style={{ border: '1px solid rgba(255, 98, 0,0.15)' }}
             >
               <img
@@ -126,20 +127,20 @@ export default function AboutUs() {
               {stats.map((item, i) => (
                 <div
                   key={i}
-                  className="group relative p-6 overflow-hidden"
+                  className="group relative p-6 overflow-hidden rounded-lg shadow-sm"
                   style={{
-                    background: '#27272a',
-                    border: '1px solid rgba(255, 98, 0, 0.12)',
+                    background: 'rgba(255, 255, 255, 0.65)',
+                    border: '1px solid rgba(255, 98, 0, 0.15)',
                     transition: 'all 0.4s ease',
                     animationDelay: `${0.1 + i * 0.1}s`,
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = 'rgba(255, 98, 0, 0.3)';
-                    e.currentTarget.style.background = 'rgba(255, 98, 0, 0.04)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 98, 0, 0.35)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.85)';
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.borderColor = 'rgba(255, 98, 0, 0.12)';
-                    e.currentTarget.style.background = '#27272a';
+                    e.currentTarget.style.borderColor = 'rgba(255, 98, 0, 0.15)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.65)';
                   }}
                 >
                   {/* Icon */}
@@ -159,7 +160,7 @@ export default function AboutUs() {
                   {/* Label */}
                   <div
                     className="text-[10px] tracking-[0.2em] uppercase"
-                    style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}
+                    style={{ color: '#6e6e73', fontFamily: 'var(--font-mono)' }}
                   >
                     {item.label}
                   </div>
@@ -169,10 +170,10 @@ export default function AboutUs() {
 
             {/* Mission Statement */}
             <div
-              className="about-reveal p-7 relative overflow-hidden"
+              className="about-reveal p-7 relative overflow-hidden rounded-lg shadow-sm"
               style={{
-                background: '#27272a',
-                border: '1px solid rgba(255, 98, 0, 0.12)',
+                background: 'rgba(255, 255, 255, 0.65)',
+                border: '1px solid rgba(255, 98, 0, 0.15)',
                 animationDelay: '0.3s',
               }}
             >
@@ -188,7 +189,7 @@ export default function AboutUs() {
                 <div className="gold-tag mb-4" style={{ fontSize: '9px' }}>Our Commitment</div>
                 <blockquote
                   className="font-serif italic leading-relaxed mb-4"
-                  style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', color: 'rgba(255, 255, 255, 0.85)' }}
+                  style={{ fontSize: 'clamp(1rem, 2vw, 1.2rem)', color: '#1c1c1f' }}
                 >
                   "We build more than structures — we create enduring spaces where lives unfold, families grow, and businesses thrive."
                 </blockquote>
@@ -197,7 +198,7 @@ export default function AboutUs() {
                     <span
                       key={i}
                       className="flex items-center gap-2 text-[10px] tracking-wider uppercase"
-                      style={{ color: 'rgba(255, 255, 255, 0.6)', fontFamily: 'var(--font-mono)' }}
+                      style={{ color: 'rgba(28, 28, 31, 0.7)', fontFamily: 'var(--font-mono)' }}
                     >
                       <span
                         className="w-1.5 h-1.5 rounded-full"
@@ -234,7 +235,7 @@ export default function AboutUs() {
                     className="w-7 h-7 rounded-full flex items-center justify-center z-10 mb-4 transition-all duration-300 group-hover:scale-110"
                     style={{
                       border: `1px solid ${i === milestones.length - 1 ? '#ff6200' : 'rgba(255, 98, 0, 0.3)'}`,
-                      background: i === milestones.length - 1 ? 'rgba(255, 98, 0, 0.15)' : 'rgba(255, 255, 255, 0.06)',
+                      background: i === milestones.length - 1 ? 'rgba(255, 98, 0, 0.15)' : 'rgba(255, 255, 255, 0.5)',
                     }}
                   >
                     <div
@@ -245,14 +246,14 @@ export default function AboutUs() {
                   {/* Year */}
                   <span
                     className="font-display font-extrabold text-lg tracking-tight mb-1"
-                    style={{ color: i === milestones.length - 1 ? '#ff6200' : '#ffffff' }}
+                    style={{ color: i === milestones.length - 1 ? '#ff6200' : '#1c1c1f' }}
                   >
                     {m.year}
                   </span>
                   {/* Label */}
                   <span
                     className="text-[9px] tracking-[0.18em] uppercase"
-                    style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}
+                    style={{ color: '#6e6e73', fontFamily: 'var(--font-mono)' }}
                   >
                     {m.label}
                   </span>

@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import WhyUs from './components/WhyUs';
 import SmartHUD from './components/SmartHUD';
 import Reviews from './components/Reviews';
+import Packages from './components/Packages';
 import Footer from './components/Footer';
 import AllocationModal from './components/AllocationModal';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
@@ -326,7 +327,7 @@ function HomePage({
           <ScrollStackItem style={{ background: 'linear-gradient(160deg, #18181b 0%, #0c0c0e 100%)' }}>
             <Hero timeText={timeText} setAllocationModal={setAllocationModal} />
           </ScrollStackItem>
-          <ScrollStackItem style={{ background: '#18181b' }}>
+          <ScrollStackItem style={{ background: '#FED8B1' }}>
             <AboutUs />
           </ScrollStackItem>
           <ScrollStackItem style={{ background: '#18181b' }}>
@@ -345,6 +346,9 @@ function HomePage({
           </ScrollStackItem>
           <ScrollStackItem style={{ background: '#18181b' }}>
             <Reviews reviews={reviews} />
+          </ScrollStackItem>
+          <ScrollStackItem style={{ background: '#18181b' }}>
+            <Packages setAllocationModal={setAllocationModal} setSelectedProject={setSelectedProject} />
           </ScrollStackItem>
           <ScrollStackItem style={{ background: '#18181b' }}>
             <Footer timeText={timeText} />

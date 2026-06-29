@@ -271,6 +271,7 @@ export default function Footer({ timeText }) {
                   { label: 'Process', action: () => scrollTo('why-us') },
                   { label: 'Estimator', action: () => scrollTo('estimator') },
                   { label: 'Reviews', action: () => scrollTo('reviews') },
+                  { label: 'Packages', action: () => scrollTo('packages') },
                 ].map((link, i) => (
                   <li key={i}>
                     <button
