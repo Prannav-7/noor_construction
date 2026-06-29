@@ -21,22 +21,33 @@ const CardNav = ({
   logo,
   logoAlt = 'Logo',
   className = '',
-  onCtaClick
+  onCtaClick,
+  showNav: propShowNav
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showNav, setShowNav] = useState(true);
   
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 40);
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 40);
+      
+      // Hide navigation bar during the scroll intro sequence (first 1.3 screens of scroll)
+      // only on the home page ('/').
+      if (location.pathname === '/') {
+        setShowNav(scrollY > window.innerHeight * 1.3);
+      } else {
+        setShowNav(true);
+      }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [location.pathname]);
 
   const handleLinkClick = (e, href, isMobileClick = false) => {
     if (href === '#enquire') {
@@ -68,7 +79,11 @@ const CardNav = ({
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[950] w-full flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-[950] w-full flex items-center justify-between px-6 md:px-12 transition-all duration-500 ${
+          (propShowNav !== undefined ? (propShowNav && showNav) : showNav)
+            ? 'translate-y-0 opacity-100'
+            : '-translate-y-full opacity-0 pointer-events-none'
+        } ${
           scrolled 
             ? 'h-16 bg-neutral-950/85 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)]' 
             : 'h-20 bg-transparent border-b border-white/5'

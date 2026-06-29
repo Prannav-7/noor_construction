@@ -28,7 +28,8 @@ const ScrollStack = ({
     blurAmount = 0,
     useWindowScroll = false,
     disableStacking = true,
-    onStackComplete
+    onStackComplete,
+    isLocked = false
 }) => {
     const scrollerRef = useRef(null);
     const stackCompletedRef = useRef(false);
@@ -318,9 +319,24 @@ const ScrollStack = ({
             animationFrameRef.current = requestAnimationFrame(raf);
 
             lenisRef.current = lenis;
+            
+            if (isLocked) {
+                lenis.stop();
+            }
+            
             return lenis;
         }
-    }, [handleScroll, useWindowScroll, disableStacking]);
+    }, [handleScroll, useWindowScroll, disableStacking, isLocked]);
+
+    // Dynamically pause/resume Lenis scrolling
+    useEffect(() => {
+        if (!lenisRef.current) return;
+        if (isLocked) {
+            lenisRef.current.stop();
+        } else {
+            lenisRef.current.start();
+        }
+    }, [isLocked]);
 
     // Recalculate layout values on window resizing & load events
     useEffect(() => {
@@ -447,9 +463,7 @@ const ScrollStack = ({
     const containerStyles = useWindowScroll
         ? {
             overscrollBehavior: 'contain',
-            WebkitOverflowScrolling: 'touch',
-            WebkitTransform: 'translateZ(0)',
-            transform: 'translateZ(0)'
+            WebkitOverflowScrolling: 'touch'
         }
         : {
             overscrollBehavior: 'contain',

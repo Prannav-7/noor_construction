@@ -9,21 +9,23 @@ const stats = [
   { value: '6+', label: 'Happy Clients' },
 ];
 
-export default function Hero({ timeText, setAllocationModal }) {
+export default function Hero({ timeText, setAllocationModal, combined = false }) {
   return (
     <section
       id="hero"
-      className="relative pt-32 pb-8 lg:pt-48 lg:pb-12 px-6 min-h-screen w-full z-10 overflow-hidden text-white luxury-grain"
-      style={{ background: '#18181b' }}
+      className={`relative pt-20 pb-8 lg:pt-36 lg:pb-12 px-4 md:px-8 lg:px-12 min-h-screen w-full z-10 text-white ${!combined ? 'luxury-grain overflow-hidden' : 'overflow-visible'}`}
+      style={{ background: combined ? 'transparent' : '#18181b' }}
     >
       {/* Real-time Construction Workers Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none z-0"
-        style={{
-          backgroundImage: "url('/hero_bg_local_construction.png')",
-          filter: 'brightness(0.4) contrast(1.1) grayscale(15%)'
-        }}
-      />
+      {!combined && (
+        <div
+          className="absolute inset-0 bg-cover bg-center pointer-events-none z-0"
+          style={{
+            backgroundImage: "url('/hero_bg_local_construction.png')",
+            filter: 'brightness(0.4) contrast(1.1) grayscale(15%)'
+          }}
+        />
+      )}
 
       {/* Dark gradient overlay to ensure text contrast and seamless footer/section transition */}
       <div
@@ -117,32 +119,30 @@ export default function Hero({ timeText, setAllocationModal }) {
 
           {/* Stat Strip */}
           <div
-            className="flex items-center gap-0 pt-8"
+            className="grid grid-cols-3 gap-2 sm:gap-4 pt-6 sm:pt-8 w-full"
             style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}
           >
             {stats.map((stat, i) => (
-              <React.Fragment key={i}>
-                <div className="flex-1 pr-6">
-                  <div
-                    className="font-display font-extrabold mb-0.5"
-                    style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)', color: '#ff6200', lineHeight: 1 }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div
-                    className="text-[10px] tracking-[0.2em] uppercase"
-                    style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}
-                  >
-                    {stat.label}
-                  </div>
+              <div key={i} className="pr-1 sm:pr-4 relative">
+                <div
+                  className="font-display font-extrabold mb-0.5"
+                  style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2.4rem)', color: '#ff6200', lineHeight: 1 }}
+                >
+                  {stat.value}
+                </div>
+                <div
+                  className="text-[8px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase leading-tight"
+                  style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}
+                >
+                  {stat.label}
                 </div>
                 {i < stats.length - 1 && (
                   <div
-                    className="w-px self-stretch mx-2 shrink-0"
+                    className="absolute right-0 top-1 bottom-1 w-px"
                     style={{ background: 'rgba(255, 255, 255, 0.1)' }}
                   />
                 )}
-              </React.Fragment>
+              </div>
             ))}
           </div>
         </div>
@@ -222,10 +222,12 @@ export default function Hero({ timeText, setAllocationModal }) {
       </div>
 
       {/* Bottom fade into next section */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to top, #18181b, transparent)' }}
-      />
+      {!combined && (
+        <div
+          className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
+          style={{ background: 'linear-gradient(to top, #18181b, transparent)' }}
+        />
+      )}
     </section>
   );
 }

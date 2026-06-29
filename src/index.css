@@ -235,7 +235,7 @@ body,
 .tech-grid-container {
   position: relative;
   background-color: #18181b;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .tech-grid-container::before {

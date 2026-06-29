@@ -14,6 +14,8 @@ import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
 import ProjectDetail from './pages/ProjectDetail';
 import { PROJECTS_BY_CATEGORY } from './data/projects';
 import IntroSection from './components/IntroSection';
+import IntroSequenceSection from './components/IntroSequence';
+
 
 function App() {
   const location = useLocation();
@@ -29,6 +31,23 @@ function App() {
 
   // 'playing' -> intro active; 'unfolding' -> curtain splits and website fades/scales in; 'completed' -> intro unmounted
   const [introState, setIntroState] = useState('playing');
+  const [introCompleted, setIntroCompleted] = useState(false);
+
+  // Lock body and html scroll when blueprint intro is active
+  useEffect(() => {
+    if (introState !== 'completed') {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    };
+  }, [introState]);
+
   // Navigation & Modal States
   const [allocationModal, setAllocationModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -211,6 +230,9 @@ function App() {
               estimates={estimates}
               reviews={reviews}
               showIntro={introState === 'playing'}
+              introState={introState}
+              introCompleted={introCompleted}
+              setIntroCompleted={setIntroCompleted}
             />
           } />
         </Routes>
@@ -234,7 +256,7 @@ function HomePage({
   timeText, allocationModal, setAllocationModal,
   selectedProject, setSelectedProject,
   projects, calculator, updateCalculator, estimates, reviews,
-  showIntro
+  showIntro, introState, introCompleted, setIntroCompleted
 }) {
   const location = useLocation();
 
@@ -323,10 +345,13 @@ function HomePage({
           scaleEndPosition="0%"
           blurAmount={0}
           disableStacking={true}
+          isLocked={introState !== 'completed' || !introCompleted}
         >
-          <ScrollStackItem style={{ background: 'linear-gradient(160deg, #18181b 0%, #0c0c0e 100%)' }}>
-            <Hero timeText={timeText} setAllocationModal={setAllocationModal} />
-          </ScrollStackItem>
+          <IntroSequenceSection 
+            timeText={timeText} 
+            setAllocationModal={setAllocationModal} 
+            onComplete={() => setIntroCompleted(true)} 
+          />
           <ScrollStackItem style={{ background: '#FED8B1' }}>
             <AboutUs />
           </ScrollStackItem>
