@@ -6,8 +6,11 @@ const PACKAGES_DATA = [
     id: 'standard',
     name: 'Standard Package',
     price: '2399',
-    headerBg: 'bg-[#e5c158]',
-    buttonBg: 'bg-[#e5c158] hover:bg-[#dcae1d]',
+    headerBg: 'bg-[#ff9c54]',
+    textColor: 'text-neutral-900',
+    accentColor: 'text-neutral-800',
+    surveyColor: 'border-black/20',
+    buttonBg: 'bg-[#ff9c54] hover:bg-[#ff8c39] text-neutral-900',
     categories: [
       {
         title: 'Structure',
@@ -88,8 +91,11 @@ const PACKAGES_DATA = [
     id: 'premium',
     name: 'Premium Package',
     price: '2649',
-    headerBg: 'bg-[#dcae1d]',
-    buttonBg: 'bg-[#dcae1d] hover:bg-[#c59816]',
+    headerBg: 'bg-[#ff6200]',
+    textColor: 'text-white',
+    accentColor: 'text-white/85',
+    surveyColor: 'border-white/20',
+    buttonBg: 'bg-[#ff6200] hover:bg-[#e05600] text-white',
     categories: [
       {
         title: 'Structure',
@@ -169,8 +175,11 @@ const PACKAGES_DATA = [
     id: 'luxury',
     name: 'Ultra Luxury',
     price: '3199',
-    headerBg: 'bg-[#c59816]',
-    buttonBg: 'bg-[#c59816] hover:bg-[#ae830e]',
+    headerBg: 'bg-[#cc4e00]',
+    textColor: 'text-white',
+    accentColor: 'text-white/85',
+    surveyColor: 'border-white/20',
+    buttonBg: 'bg-[#cc4e00] hover:bg-[#b23a00] text-white',
     categories: [
       {
         title: 'Structure',
@@ -327,17 +336,17 @@ export default function Packages({ setAllocationModal, setSelectedProject }) {
               {/* Card Header */}
               <div className={`${pkg.headerBg} py-8 px-6 text-center flex flex-col items-center justify-center relative`}>
                 {/* Visual Survey Lines */}
-                <div className="absolute top-2 left-2 w-1.5 h-1.5 border-t border-l border-black/20"></div>
-                <div className="absolute top-2 right-2 w-1.5 h-1.5 border-t border-r border-black/20"></div>
-                <div className="absolute bottom-2 left-2 w-1.5 h-1.5 border-b border-l border-black/20"></div>
-                <div className="absolute bottom-2 right-2 w-1.5 h-1.5 border-b border-r border-black/20"></div>
+                <div className={`absolute top-2 left-2 w-1.5 h-1.5 border-t border-l ${pkg.surveyColor}`}></div>
+                <div className={`absolute top-2 right-2 w-1.5 h-1.5 border-t border-r ${pkg.surveyColor}`}></div>
+                <div className={`absolute bottom-2 left-2 w-1.5 h-1.5 border-b border-l ${pkg.surveyColor}`}></div>
+                <div className={`absolute bottom-2 right-2 w-1.5 h-1.5 border-b border-r ${pkg.surveyColor}`}></div>
 
-                <h3 className="font-mono text-[11px] font-black tracking-[0.2em] text-neutral-900 uppercase mb-2">
+                <h3 className={`font-mono text-[11px] font-black tracking-[0.2em] uppercase mb-2 ${pkg.textColor}`}>
                   {pkg.name}
                 </h3>
-                <div className="flex items-baseline justify-center text-neutral-900 font-mono">
+                <div className={`flex items-baseline justify-center font-mono ${pkg.textColor}`}>
                   <span className="text-3xl font-extrabold">₹ {pkg.price}</span>
-                  <span className="text-[10px] ml-1 font-semibold text-neutral-800">/ sqft</span>
+                  <span className={`text-[10px] ml-1 font-semibold ${pkg.accentColor}`}>/ sqft</span>
                 </div>
               </div>
 
@@ -391,7 +400,7 @@ export default function Packages({ setAllocationModal, setSelectedProject }) {
                 <div className="mt-8 flex justify-center w-full">
                   <button
                     onClick={() => handleCtaClick(pkg.name)}
-                    className={`${pkg.buttonBg} w-full py-3.5 text-neutral-900 font-mono text-[10.5px] font-bold tracking-widest rounded-xl shadow-md transition-all duration-300 uppercase hover:scale-[1.02] active:scale-[0.98] cursor-pointer`}
+                    className={`${pkg.buttonBg} w-full py-3.5 font-mono text-[10.5px] font-bold tracking-widest rounded-xl shadow-md transition-all duration-300 uppercase hover:scale-[1.02] active:scale-[0.98] cursor-pointer`}
                   >
                     Get Detailed Specification
                   </button>
