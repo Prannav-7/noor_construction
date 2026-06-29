@@ -64,8 +64,8 @@ export default function TypewriterText({
   }, [currentText, isDeleting, currentWordIndex, wordList, speed, delay, eraseSpeed, loop, isStarted]);
 
   return (
-    <span className={`inline-flex items-center ${className}`}>
-      <span>{currentText}</span>
+    <span className={`inline-flex items-center whitespace-nowrap ${className}`}>
+      <span>{currentText || '\u00a0'}</span>
       {cursor && (
         <span className="ml-0.5 inline-block w-[2px] h-[1em] bg-current animate-pulse opacity-70" style={{ animationDuration: '0.8s' }}></span>
       )}

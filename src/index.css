@@ -101,6 +101,11 @@ body,
   mix-blend-mode: overlay;
 }
 
+/* Ensure lining figures for Bodoni Moda display font numbers */
+.font-display {
+  font-variant-numeric: lining-nums;
+}
+
 /* =====================================================================
    GOLD TYPOGRAPHY
    ===================================================================== */

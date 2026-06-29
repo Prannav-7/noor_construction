@@ -245,7 +245,11 @@ export default function Carousel({
         ))}
       </motion.div>
 
-      <div className={`carousel-indicators-container ${round ? 'round' : ''}`}>
+      <div className={`carousel-indicators-container ${round ? 'round' : ''} flex items-center justify-center gap-3.5`}>
+        <span className="font-mono text-[9px] font-bold text-white/40 select-none tracking-widest shrink-0">
+          {String(activeIndex + 1).padStart(2, '0')}
+        </span>
+        
         <div className="carousel-indicators">
           {resolvedItems.map((_, index) => (
             <motion.button
@@ -254,12 +258,16 @@ export default function Carousel({
               className={`carousel-indicator ${activeIndex === index ? 'active' : 'inactive'}`}
               aria-label={`Go to slide ${index + 1}`}
               aria-current={activeIndex === index}
-              animate={{ scale: activeIndex === index ? 1.2 : 1 }}
+              animate={{ scale: activeIndex === index ? 1.25 : 1 }}
               onClick={() => setPosition(loop ? index + 1 : index)}
               transition={{ duration: 0.15 }}
             />
           ))}
         </div>
+
+        <span className="font-mono text-[9px] font-bold text-white/20 select-none tracking-widest shrink-0">
+          {String(resolvedItems.length).padStart(2, '0')}
+        </span>
       </div>
     </div>
   );
