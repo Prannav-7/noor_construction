@@ -51,11 +51,11 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
 
             if (nextProgress >= 1.0) {
                 setTransitionFinished(true);
-                // Once transition completes, wait 0.8s before unlocking scrolling
+                // Once transition completes, wait 1.5s before unlocking scrolling
                 timeoutRef.current = setTimeout(() => {
                     setIsCompleted(true);
                     if (onComplete) onComplete();
-                }, 800);
+                }, 1500);
             }
         };
 
@@ -84,11 +84,11 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
 
             if (nextProgress >= 1.0) {
                 setTransitionFinished(true);
-                // Once transition completes, wait 0.8s before unlocking scrolling
+                // Once transition completes, wait 1.5s before unlocking scrolling
                 timeoutRef.current = setTimeout(() => {
                     setIsCompleted(true);
                     if (onComplete) onComplete();
-                }, 800);
+                }, 1500);
             }
         };
 
@@ -126,7 +126,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
     const isHeroInteractive = useTransform(progress, (p) => p > 0.55 ? "auto" : "none");
 
     return (
-        <div className="relative h-screen w-full overflow-hidden bg-zinc-950 font-sans flex items-center justify-center">
+        <div className="relative min-h-screen lg:h-screen w-full overflow-visible lg:overflow-hidden bg-zinc-950 font-sans flex flex-col lg:flex-row lg:items-center lg:justify-center">
 
             {/* --- CORE BRAND IDENTITY: NOOR Constructions & Tagline (Phase 1) --- */}
             <motion.div 
@@ -164,7 +164,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                         }}
                         className="font-sans font-extralight text-white leading-none tracking-[-0.02em] mb-6 whitespace-nowrap uppercase"
                     >
-                        NOOR <span className="font-display italic font-normal lowercase tracking-normal text-gold-shimmer">Constructions</span>
+                        NOOR <span className="font-display italic font-normal tracking-normal text-gold-shimmer">Constructions</span>
                     </motion.h1>
 
                     {/* Unified Tagline in Single Line */}
@@ -180,7 +180,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                             }}
                             className="font-mono font-bold tracking-[0.25em] md:tracking-[0.35em] uppercase whitespace-nowrap"
                         >
-                            Vision Precision Excellence
+                            Design Engineering Trust
                         </motion.p>
                         <motion.div
                             style={{ backgroundColor: lineColor }}
@@ -197,7 +197,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                     y: heroY,
                     pointerEvents: isHeroInteractive
                 }}
-                className="absolute inset-0 z-50 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none"
+                className="relative lg:absolute lg:inset-0 z-50 w-full h-auto lg:h-full lg:overflow-y-auto lg:overflow-x-hidden scrollbar-none"
             >
                 <Hero 
                     combined={true} 
@@ -207,7 +207,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
             </motion.div>
 
             {/* --- THE TRANSFORMATION ENGINE (Background, visible all the time) --- */}
-            <div className="absolute inset-0 z-10 w-full h-full pointer-events-none">
+            <div className="fixed lg:absolute inset-0 z-10 w-full h-full pointer-events-none">
                 {/* 1. THE FOUNDATION (B&W) */}
                 <div className="absolute inset-0 w-full h-full">
                     <img
@@ -240,7 +240,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
             {/* SCROLL INDICATOR */}
             <motion.div
                 style={{ opacity: useTransform(progress, [0, 0.15], [1, 0]) }}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4 pointer-events-none mix-blend-difference"
+                className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4 pointer-events-none mix-blend-difference"
             >
                 <div className="w-[1px] h-12 bg-white/20 relative overflow-hidden">
                     <motion.div

@@ -13,7 +13,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
   return (
     <section
       id="hero"
-      className={`relative pt-20 pb-8 lg:pt-36 lg:pb-12 px-4 md:px-8 lg:px-12 min-h-screen w-full z-10 text-white ${!combined ? 'luxury-grain overflow-hidden' : 'overflow-visible'}`}
+      className={`relative pt-16 pb-8 lg:pt-32 lg:pb-12 px-4 md:px-8 lg:px-12 min-h-screen w-full z-10 text-white ${!combined ? 'luxury-grain overflow-hidden' : 'overflow-visible'}`}
       style={{ background: combined ? 'transparent' : '#18181b' }}
     >
       {/* Real-time Construction Workers Background Image */}
@@ -66,15 +66,15 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
       </div>
 
       {/* Main grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full max-w-7xl mx-auto relative z-10 mt-12 lg:mt-24">
+      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-center lg:items-start w-full max-w-7xl mx-auto relative z-10 mt-4 md:mt-10 lg:mt-24">
 
         {/* ── LEFT: Text ── */}
         <div className="lg:col-span-6 flex flex-col justify-center reveal-on-scroll relative z-10">
 
           {/* Headline */}
           <h1
-            className="font-display font-extrabold leading-[1.0] tracking-tight mb-5 text-white"
-            style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)' }}
+            className="font-display font-extrabold leading-[1.0] tracking-tight mb-4 text-white"
+            style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)' }}
           >
             BUILDING
             <br />
@@ -90,13 +90,13 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
           </h1>
 
           <p
-            className="font-sans text-base md:text-lg mb-8 leading-relaxed max-w-md text-neutral-400"
+            className="font-sans text-sm md:text-base mb-5 leading-relaxed max-w-md text-neutral-400"
           >
             Where every corner of the East Coast Road tells a story of craft — we build homes that stand as your greatest legacy, engineered with precision and finished with artistry.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-3 items-center mb-10">
+          <div className="flex flex-wrap gap-3 items-center mb-6 lg:mb-10">
             <button
               onClick={() => {
                 const el = document.getElementById('projects');
@@ -158,7 +158,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
 
           {/* Elegant thin-bordered panel */}
           <div
-            className="relative w-full max-w-[440px] aspect-[4/5] overflow-hidden flex flex-col justify-center z-10 lg:-translate-y-10"
+            className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[440px] aspect-[1.3] lg:aspect-[4/5] overflow-hidden flex flex-col justify-center z-10 lg:-translate-y-10"
             style={{
               border: '1px solid rgba(255, 255, 255, 0.08)',
               background: 'rgba(24, 24, 27, 0.75)',
