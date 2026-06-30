@@ -66,7 +66,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
       </div>
 
       {/* Main grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8 items-start w-full max-w-7xl mx-auto relative z-10 mt-4 md:mt-10 lg:mt-24">
+      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-center lg:items-start w-full max-w-7xl mx-auto relative z-10 mt-4 md:mt-10 lg:mt-24">
 
         {/* ── LEFT: Text ── */}
         <div className="lg:col-span-6 flex flex-col justify-center reveal-on-scroll relative z-10">
