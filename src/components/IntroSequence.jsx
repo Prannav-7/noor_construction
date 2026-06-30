@@ -126,7 +126,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
     const isHeroInteractive = useTransform(progress, (p) => p > 0.55 ? "auto" : "none");
 
     return (
-        <div className="relative min-h-screen lg:h-screen w-full overflow-visible lg:overflow-hidden bg-zinc-950 font-sans flex flex-col lg:flex-row lg:items-center lg:justify-center">
+        <div className="relative h-screen w-full overflow-hidden bg-zinc-950 font-sans flex items-center justify-center">
 
             {/* --- CORE BRAND IDENTITY: NOOR Constructions & Tagline (Phase 1) --- */}
             <motion.div 
@@ -197,7 +197,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                     y: heroY,
                     pointerEvents: isHeroInteractive
                 }}
-                className="relative lg:absolute lg:inset-0 z-50 w-full h-auto lg:h-full lg:overflow-y-auto lg:overflow-x-hidden scrollbar-none"
+                className="absolute inset-0 z-50 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none"
             >
                 <Hero 
                     combined={true} 
@@ -207,7 +207,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
             </motion.div>
 
             {/* --- THE TRANSFORMATION ENGINE (Background, visible all the time) --- */}
-            <div className="fixed lg:absolute inset-0 z-10 w-full h-full pointer-events-none">
+            <div className="absolute inset-0 z-10 w-full h-full pointer-events-none">
                 {/* 1. THE FOUNDATION (B&W) */}
                 <div className="absolute inset-0 w-full h-full">
                     <img
@@ -240,7 +240,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
             {/* SCROLL INDICATOR */}
             <motion.div
                 style={{ opacity: useTransform(progress, [0, 0.15], [1, 0]) }}
-                className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4 pointer-events-none mix-blend-difference"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4 pointer-events-none mix-blend-difference"
             >
                 <div className="w-[1px] h-12 bg-white/20 relative overflow-hidden">
                     <motion.div
