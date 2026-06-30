@@ -59,40 +59,6 @@ export default function ProjectDetail({ setAllocationModal, setSelectedProject }
   return (
     <div className="min-h-screen bg-[#f8f6f2] font-sans">
 
-      {/* ── ABSOLUTE TRANSPARENT OVERLAY NAVBAR ── */}
-      <header
-        className="absolute top-0 left-0 right-0 z-50 w-full px-6 py-4 flex items-center justify-between gap-4 bg-gradient-to-b from-black/80 via-black/35 to-transparent"
-      >
-        {/* Logo */}
-        <a href="/" className="flex items-center shrink-0">
-          <img src="/ncs-logo.png" alt="NCS" className="h-11 w-auto object-contain" />
-        </a>
-
-        {/* Title in center */}
-        <div className="flex-1 flex flex-col items-center">
-          <span className="font-mono text-[8px] tracking-[0.3em] text-white/40 uppercase hidden md:block">Project Detail</span>
-          <span className="font-display font-bold text-sm text-white tracking-tight hidden md:block truncate max-w-sm">{project.title}</span>
-        </div>
-
-        {/* Back + Close buttons */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handleBack}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/25 text-white bg-black/20 backdrop-blur-sm font-mono text-[10px] font-bold tracking-wider hover:bg-white/10 transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">BACK TO HOME</span>
-          </button>
-          <button
-            onClick={handleBack}
-            className="w-9 h-9 flex items-center justify-center rounded-lg bg-black/20 backdrop-blur-sm hover:bg-white/20 transition-colors text-white"
-            title="Close"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-      </header>
-
       {/* ── HERO BANNER ── */}
       <div className="relative h-[50vh] min-h-[300px] max-h-[500px] overflow-hidden">
         <img

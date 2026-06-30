@@ -208,7 +208,10 @@ function App() {
           }`}
       >
         {/* Global sticky header navigation */}
-        {!isProjectDetail && <Header setAllocationModal={setAllocationModal} />}
+        <Header 
+          setAllocationModal={setAllocationModal} 
+          showNav={isProjectDetail ? true : introCompleted} 
+        />
 
         <Routes>
           <Route path="/project/:id" element={

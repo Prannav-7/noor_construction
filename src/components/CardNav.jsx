@@ -35,14 +35,7 @@ const CardNav = ({
     const onScroll = () => {
       const scrollY = window.scrollY;
       setScrolled(scrollY > 40);
-      
-      // Hide navigation bar during the scroll intro sequence (first 1.3 screens of scroll)
-      // only on the home page ('/').
-      if (location.pathname === '/') {
-        setShowNav(scrollY > window.innerHeight * 1.3);
-      } else {
-        setShowNav(true);
-      }
+      setShowNav(true);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
