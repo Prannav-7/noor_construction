@@ -51,11 +51,8 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
 
             if (nextProgress >= 1.0) {
                 setTransitionFinished(true);
-                // Once transition completes, wait 1.5s before unlocking scrolling
-                timeoutRef.current = setTimeout(() => {
-                    setIsCompleted(true);
-                    if (onComplete) onComplete();
-                }, 1500);
+                setIsCompleted(true);
+                if (onComplete) onComplete();
             }
         };
 
@@ -84,11 +81,8 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
 
             if (nextProgress >= 1.0) {
                 setTransitionFinished(true);
-                // Once transition completes, wait 1.5s before unlocking scrolling
-                timeoutRef.current = setTimeout(() => {
-                    setIsCompleted(true);
-                    if (onComplete) onComplete();
-                }, 1500);
+                setIsCompleted(true);
+                if (onComplete) onComplete();
             }
         };
 

@@ -331,7 +331,7 @@ export default function Packages({ setAllocationModal, setSelectedProject }) {
           {PACKAGES_DATA.map((pkg) => (
             <div
               key={pkg.id}
-              className="w-full lg:w-[370px] flex flex-col bg-white text-neutral-800 rounded-2xl overflow-hidden shadow-xl border border-neutral-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5"
+              className="w-full lg:w-[370px] max-w-md mx-auto lg:mx-0 flex flex-col bg-white text-neutral-800 rounded-2xl overflow-hidden shadow-xl border border-neutral-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5"
             >
               {/* Card Header */}
               <div className={`${pkg.headerBg} py-8 px-6 text-center flex flex-col items-center justify-center relative`}>
@@ -361,9 +361,11 @@ export default function Packages({ setAllocationModal, setSelectedProject }) {
                         className="border-b border-neutral-200/80 py-2.5 font-sans"
                       >
                         {/* Toggle Bar */}
-                        <div
+                        <button
                           onClick={() => toggleSection(pkg.id, cat.title)}
-                          className="flex justify-between items-center cursor-pointer py-1 group select-none text-neutral-800 hover:text-[#ff6200] transition-colors"
+                          className="w-full flex justify-between items-center cursor-pointer py-1 group select-none text-neutral-800 hover:text-[#ff6200] transition-colors bg-transparent border-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6200] rounded px-1"
+                          aria-expanded={isOpen}
+                          aria-label={`Toggle specifications list for ${cat.title}`}
                         >
                           <span className="font-bold text-[12.5px] tracking-wide">
                             {cat.title}
@@ -375,7 +377,7 @@ export default function Packages({ setAllocationModal, setSelectedProject }) {
                               <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                             )}
                           </span>
-                        </div>
+                        </button>
 
                         {/* Accordion Content */}
                         <div

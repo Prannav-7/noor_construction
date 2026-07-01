@@ -198,9 +198,9 @@ function ProjectCard({ project, index, onClick }) {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <button
-            className="w-full py-3 rounded-lg font-mono text-[10px] font-bold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-500 group-hover:shadow-lg cursor-pointer"
+          {/* CTA Button (Visual only to avoid nested interactive elements) */}
+          <div
+            className="w-full py-3 rounded-lg font-mono text-[10px] font-bold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-500 group-hover:shadow-lg"
             style={{
               background: '#ff6200',
               color: '#ffffff',
@@ -208,7 +208,7 @@ function ProjectCard({ project, index, onClick }) {
           >
             View Blueprint Details
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
+          </div>
         </div>
       </div>
     </div>
@@ -231,6 +231,17 @@ export default function Projects({ projects }) {
   const completedCount = allProjects.filter(p => p.progress === 100).length;
 
   const [mobileDrawerProject, setMobileDrawerProject] = useState(null);
+
+  useEffect(() => {
+    if (mobileDrawerProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileDrawerProject]);
 
   const handleCardClick = (project) => {
     if (window.innerWidth < 1024) {

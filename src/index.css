@@ -693,7 +693,7 @@ body,
   }
 
   #hero {
-    padding-top: 1.5rem !important;
+    padding-top: 6.5rem !important;
   }
 }
 
@@ -795,4 +795,106 @@ body,
     linear-gradient(45deg, rgba(255, 98, 0, 0.02) 1px, transparent 1px),
     linear-gradient(-45deg, rgba(255, 98, 0, 0.02) 1px, transparent 1px);
   background-size: 32px 32px;
+}
+
+/* =====================================================================
+   WHY CHOOSE US - MARQUEE CARDS
+   ===================================================================== */
+.scrollbar-none::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.why-us-card {
+  background: #1c1c1e;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-us-card:hover {
+  background: #27272a;
+  border-color: rgba(255, 98, 0, 0.35);
+  box-shadow: 0 30px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 98, 0, 0.15);
+  transform: translateY(-8px) scale(1.015);
+}
+
+.why-us-card .card-title {
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.4s ease;
+}
+
+.why-us-card:hover .card-title {
+  color: #ffffff;
+}
+
+.why-us-card .card-desc {
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.4s ease;
+}
+
+.why-us-card:hover .card-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.why-us-card .card-top-accent {
+  height: 2px;
+  width: 100%;
+  background: transparent;
+  transition: background 0.4s ease;
+}
+
+.why-us-card:hover .card-top-accent {
+  background: linear-gradient(90deg, transparent, #ff6200 50%, transparent);
+}
+
+.why-us-card .card-tag {
+  color: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.4s ease;
+}
+
+.why-us-card:hover .card-tag {
+  color: #ff6200;
+  border-color: rgba(255, 98, 0, 0.25);
+}
+
+.why-us-card .card-icon-container {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.4s ease;
+}
+
+.why-us-card:hover .card-icon-container {
+  background: rgba(255, 98, 0, 0.12);
+  color: #ff6200;
+  border-color: rgba(255, 98, 0, 0.25);
+}
+
+.why-us-card .card-brand-pill {
+  color: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: transparent;
+  transition: all 0.4s ease;
+}
+
+.why-us-card:hover .card-brand-pill {
+  color: #ff8c39;
+  border-color: rgba(255, 98, 0, 0.2);
+  background: rgba(255, 98, 0, 0.06);
+}
+
+.why-us-card .card-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  transition: border-color 0.4s ease;
+}
+
+.why-us-card:hover .card-divider {
+  border-top-color: rgba(255, 98, 0, 0.15);
 }

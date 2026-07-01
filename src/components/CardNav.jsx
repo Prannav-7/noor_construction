@@ -32,6 +32,17 @@ const CardNav = ({
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY;
       setScrolled(scrollY > 40);

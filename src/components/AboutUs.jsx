@@ -123,7 +123,7 @@ export default function AboutUs() {
           <div className="lg:col-span-7">
 
             {/* Two stat cards */}
-            <div className="grid grid-cols-2 gap-4 mb-6 about-reveal">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 about-reveal">
               {stats.map((item, i) => (
                 <div
                   key={i}

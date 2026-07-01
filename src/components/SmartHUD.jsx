@@ -150,6 +150,7 @@ export default function SmartHUD({
                     value={sliderSqft}
                     onChange={(e) => setSliderSqft(Number(e.target.value))}
                     className="hud-slider relative z-10 w-full"
+                    aria-label="Area Estimator Meter in Square Feet"
                   />
                 </div>
 
@@ -291,6 +292,7 @@ export default function SmartHUD({
                       value={calculator.groundFloor || ''}
                       onChange={(e) => updateCalculator('groundFloor', e.target.value)}
                       className="w-24 px-2 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="Ground Floor Area in square feet"
                     />
                     <span className="text-[10px] text-neutral-500 font-mono w-7">sqft</span>
                   </div>
@@ -315,6 +317,7 @@ export default function SmartHUD({
                       value={calculator.firstFloor || ''}
                       onChange={(e) => updateCalculator('firstFloor', e.target.value)}
                       className="w-24 px-2 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="First Floor Area in square feet"
                     />
                     <span className="text-[10px] text-neutral-500 font-mono w-7">sqft</span>
                   </div>
@@ -339,6 +342,7 @@ export default function SmartHUD({
                       value={calculator.secondFloor || ''}
                       onChange={(e) => updateCalculator('secondFloor', e.target.value)}
                       className="w-24 px-2 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="Second Floor Area in square feet"
                     />
                     <span className="text-[10px] text-neutral-500 font-mono w-7">sqft</span>
                   </div>
@@ -363,6 +367,7 @@ export default function SmartHUD({
                       value={calculator.thirdFloor || ''}
                       onChange={(e) => updateCalculator('thirdFloor', e.target.value)}
                       className="w-24 px-2 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="Third Floor Area in square feet"
                     />
                     <span className="text-[10px] text-neutral-500 font-mono w-7">sqft</span>
                   </div>
@@ -387,6 +392,7 @@ export default function SmartHUD({
                       value={calculator.fourthFloor || ''}
                       onChange={(e) => updateCalculator('fourthFloor', e.target.value)}
                       className="w-24 px-2 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="Fourth Floor Area in square feet"
                     />
                     <span className="text-[10px] text-neutral-500 font-mono w-7">sqft</span>
                   </div>
@@ -411,6 +417,7 @@ export default function SmartHUD({
                       value={calculator.waterSump || ''}
                       onChange={(e) => updateCalculator('waterSump', e.target.value)}
                       className="w-24 px-2 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="RCC Water Sump Capacity in liters"
                     />
                     <span className="text-[10px] text-neutral-500 font-mono w-7">ltr</span>
                   </div>
@@ -435,6 +442,7 @@ export default function SmartHUD({
                       value={calculator.septicTank || ''}
                       onChange={(e) => updateCalculator('septicTank', e.target.value)}
                       className="w-24 px-2 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="RCC Septic Tank Capacity in liters"
                     />
                     <span className="text-[10px] text-neutral-500 font-mono w-7">ltr</span>
                   </div>
@@ -461,6 +469,7 @@ export default function SmartHUD({
                       value={calculator.compoundLength || ''}
                       onChange={(e) => updateCalculator('compoundLength', e.target.value)}
                       className="w-12 px-1 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="Compound Wall Length in feet"
                     />
                     <span className="text-neutral-400 font-mono text-[10px]">×</span>
                     <input
@@ -470,8 +479,9 @@ export default function SmartHUD({
                       value={calculator.compoundHeight || ''}
                       onChange={(e) => updateCalculator('compoundHeight', e.target.value)}
                       className="w-12 px-1 py-1 text-center font-mono text-xs border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                      aria-label="Compound Wall Height in feet"
                     />
-                    <span className="text-[10px] text-neutral-500 font-mono w-7">ft</span>
+                    <span className="text-[10px] text-neutral-550 font-mono w-7">ft</span>
                   </div>
                   <div className="font-mono text-[11px] font-bold text-neutral-900">
                     ₹{getCompoundTotal().toLocaleString('en-IN')}
@@ -516,6 +526,7 @@ export default function SmartHUD({
                         value={calculator.groundFloor || ''}
                         onChange={(e) => updateCalculator('groundFloor', e.target.value)}
                         className="w-24 px-2 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                        aria-label="Ground Floor Area in square feet"
                       />
                     </td>
                     <td className="py-2 px-3 text-center text-neutral-500 font-mono">sqft</td>
@@ -534,6 +545,7 @@ export default function SmartHUD({
                         value={calculator.firstFloor || ''}
                         onChange={(e) => updateCalculator('firstFloor', e.target.value)}
                         className="w-24 px-2 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                        aria-label="First Floor Area in square feet"
                       />
                     </td>
                     <td className="py-2 px-3 text-center text-neutral-500 font-mono">sqft</td>
@@ -552,6 +564,7 @@ export default function SmartHUD({
                         value={calculator.secondFloor || ''}
                         onChange={(e) => updateCalculator('secondFloor', e.target.value)}
                         className="w-24 px-2 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                        aria-label="Second Floor Area in square feet"
                       />
                     </td>
                     <td className="py-2 px-3 text-center text-neutral-500 font-mono">sqft</td>
@@ -570,6 +583,7 @@ export default function SmartHUD({
                         value={calculator.thirdFloor || ''}
                         onChange={(e) => updateCalculator('thirdFloor', e.target.value)}
                         className="w-24 px-2 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                        aria-label="Third Floor Area in square feet"
                       />
                     </td>
                     <td className="py-2 px-3 text-center text-neutral-500 font-mono">sqft</td>
@@ -588,6 +602,7 @@ export default function SmartHUD({
                         value={calculator.fourthFloor || ''}
                         onChange={(e) => updateCalculator('fourthFloor', e.target.value)}
                         className="w-24 px-2 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                        aria-label="Fourth Floor Area in square feet"
                       />
                     </td>
                     <td className="py-2 px-3 text-center text-neutral-500 font-mono">sqft</td>
@@ -606,6 +621,7 @@ export default function SmartHUD({
                         value={calculator.waterSump || ''}
                         onChange={(e) => updateCalculator('waterSump', e.target.value)}
                         className="w-24 px-2 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                        aria-label="RCC Water Sump Capacity in liters"
                       />
                     </td>
                     <td className="py-2 px-3 text-center text-neutral-500 font-mono">ltr</td>
@@ -624,6 +640,7 @@ export default function SmartHUD({
                         value={calculator.septicTank || ''}
                         onChange={(e) => updateCalculator('septicTank', e.target.value)}
                         className="w-24 px-2 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                        aria-label="RCC Septic Tank Capacity in liters"
                       />
                     </td>
                     <td className="py-2 px-3 text-center text-neutral-500 font-mono">ltr</td>
@@ -643,6 +660,7 @@ export default function SmartHUD({
                           value={calculator.compoundLength || ''}
                           onChange={(e) => updateCalculator('compoundLength', e.target.value)}
                           className="w-14 px-1 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                          aria-label="Compound Wall Length in feet"
                         />
                         <span className="text-neutral-400 font-mono">×</span>
                         <input
@@ -652,6 +670,7 @@ export default function SmartHUD({
                           value={calculator.compoundHeight || ''}
                           onChange={(e) => updateCalculator('compoundHeight', e.target.value)}
                           className="w-14 px-1 py-0.5 text-center font-mono border border-neutral-200 rounded focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00]"
+                          aria-label="Compound Wall Height in feet"
                         />
                       </div>
                     </td>

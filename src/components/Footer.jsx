@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Clock, ArrowUpRight, Shield, X } from 'lucide-react';
 
 /* ─── Modal content ─────────────────────────────────────────── */
@@ -42,6 +42,14 @@ const TERMS_CONTENT = {
 
 /* ─── Reusable Policy Modal ──────────────────────────────────── */
 function PolicyModal({ content, onClose }) {
+  useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, []);
+
   return (
     <div
       className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4"

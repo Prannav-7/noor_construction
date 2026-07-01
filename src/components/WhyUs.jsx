@@ -1,5 +1,6 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ShieldCheck, Clock, HardHat, FileText, HeartPulse, Cpu, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const cards = [
   {
@@ -59,7 +60,7 @@ export default function WhyUs() {
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1200
   );
-  const touchStartX = useRef(null);
+  const directionRef = useRef(1); // 1 = forward, -1 = backward
   const TOTAL_CARDS = cards.length;
 
   useEffect(() => {
@@ -69,20 +70,35 @@ export default function WhyUs() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // ── Auto-advance every 4 s (loops back to card 0 from last) ──
+  // ── Auto-advance with ping-pong direction (slow gliding back and forth) ──
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
-      setActiveIndex(i => (i + 1) % TOTAL_CARDS);
-    }, 4000);
+      setActiveIndex(current => {
+        if (current >= TOTAL_CARDS - 1) {
+          directionRef.current = -1;
+          return Math.max(0, current - 1);
+        }
+        if (current <= 0) {
+          directionRef.current = 1;
+          return Math.min(TOTAL_CARDS - 1, current + 1);
+        }
+        const next = current + directionRef.current;
+        if (next >= TOTAL_CARDS) {
+          directionRef.current = -1;
+          return current - 1;
+        }
+        if (next < 0) {
+          directionRef.current = 1;
+          return current + 1;
+        }
+        return next;
+      });
+    }, 5000);
     return () => clearInterval(timer);
   }, [isPaused, TOTAL_CARDS]);
 
   // ── Responsive card width ──────────────────────────────────
-  // mobile (<640)  → fill viewport with small side peek
-  // tablet (640-1023) → 380px
-  // laptop (1024-1279) → 400px
-  // desktop (≥1280) → 440px
   const isMobile = windowWidth < 640;
   const CARD_GAP = 20;
   let CARD_WIDTH;
@@ -96,19 +112,37 @@ export default function WhyUs() {
     CARD_WIDTH = 440;
   }
 
-  // ── Alignment logic ────────────────────────
-  const getTranslateX = (index) => {
+  const TOTAL_WIDTH = TOTAL_CARDS * CARD_WIDTH + (TOTAL_CARDS - 1) * CARD_GAP;
+
+  const getTranslateBounds = () => {
     if (isMobile) {
-      // Center active card on mobile
-      const viewportCenter = windowWidth / 2;
-      const cardCenter = index * (CARD_WIDTH + CARD_GAP) + CARD_WIDTH / 2;
-      return viewportCenter - cardCenter;
+      const mobileStart = (windowWidth - CARD_WIDTH) / 2;
+      const max = mobileStart;
+      const min = Math.min(mobileStart, (windowWidth - mobileStart) - TOTAL_WIDTH);
+      return { min, max };
     } else {
-      // Align active card with the left edge of the max-w-7xl container on desktop
       const containerLeft = Math.max(24, (windowWidth - 1280) / 2 + 24);
-      return containerLeft - (index * (CARD_WIDTH + CARD_GAP));
+      const max = containerLeft;
+      const min = Math.min(containerLeft, (windowWidth - containerLeft) - TOTAL_WIDTH);
+      return { min, max };
     }
   };
+
+  const { min: minTranslateX, max: maxTranslateX } = getTranslateBounds();
+
+  const getTranslateX = (index) => {
+    if (isMobile) {
+      const viewportCenter = windowWidth / 2;
+      const cardCenter = index * (CARD_WIDTH + CARD_GAP) + CARD_WIDTH / 2;
+      const rawX = viewportCenter - cardCenter;
+      return Math.max(minTranslateX, Math.min(maxTranslateX, rawX));
+    } else {
+      const containerLeft = Math.max(24, (windowWidth - 1280) / 2 + 24);
+      const rawX = containerLeft - (index * (CARD_WIDTH + CARD_GAP));
+      return Math.max(minTranslateX, Math.min(maxTranslateX, rawX));
+    }
+  };
+
   const translateX = getTranslateX(activeIndex);
 
   const handlePrev = () => {
@@ -118,18 +152,20 @@ export default function WhyUs() {
     setActiveIndex(i => (i + 1) % TOTAL_CARDS);
   };
 
-  // Touch swipe
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) handleNext();
-      else handlePrev();
+  const handleDragEnd = (event, info) => {
+    const { offset, velocity } = info;
+    const swipeThreshold = 50;
+    const velocityThreshold = 500;
+
+    if (offset.x < -swipeThreshold || velocity.x < -velocityThreshold) {
+      if (activeIndex < TOTAL_CARDS - 1) {
+        setActiveIndex(prev => prev + 1);
+      }
+    } else if (offset.x > swipeThreshold || velocity.x > velocityThreshold) {
+      if (activeIndex > 0) {
+        setActiveIndex(prev => prev - 1);
+      }
     }
-    touchStartX.current = null;
   };
 
   return (
@@ -161,7 +197,7 @@ export default function WhyUs() {
 
         {/* ── HEADER ── */}
         <div 
-          className="max-w-7xl w-full mx-auto px-6 mb-8 lg:mb-10 transition-all duration-1000 ease-out"
+          className="max-w-7xl w-full mx-auto px-6 mb-8 lg:mb-12 transition-all duration-1000 ease-out"
           style={{ opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(40px)' }}
         >
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
@@ -234,16 +270,17 @@ export default function WhyUs() {
             transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
             transitionDelay: '200ms'
           }}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
         >
-          {/* Track */}
-          <div
-            className="flex py-4"
+          <motion.div
+            drag="x"
+            dragConstraints={{ left: minTranslateX, right: maxTranslateX }}
+            dragElastic={0.1}
+            animate={{ x: translateX }}
+            transition={{ type: 'spring', stiffness: 35, damping: 18 }}
+            onDragEnd={handleDragEnd}
+            className="flex py-4 cursor-grab active:cursor-grabbing"
             style={{
               gap: `${CARD_GAP}px`,
-              transform: `translate3d(${translateX}px, 0, 0)`,
-              transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
               willChange: 'transform',
             }}
           >
@@ -253,113 +290,61 @@ export default function WhyUs() {
               return (
                 <div
                   key={card.id}
-                  className="flex-shrink-0 transition-all duration-500 cursor-pointer"
+                  className="flex-shrink-0 why-us-card relative overflow-hidden cursor-pointer"
                   style={{
                     width: `${CARD_WIDTH}px`,
-                    opacity: isActive ? 1 : 0.45,
-                    transform: `scale(${isActive ? 1 : 0.95})`,
+                    opacity: isActive ? 1 : 0.65,
+                    transform: `scale(${isActive ? 1 : 0.97})`,
                   }}
-                  onClick={() => {
-                    if (!isActive) setActiveIndex(i);
-                  }}
+                  onClick={() => setActiveIndex(i)}
                 >
-                  <div
-                    className="h-full relative overflow-hidden transition-all duration-500"
-                    style={{
-                      background: isActive ? '#27272a' : '#1c1c1e',
-                      border: `1px solid ${isActive ? 'rgba(255, 98, 0, 0.3)' : 'rgba(255, 255, 255, 0.06)'}`,
-                      boxShadow: isActive
-                        ? '0 24px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 98, 0, 0.1)'
-                        : 'none',
-                    }}
-                  >
-                    {/* Top accent */}
-                    <div
-                      className="h-[2px] w-full transition-all duration-500"
-                      style={{
-                        background: isActive
-                          ? 'linear-gradient(90deg, transparent, #ff6200 50%, transparent)'
-                          : 'transparent',
-                      }}
-                    />
+                  {/* Top accent line */}
+                  <div className="card-top-accent" />
 
-                    <div className="p-5 lg:p-6">
-                      {/* Tag + Icon */}
-                      <div className="flex items-center justify-between mb-4">
+                  <div className="p-5 lg:p-6">
+                    {/* Tag + Icon */}
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[8px] tracking-[0.25em] font-bold uppercase px-2 py-1 card-tag font-mono">
+                        {card.tag}
+                      </span>
+                      <div className="w-9 h-9 flex items-center justify-center card-icon-container">
+                        {card.icon}
+                      </div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-display font-extrabold leading-tight mb-3 tracking-tight card-title" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.2rem)' }}>
+                      {card.title}
+                    </h3>
+
+                    {/* Desc */}
+                    <p className="font-sans text-[12.5px] leading-[1.7] mb-4 card-desc">
+                      {card.desc}
+                    </p>
+
+                    {/* Brand pills */}
+                    <div className="pt-3 flex flex-wrap gap-1.5 card-divider">
+                      {card.brands.map((brand, j) => (
                         <span
-                          className="text-[8px] tracking-[0.25em] font-bold uppercase px-2 py-1"
-                          style={{
-                            color: isActive ? '#ff6200' : 'rgba(255,255,255,0.25)',
-                            fontFamily: 'var(--font-mono)',
-                            border: `1px solid ${isActive ? 'rgba(255,98,0,0.2)' : 'rgba(255,255,255,0.06)'}`,
-                          }}
+                          key={j}
+                          className="text-[8.5px] font-bold tracking-[0.12em] uppercase px-2 py-[3px] card-brand-pill font-mono"
                         >
-                          {card.tag}
+                          {brand}
                         </span>
-                        <div
-                          className="w-9 h-9 flex items-center justify-center"
-                          style={{
-                            background: isActive ? 'rgba(255,98,0,0.12)' : 'rgba(255,255,255,0.04)',
-                            color: isActive ? '#ff6200' : 'rgba(255,255,255,0.25)',
-                            border: `1px solid ${isActive ? 'rgba(255,98,0,0.2)' : 'rgba(255,255,255,0.06)'}`,
-                          }}
-                        >
-                          {card.icon}
-                        </div>
-                      </div>
-
-                      {/* Title */}
-                      <h3
-                        className="font-display font-extrabold leading-tight mb-3 tracking-tight"
-                        style={{
-                          fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-                          color: isActive ? '#ffffff' : 'rgba(255,255,255,0.35)',
-                        }}
-                      >
-                        {card.title}
-                      </h3>
-
-                      {/* Desc */}
-                      <p
-                        className="font-sans text-[12.5px] leading-[1.7] mb-4"
-                        style={{ color: isActive ? 'rgba(255,255,255,0.72)' : 'rgba(255,255,255,0.25)' }}
-                      >
-                        {card.desc}
-                      </p>
-
-                      {/* Brand pills */}
-                      <div
-                        className="pt-3 flex flex-wrap gap-1.5"
-                        style={{ borderTop: `1px solid ${isActive ? 'rgba(255,98,0,0.12)' : 'rgba(255,255,255,0.04)'}` }}
-                      >
-                        {card.brands.map((brand, j) => (
-                          <span
-                            key={j}
-                            className="text-[8.5px] font-bold tracking-[0.12em] uppercase px-2 py-[3px]"
-                            style={{
-                              fontFamily: 'var(--font-mono)',
-                              color: isActive ? '#ff8c39' : 'rgba(255,255,255,0.2)',
-                              border: `1px solid ${isActive ? 'rgba(255,98,0,0.18)' : 'rgba(255,255,255,0.05)'}`,
-                              background: isActive ? 'rgba(255,98,0,0.06)' : 'transparent',
-                            }}
-                          >
-                            {brand}
-                          </span>
-                        ))}
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
         {/* Mobile swipe hint */}
         {isMobile && (
-          <p className="text-center text-[10px] tracking-[0.2em] uppercase mt-3 font-mono"
+          <p className="text-center text-[10px] tracking-[0.2em] uppercase mt-4 font-mono"
             style={{ color: 'rgba(255,255,255,0.25)' }}>
-            ← Swipe or tap to explore →
+            ← Swipe or drag to explore →
           </p>
         )}
 

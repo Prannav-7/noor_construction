@@ -101,15 +101,17 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
 
   return (
     <div className={`relative ${className}`} style={{ perspective: '1000px' }}>
-      <div
-        className={`group relative transition-all duration-300 ease-out cursor-pointer ${
+      <button
+        className={`group relative text-left transition-all duration-300 ease-out cursor-pointer border-0 bg-transparent p-0 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6200] rounded-xl ${
           !open ? 'hover:-translate-y-2' : ''
         }`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={() => setOpen(prev => !prev)}
+        aria-expanded={open}
+        aria-label={`Show verified reviews for ${category}`}
         style={{
-          transform: open ? 'translateY(-8px)' : undefined
+          transform: open ? 'translateY(-8px)' : undefined,
         }}
       >
         <div
@@ -182,7 +184,7 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
             }}
           ></div>
         </div>
-      </div>
+      </button>
 
       {/* Tutorial Label under the folder */}
       <div className="text-center mt-5 h-5 select-none pointer-events-none">
