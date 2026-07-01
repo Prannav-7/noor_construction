@@ -210,7 +210,7 @@ function App() {
         {/* Global sticky header navigation */}
         <Header 
           setAllocationModal={setAllocationModal} 
-          showNav={isProjectDetail ? true : introCompleted} 
+          showNav={true} 
         />
 
         <Routes>
