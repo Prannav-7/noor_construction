@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, ArrowRight, Home, Compass, Ruler, Car, X, CheckCircle2, Clock } from 'lucide-react';
 import { PROJECTS_BY_CATEGORY } from '../data/projects';
@@ -358,17 +359,18 @@ export default function Projects({ projects }) {
         </div>
       </div>
 
-      {/* Mobile Details Drawer */}
-      {mobileDrawerProject && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center lg:hidden bg-black/60 backdrop-blur-sm">
+      {/* Mobile Details Drawer via Portal */}
+      {mobileDrawerProject && createPortal(
+        <div className="fixed inset-0 z-[99999] flex items-end justify-center lg:hidden bg-black/75 backdrop-blur-md">
           <div className="absolute inset-0" onClick={() => setMobileDrawerProject(null)} />
 
-          <div className="w-full bg-white rounded-t-2xl p-6 relative z-10 max-h-[85vh] overflow-y-auto shadow-2xl border-t border-neutral-200 animate-card-reveal">
+          <div className="w-full max-w-lg bg-white rounded-t-3xl p-5 sm:p-6 relative z-10 max-h-[88vh] overflow-y-auto shadow-2xl border-t border-neutral-200 animate-card-reveal text-neutral-900 pb-8">
             <div className="w-12 h-1 bg-neutral-300 rounded-full mx-auto mb-4" />
 
             <button
               onClick={() => setMobileDrawerProject(null)}
-              className="absolute top-4 right-4 p-1.5 rounded-full bg-neutral-100 text-neutral-500 hover:text-black transition-colors cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full bg-neutral-100 text-neutral-500 hover:text-black transition-colors cursor-pointer"
+              aria-label="Close Drawer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -444,13 +446,14 @@ export default function Projects({ projects }) {
                 setMobileDrawerProject(null);
                 navigate(`/project/${mobileDrawerProject.id}`);
               }}
-              className="w-full py-3.5 bg-[#ff6200] text-white font-mono text-xs font-bold tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+              className="w-full py-3.5 bg-[#ff6200] hover:bg-[#e05600] text-white font-mono text-xs font-bold tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-md cursor-pointer transition-colors"
             >
               OPEN BLUEPRINT DETAILS
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

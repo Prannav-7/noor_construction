@@ -175,11 +175,28 @@ export default function IntroSection({ onStartReveal, onComplete }) {
     });
   };
 
+  const handleTouchMove = (e) => {
+    if (skipped || !e.touches || !e.touches[0]) return;
+    const { clientX, clientY } = e.touches[0];
+    const { innerWidth, innerHeight } = window;
+    const xPos = (clientX / innerWidth - 0.5) * 20;
+    const yPos = (clientY / innerHeight - 0.5) * 20;
+
+    gsap.to('.parallax-target', {
+      rotateY: xPos,
+      rotateX: -yPos,
+      transformPerspective: 1200,
+      ease: 'power2.out',
+      duration: 0.6
+    });
+  };
+
   return (
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="fixed inset-0 w-screen h-screen z-[99999] overflow-hidden bg-transparent select-none"
+      onTouchMove={handleTouchMove}
+      className="fixed inset-0 w-screen h-screen z-[99999] overflow-hidden bg-transparent select-none cursor-pointer"
     >
       {/* ── SKIP INTRO ACTION BUTTON ── */}
       <button
@@ -326,7 +343,7 @@ export default function IntroSection({ onStartReveal, onComplete }) {
             {/* Float HUD Status Indicators */}
             <div
               ref={statusTextRef}
-              className="telemetry-hud absolute bottom-2 font-mono text-[9px] md:text-[10px] tracking-[0.25em] text-[#ff6200] border border-[#ff6200]/25 px-3 py-1 bg-black/75 backdrop-blur-md rounded shadow-[0_0_10px_rgba(255,98,0,0.1)] transition-all duration-300"
+              className="blueprint-status-badge absolute bottom-2 font-mono text-[9px] md:text-[10px] tracking-[0.25em] text-[#ff6200] border border-[#ff6200]/30 px-3 py-1 bg-black/85 backdrop-blur-md rounded shadow-[0_0_10px_rgba(255,98,0,0.15)] transition-all duration-300 z-30"
             >
               STATUS: INITIALIZING_
             </div>

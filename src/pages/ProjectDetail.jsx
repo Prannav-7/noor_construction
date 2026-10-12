@@ -58,6 +58,15 @@ export default function ProjectDetail({ setAllocationModal, setSelectedProject }
 
   return (
     <div className="min-h-screen bg-[#f8f6f2] font-sans">
+      {/* ── TOP FLOATING BACK BUTTON ── */}
+      <button
+        onClick={handleBack}
+        className="fixed top-20 sm:top-24 left-4 sm:left-6 z-50 flex items-center gap-2 px-3.5 py-1.5 bg-neutral-900/90 hover:bg-[#ff6200] text-white border border-white/20 rounded-full font-mono text-[10px] font-bold tracking-wider backdrop-blur-md shadow-xl transition-all cursor-pointer active:scale-95"
+        aria-label="Back to projects"
+      >
+        <ArrowLeft className="w-3.5 h-3.5 text-[#ff6200]" />
+        <span>BACK</span>
+      </button>
 
       {/* ── HERO BANNER ── */}
       <div className="relative h-[50vh] min-h-[300px] max-h-[500px] overflow-hidden">
@@ -152,6 +161,63 @@ export default function ProjectDetail({ setAllocationModal, setSelectedProject }
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* ── ARCHITECTURAL BLUEPRINT SPECIFICATION ── */}
+            <div className="bg-[#0a1628] text-white rounded-2xl p-5 sm:p-7 border border-[#1a3a5c] relative overflow-hidden shadow-xl blueprint-grid">
+              <div className="relative z-10">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-[#1a3a5c]/60">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff6200] animate-pulse" />
+                    <span className="font-mono text-[10px] tracking-[0.25em] text-[#ff6200] font-bold uppercase">
+                      ARCHITECTURAL BLUEPRINT // CAD-V2
+                    </span>
+                  </div>
+                  <span className="font-mono text-[9px] text-[#5a8ab5] tracking-wider uppercase">
+                    DOC #{project.id?.toUpperCase()}-2026
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 mb-5 font-mono text-[10px]">
+                  <div className="bg-[#0d1f38]/90 p-3 rounded-lg border border-[#1a3a5c]/50">
+                    <span className="text-[#5a8ab5] block text-[8px] uppercase tracking-wider mb-0.5">Built-up Area</span>
+                    <span className="font-bold text-white text-xs">{project.specifications?.area || project.area}</span>
+                  </div>
+                  <div className="bg-[#0d1f38]/90 p-3 rounded-lg border border-[#1a3a5c]/50">
+                    <span className="text-[#5a8ab5] block text-[8px] uppercase tracking-wider mb-0.5">Structural Steel</span>
+                    <span className="font-bold text-white text-xs">Fe-550 TMT Grade</span>
+                  </div>
+                  <div className="bg-[#0d1f38]/90 p-3 rounded-lg border border-[#1a3a5c]/50">
+                    <span className="text-[#5a8ab5] block text-[8px] uppercase tracking-wider mb-0.5">Concrete Mix</span>
+                    <span className="font-bold text-white text-xs">M25/M30 Ready-Mix</span>
+                  </div>
+                  <div className="bg-[#0d1f38]/90 p-3 rounded-lg border border-[#1a3a5c]/50">
+                    <span className="text-[#5a8ab5] block text-[8px] uppercase tracking-wider mb-0.5">Orientation</span>
+                    <span className="font-bold text-white text-xs">{project.specifications?.facing || 'East Facing'}</span>
+                  </div>
+                  <div className="bg-[#0d1f38]/90 p-3 rounded-lg border border-[#1a3a5c]/50">
+                    <span className="text-[#5a8ab5] block text-[8px] uppercase tracking-wider mb-0.5">Parking Allocation</span>
+                    <span className="font-bold text-white text-xs">{project.specifications?.parking || 'Covered'}</span>
+                  </div>
+                  <div className="bg-[#0d1f38]/90 p-3 rounded-lg border border-[#1a3a5c]/50">
+                    <span className="text-[#5a8ab5] block text-[8px] uppercase tracking-wider mb-0.5">BIM Twin Sync</span>
+                    <span className="font-bold text-[#4ade80] text-xs">✓ 100% CAD Verified</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[#1a3a5c]/50 text-neutral-400 font-mono text-[9px]">
+                  <span className="text-[#8baac4]">STAMP: APPROVED FOR STRUCTURAL EXECUTION</span>
+                  <button
+                    onClick={() => {
+                      setSelectedProject(project);
+                      setAllocationModal(true);
+                    }}
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#ff6200] hover:bg-[#e05600] text-white font-bold rounded-lg tracking-wider text-[10px] transition-all cursor-pointer shadow-md"
+                  >
+                    REQUEST FULL BLUEPRINT PDF
+                  </button>
+                </div>
               </div>
             </div>
 
