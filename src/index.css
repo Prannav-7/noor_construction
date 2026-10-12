@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -104,8 +105,14 @@ body,
 
 /* Modern display font numbers with tabular alignment */
 .font-display {
-  font-family: var(--font-display);
+  font-family: 'Space Grotesk', var(--font-display, 'Space Grotesk'), sans-serif;
   font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Ensure Space Grotesk uses its maximum bold weight (700) for extrabold and black */
+.font-display.font-extrabold,
+.font-display.font-black {
+  font-weight: 700;
 }
 
 /* =====================================================================
