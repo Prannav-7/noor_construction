@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: 'Bodoni Moda', serif;
+  --font-display: 'Space Grotesk', sans-serif;
   --font-mono: 'Space Grotesk', sans-serif;
   --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
 
   /* Architectural Noir Palette */
   --color-void: #ffffff;
@@ -101,9 +102,10 @@ body,
   mix-blend-mode: overlay;
 }
 
-/* Ensure lining figures for Bodoni Moda display font numbers */
+/* Modern display font numbers with tabular alignment */
 .font-display {
-  font-variant-numeric: lining-nums;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
 /* =====================================================================
