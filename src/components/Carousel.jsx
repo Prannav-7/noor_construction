@@ -212,7 +212,7 @@ export default function Carousel({
     <div
       ref={containerRef}
       className={`carousel-container ${round ? 'round' : ''}`}
-      style={{ width: `${baseWidth}px`, ...(round && { height: `${baseWidth}px`, borderRadius: '50%' }) }}
+      style={{ width: `min(${baseWidth}px, 100%)`, ...(round && { height: `${baseWidth}px`, borderRadius: '50%' }) }}
     >
       <motion.div
         className="carousel-track"

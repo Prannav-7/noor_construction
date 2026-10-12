@@ -136,7 +136,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                         scale: scale,
                         willChange: "opacity, transform, color"
                     }}
-                    className="px-6 text-center max-w-[95vw] flex flex-col items-center overflow-visible"
+                    className="px-4 text-center w-full flex flex-col items-center"
                 >
                     {/* Building Legacies - Pre-title */}
                     <div className="flex items-center justify-center gap-4 mb-6 opacity-85">
@@ -154,9 +154,9 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                     <motion.h1
                         style={{
                             color: textColor,
-                            fontSize: "clamp(2.5rem, 9vw, 11vw)"
+                            fontSize: "clamp(2rem, 8vw, 11vw)"
                         }}
-                        className="font-sans font-extralight text-white leading-none tracking-[-0.02em] mb-6 whitespace-nowrap uppercase"
+                        className="font-sans font-extralight text-white leading-none tracking-[-0.02em] mb-6 uppercase text-center break-words w-full"
                     >
                         NOOR <span className="font-display italic font-normal tracking-normal text-gold-shimmer">Constructions</span>
                     </motion.h1>

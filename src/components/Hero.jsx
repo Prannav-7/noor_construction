@@ -176,7 +176,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
 
           {/* Elegant thin-bordered panel */}
           <div
-            className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[440px] aspect-[0.95] sm:aspect-[1.0] lg:aspect-[4/5] overflow-hidden flex flex-col justify-center z-10 lg:-translate-y-10"
+            className="relative w-[92vw] max-w-[92vw] sm:w-full sm:max-w-[380px] lg:max-w-[440px] aspect-[4/3] sm:aspect-[1.0] lg:aspect-[4/5] overflow-hidden flex flex-col justify-center z-10 lg:-translate-y-10"
             style={{
               border: '1px solid rgba(255, 255, 255, 0.08)',
               background: 'rgba(24, 24, 27, 0.75)',
@@ -191,7 +191,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
             <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
 
             {/* Carousel */}
-            <div ref={containerRef} className="relative flex-1 overflow-hidden m-4 rounded-sm" style={{ background: '#18181b' }}>
+            <div ref={containerRef} className="relative flex-1 overflow-hidden m-2 sm:m-4 rounded-sm" style={{ background: '#18181b' }}>
               <Carousel baseWidth={carouselWidth} autoplay={true} loop={true} autoplayDelay={3800} />
 
               {/* Subtle annotation overlays */}
