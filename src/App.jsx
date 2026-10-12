@@ -57,7 +57,7 @@ function App() {
 
   // Interactive Estimator Variables
   const [calculator, setCalculator] = useState({
-    package: 'luminosity',
+    package: 'standard',
     groundFloor: 1200,
     firstFloor: 1200,
     secondFloor: 0,
@@ -146,13 +146,12 @@ function App() {
   // Estimator live calculations
   const calculateEstimates = () => {
     const PACKAGES = {
-      luminosity: { rate: 4500, label: 'Noor Luminosity Villa Package' },
-      nova: { rate: 3800, label: 'Nova Apex Smart Home Package' },
-      helix: { rate: 5800, label: 'Tech-Helix Corporate Package' },
-      oceanic: { rate: 6500, label: 'Oceanic Horizon Net-Zero Package' }
+      standard: { rate: 2399, label: 'Standard Package' },
+      premium: { rate: 2649, label: 'Premium Package' },
+      luxury: { rate: 3199, label: 'Ultra Luxury' }
     };
-    const rate = PACKAGES[calculator.package]?.rate || 4500;
-    const packageName = PACKAGES[calculator.package]?.label || 'Noor Luminosity Villa Package';
+    const rate = PACKAGES[calculator.package]?.rate || 2399;
+    const packageName = PACKAGES[calculator.package]?.label || 'Standard Package';
 
     const floorArea =
       Number(calculator.groundFloor || 0) +
@@ -171,12 +170,12 @@ function App() {
 
     // Estimates summary
     const baseOffset = floorArea * 0.0015;
-    const offsetFactor = calculator.package === 'oceanic' ? 2.5 : calculator.package === 'luminosity' ? 1.8 : 1.1;
+    const offsetFactor = calculator.package === 'luxury' ? 2.2 : calculator.package === 'premium' ? 1.6 : 1.1;
     const carbonOffset = baseOffset * offsetFactor;
 
-    const solarGen = (floorArea * 0.005) * (calculator.package === 'oceanic' ? 1.5 : calculator.package === 'luminosity' ? 1.2 : 0.8);
+    const solarGen = (floorArea * 0.005) * (calculator.package === 'luxury' ? 1.5 : calculator.package === 'premium' ? 1.2 : 0.8);
 
-    const baseMonths = calculator.package === 'helix' ? 18 : 10;
+    const baseMonths = calculator.package === 'luxury' ? 14 : 10;
     const sizeFactor = floorArea / 2000;
     const timeline = Math.max(6, Math.min(36, Math.round(baseMonths * (0.7 + sizeFactor * 0.3))));
 

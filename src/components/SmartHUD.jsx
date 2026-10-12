@@ -1,30 +1,24 @@
 import React, { useState } from 'react';
-import { Sun, Droplet, Clock, Shield, Coins, FileSpreadsheet, Ruler, Leaf } from 'lucide-react';
+import { Coins, FileSpreadsheet } from 'lucide-react';
 
 const PACKAGES = {
-  luminosity: {
-    rate: 4500,
-    name: 'Noor Luminosity Villa Package @ ₹4,500/sqft',
-    desc: 'Futuristic Eco-Living (Villas & Premium Residences)',
-    image: '/coastal_villa.png'
-  },
-  nova: {
-    rate: 3800,
-    name: 'Nova Apex Smart Home Package @ ₹3,800/sqft',
-    desc: 'High-Density Decarbonized Living (Apartments & Custom Homes)',
+  standard: {
+    rate: 2399,
+    name: 'Standard Package @ ₹2,399/sqft',
+    desc: 'Essential Quality Living (TATA Steel, Grade 43/53 Cement & Red Bricks)',
     image: '/smart_home.png'
   },
-  helix: {
-    rate: 5800,
-    name: 'Tech-Helix Corporate Package @ ₹5,800/sqft',
-    desc: 'Heavy Structural Commercial Nexus (Offices & Tech Parks)',
-    image: '/tech_park.png'
-  },
-  oceanic: {
-    rate: 6500,
-    name: 'Oceanic Horizon Net-Zero Package @ ₹6,500/sqft',
-    desc: 'Marine-Grade Off-Grid Luxury (Coastal & High-Exposure)',
+  premium: {
+    rate: 2649,
+    name: 'Premium Package @ ₹2,649/sqft',
+    desc: 'Superior Architectural Living (TATA Tiscon, Teakwood Doors & Jaquar/Hindware)',
     image: '/coastal_villa.png'
+  },
+  luxury: {
+    rate: 3199,
+    name: 'Ultra Luxury Package @ ₹3,199/sqft',
+    desc: 'Opulent High-End Engineering (Italian Marble, Geberit/Kohler & Quartz)',
+    image: '/tech_park.png'
   }
 };
 
@@ -47,7 +41,7 @@ export default function SmartHUD({
 }) {
   const [sliderSqft, setSliderSqft] = useState(2000);
   const currentPackage = calculator.package;
-  const packageDetails = PACKAGES[currentPackage] || PACKAGES.luminosity;
+  const packageDetails = PACKAGES[currentPackage] || PACKAGES.standard;
   const currentRate = packageDetails.rate;
 
   // Meter derived values
@@ -107,8 +101,8 @@ export default function SmartHUD({
 
           {/* Bento Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* FeatureOne: Slider & Active Project Alignment (Row span 2) */}
-            <BentoCard className="sm:row-span-2 flex flex-col justify-between">
+            {/* FeatureOne: Slider & Active Project Alignment */}
+            <BentoCard className="flex flex-col justify-between">
               {/* Active Project Alignment */}
               <div className="mb-4">
                 <span className="font-mono text-[8px] text-neutral-500 tracking-widest block mb-2 font-bold uppercase">// ACTIVE PROJECT</span>
@@ -163,34 +157,14 @@ export default function SmartHUD({
 
             {/* FeatureTwo: Total Valuation */}
             <BentoCard className="flex flex-col justify-between">
-              <span className="font-mono text-[8px] font-bold uppercase tracking-wider text-neutral-500">// EST. VALUATION</span>
-              <div className="mt-2 text-2xl font-black text-[#ff6200] leading-none whitespace-nowrap animate-recalc">
-                ₹{estimates.cost} <span className="text-[10px] font-mono font-bold text-neutral-500">LAKHS</span>
+              <div>
+                <span className="font-mono text-[8px] font-bold uppercase tracking-wider text-neutral-500">// EST. VALUATION</span>
+                <div className="mt-2 text-2xl font-black text-[#ff6200] leading-none whitespace-nowrap animate-recalc">
+                  ₹{estimates.cost} <span className="text-[10px] font-mono font-bold text-neutral-500">LAKHS</span>
+                </div>
               </div>
-              <div className="mt-2 text-[9px] font-mono text-neutral-550">
+              <div className="mt-2 text-[9px] font-mono text-neutral-500">
                 Total: ₹{estimates.totalCostInRs.toLocaleString('en-IN')}
-              </div>
-            </BentoCard>
-
-            {/* FeatureThree: Telemetry Breakdown */}
-            <BentoCard className="flex flex-col gap-2">
-              <span className="font-mono text-[8px] font-semibold uppercase tracking-wider text-neutral-500">// TELEMETRY</span>
-              <div className="space-y-1.5">
-                <div className="flex w-full items-center gap-1.5">
-                  <Clock size={11} className="text-[#ff6200]" />
-                  <span className="text-[9px] text-neutral-650 font-mono">Timeline</span>
-                  <span className="ml-auto text-[10px] font-black text-neutral-900 font-mono">{estimates.timeline} Mos</span>
-                </div>
-                <div className="flex w-full items-center gap-1.5">
-                  <Sun size={11} className="text-amber-500" />
-                  <span className="text-[9px] text-neutral-650 font-mono">Solar Yield</span>
-                  <span className="ml-auto text-[10px] font-black text-neutral-900 font-mono">{estimates.energy} kWp</span>
-                </div>
-                <div className="flex w-full items-center gap-1.5">
-                  <Leaf size={11} className="text-green-500" />
-                  <span className="text-[9px] text-neutral-650 font-mono">Carbon Offset</span>
-                  <span className="ml-auto text-[10px] font-black text-neutral-900 font-mono">{estimates.carbon} T/Yr</span>
-                </div>
               </div>
             </BentoCard>
           </div>
@@ -265,10 +239,9 @@ export default function SmartHUD({
                 onChange={(e) => updateCalculator('package', e.target.value)}
                 className="flex-1 min-w-0 px-2.5 py-1.5 border border-neutral-200 rounded text-[11px] font-sans font-semibold bg-white focus:outline-none focus:border-[#ff4e00] focus:ring-1 focus:ring-[#ff4e00] text-neutral-800 cursor-pointer"
               >
-                <option value="luminosity">Luminosity Villa — ₹4,500/sqft</option>
-                <option value="nova">Nova Apex Smart Home — ₹3,800/sqft</option>
-                <option value="helix">Tech-Helix Corporate — ₹5,800/sqft</option>
-                <option value="oceanic">Oceanic Net-Zero — ₹6,500/sqft</option>
+                <option value="standard">Standard Package — ₹2,399/sqft</option>
+                <option value="premium">Premium Package — ₹2,649/sqft</option>
+                <option value="luxury">Ultra Luxury — ₹3,199/sqft</option>
               </select>
               <span className="font-mono text-[10px] font-bold text-[#ff4e00] shrink-0 whitespace-nowrap">
                 ₹{currentRate.toLocaleString('en-IN')}<span className="text-neutral-400 font-normal">/sqft</span>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Star } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const darkenColor = (hex, percent) => {
   let color = hex.startsWith('#') ? hex.slice(1) : hex;
@@ -22,14 +22,14 @@ const darkenColor = (hex, percent) => {
 function ReviewPaper({ review }) {
   if (!review) return null;
   return (
-    <div className="w-full h-full p-4 flex flex-col justify-between text-left select-text pointer-events-auto">
+    <div className="w-full h-full p-3.5 sm:p-4 flex flex-col justify-between text-left select-text pointer-events-auto">
       {/* Top Header */}
       <div>
         <div className="flex justify-between items-center mb-1">
-          <span className="font-sans font-bold text-[10.5px] text-neutral-800 truncate max-w-[130px]" title={review.name}>
+          <span className="font-sans font-bold text-[11px] text-neutral-800 truncate max-w-[130px]" title={review.name}>
             {review.name}
           </span>
-          <span className="font-mono text-[7px] text-neutral-400 shrink-0">
+          <span className="font-mono text-[7.5px] text-neutral-400 shrink-0">
             {review.date}
           </span>
         </div>
@@ -39,14 +39,14 @@ function ReviewPaper({ review }) {
             <Star key={idx} className="w-2.5 h-2.5 fill-current text-orange-500" />
           ))}
         </div>
-        {/* Comment */}
-        <p className="font-serif italic text-[9.5px] text-neutral-600 leading-relaxed line-clamp-4">
+        {/* Comment - full view without clipping */}
+        <p className="font-serif italic text-[10px] text-neutral-700 leading-relaxed">
           "{review.comment}"
         </p>
       </div>
 
       {/* Footer Info */}
-      <div className="pt-1.5 border-t border-neutral-100 flex justify-between items-center text-[7px] font-mono text-neutral-400">
+      <div className="pt-1.5 border-t border-neutral-100 flex justify-between items-center text-[7.5px] font-mono text-neutral-400">
         <span className="truncate max-w-[110px]" title={review.metadata}>{review.metadata}</span>
         <span className="text-[#ff6200] font-bold shrink-0">{review.authTag}</span>
       </div>
@@ -54,7 +54,7 @@ function ReviewPaper({ review }) {
   );
 }
 
-const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], className = '' }) => {
+const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawReviews = [], className = '' }) => {
   const maxItems = 3;
   const papers = items.slice(0, maxItems);
   while (papers.length < maxItems) {
@@ -63,6 +63,7 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
 
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024);
@@ -84,30 +85,85 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
     if (!isMobile) setOpen(false);
   };
 
-  const getOpenTransform = index => {
-    if (isMobile) {
-      // Stack rising straight up vertically like index cards on mobile
-      if (index === 0) return 'translate(-50%, -75%) rotate(-4deg) scale(1.05)';
-      if (index === 1) return 'translate(-50%, -48%) rotate(3deg) scale(1.05)';
-      if (index === 2) return 'translate(-50%, -20%) rotate(-1deg) scale(1.05)';
-    } else {
-      // Fan out horizontally on desktop
-      if (index === 0) return 'translate(-112%, -58%) rotate(-12deg) scale(1.15)';
-      if (index === 1) return 'translate(12%, -58%) rotate(12deg) scale(1.15)';
-      if (index === 2) return 'translate(-50%, -95%) rotate(2deg) scale(1.18)';
+  const getCardStyle = index => {
+    if (!open) {
+      return {
+        transform: 'translate(-50%, 0)',
+        zIndex: 20,
+        opacity: 1,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+        pointerEvents: 'none'
+      };
     }
-    return '';
+
+    if (isMobile) {
+      const offset = (index - activeMobileIndex + maxItems) % maxItems;
+      if (offset === 0) {
+        // Active Center Card: elevated completely above the folder pocket, enlarged and fully readable
+        return {
+          transform: 'translate(-50%, -92%) rotate(0deg) scale(1.1)',
+          zIndex: 40,
+          opacity: 1,
+          boxShadow: '0 20px 40px rgba(0,0,0,0.45)',
+          pointerEvents: 'auto',
+          cursor: 'default'
+        };
+      } else if (offset === 1) {
+        // Next Card: peeking out to the right
+        return {
+          transform: 'translate(-28%, -74%) rotate(7deg) scale(0.94)',
+          zIndex: 25,
+          opacity: 0.88,
+          boxShadow: '0 8px 22px rgba(0,0,0,0.25)',
+          pointerEvents: 'auto',
+          cursor: 'pointer'
+        };
+      } else {
+        // Previous Card: peeking out to the left
+        return {
+          transform: 'translate(-72%, -74%) rotate(-7deg) scale(0.94)',
+          zIndex: 24,
+          opacity: 0.88,
+          boxShadow: '0 8px 22px rgba(0,0,0,0.25)',
+          pointerEvents: 'auto',
+          cursor: 'pointer'
+        };
+      }
+    } else {
+      // Desktop fan out
+      let transform = '';
+      if (index === 0) transform = 'translate(-112%, -58%) rotate(-12deg) scale(1.15)';
+      if (index === 1) transform = 'translate(12%, -58%) rotate(12deg) scale(1.15)';
+      if (index === 2) transform = 'translate(-50%, -95%) rotate(2deg) scale(1.18)';
+      return {
+        transform,
+        zIndex: 20,
+        opacity: 1,
+        boxShadow: '0 12px 32px rgba(0,0,0,0.3)',
+        pointerEvents: 'auto'
+      };
+    }
   };
 
   return (
-    <div className={`relative ${className}`} style={{ perspective: '1000px' }}>
+    <div
+      className={`relative ${className} ${open && isMobile ? 'pt-28 pb-2' : 'pt-0 pb-0'} transition-all duration-300 ease-out`}
+      style={{ perspective: '1000px' }}
+    >
       <button
+        type="button"
         className={`group relative text-left transition-all duration-300 ease-out cursor-pointer border-0 bg-transparent p-0 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6200] rounded-xl ${
           !open ? 'hover:-translate-y-2' : ''
         }`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={() => setOpen(prev => !prev)}
+        onClick={() => {
+          setOpen(prev => {
+            const next = !prev;
+            if (next) setActiveMobileIndex(0);
+            return next;
+          });
+        }}
         aria-expanded={open}
         aria-label={`Show verified reviews for ${category}`}
         style={{
@@ -132,26 +188,25 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
 
           {/* Papers nested inside */}
           {papers.map((item, i) => {
-            let sizeClasses = '';
-            if (i === 0) sizeClasses = 'w-[88%] h-[92%]';
-            if (i === 1) sizeClasses = 'w-[88%] h-[92%]';
-            if (i === 2) sizeClasses = 'w-[90%] h-[92%]';
-
-            const transformStyle = open
-              ? getOpenTransform(i)
-              : 'translate(-50%, 0)';
+            const cardStyle = getCardStyle(i);
+            const sizeClasses = isMobile ? 'w-[92%] h-[95%]' : (i === 2 ? 'w-[90%] h-[92%]' : 'w-[88%] h-[92%]');
 
             return (
               <div
                 key={i}
-                className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-350 ease-out border border-neutral-100 ${
-                  !open ? 'transform translate-y-[5%] group-hover:translate-y-0' : 'hover:scale-[1.08] hover:z-50'
+                onClick={(e) => {
+                  if (isMobile && open) {
+                    e.stopPropagation();
+                    setActiveMobileIndex(i);
+                  }
+                }}
+                className={`absolute bottom-[10%] left-1/2 transition-all duration-350 ease-out border border-neutral-100 ${
+                  !open ? 'transform translate-y-[5%] group-hover:translate-y-0' : (!isMobile ? 'hover:scale-[1.22] hover:z-50' : '')
                 } ${sizeClasses}`}
                 style={{
-                  transform: transformStyle,
+                  ...cardStyle,
                   backgroundColor: i === 0 ? paper1 : i === 1 ? paper2 : paper3,
                   borderRadius: '12px',
-                  boxShadow: open ? '0 12px 32px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.08)',
                   transformOrigin: 'center center'
                 }}
               >
@@ -162,7 +217,7 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
 
           {/* Folder front flap 1 */}
           <div
-            className={`absolute inset-0 origin-bottom transition-all duration-300 ease-out z-30 ${
+            className={`absolute inset-0 origin-bottom transition-all duration-300 ease-out z-30 pointer-events-none ${
               !open ? 'group-hover:[transform:skew(12deg)_scaleY(0.55)]' : ''
             }`}
             style={{
@@ -174,7 +229,7 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
 
           {/* Folder front flap 2 */}
           <div
-            className={`absolute inset-0 origin-bottom transition-all duration-300 ease-out z-30 ${
+            className={`absolute inset-0 origin-bottom transition-all duration-300 ease-out z-30 pointer-events-none ${
               !open ? 'group-hover:[transform:skew(-12deg)_scaleY(0.55)]' : ''
             }`}
             style={{
@@ -186,19 +241,70 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], class
         </div>
       </button>
 
-      {/* Tutorial Label under the folder */}
-      <div className="text-center mt-5 h-5 select-none pointer-events-none">
-        <span
-          className="font-mono text-[9px] tracking-[0.25em] uppercase transition-all duration-300"
-          style={{
-            color: open ? '#ff6200' : 'rgba(255, 255, 255, 0.4)',
-            opacity: open ? 0.95 : 0.7,
-            animation: !open ? 'pulseText 2s infinite ease-in-out' : 'none'
-          }}
+      {/* Mobile Feedback Navigation Bar */}
+      {isMobile && open ? (
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="mt-6 flex flex-col items-center gap-2 relative z-50 select-none animate-fadeIn"
         >
-          {open ? (isMobile ? 'Tap folder to close' : '← Hover papers to expand →') : (isMobile ? 'Tap to Explore' : 'Click to Explore')}
-        </span>
-      </div>
+          <div className="flex items-center gap-3 bg-neutral-900/95 border border-[#ff6200]/30 px-3.5 py-1.5 rounded-full shadow-xl backdrop-blur-md">
+            <button
+              type="button"
+              onClick={() => setActiveMobileIndex(prev => (prev === 0 ? maxItems - 1 : prev - 1))}
+              className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#ff6200]/25 active:scale-90 flex items-center justify-center text-white transition-all cursor-pointer"
+              aria-label="Previous Feedback"
+            >
+              <ChevronLeft className="w-4 h-4 text-[#ff6200]" />
+            </button>
+
+            <div className="flex items-center gap-1.5 px-1 font-mono text-[10px] text-neutral-300">
+              <span className="font-bold text-[#ff6200]">{activeMobileIndex + 1}</span>
+              <span className="text-neutral-500">/</span>
+              <span>{maxItems}</span>
+              <span className="text-white/80 font-medium ml-1.5 truncate max-w-[100px]">
+                {rawReviews[activeMobileIndex]?.name?.split(' ')[0] || `Review ${activeMobileIndex + 1}`}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setActiveMobileIndex(prev => (prev === maxItems - 1 ? 0 : prev + 1))}
+              className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#ff6200]/25 active:scale-90 flex items-center justify-center text-white transition-all cursor-pointer"
+              aria-label="Next Feedback"
+            >
+              <ChevronRight className="w-4 h-4 text-[#ff6200]" />
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3 text-[9px] font-mono">
+            <span className="text-neutral-400">
+              Tap cards or arrows to flip
+            </span>
+            <span className="text-neutral-600">•</span>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="text-[#ff6200] hover:text-[#ff8c39] uppercase tracking-wider font-bold cursor-pointer underline underline-offset-2"
+            >
+              Close Folder
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* Tutorial Label under the folder */
+        <div className="text-center mt-5 h-5 select-none pointer-events-none">
+          <span
+            className="font-mono text-[9px] tracking-[0.25em] uppercase transition-all duration-300"
+            style={{
+              color: open ? '#ff6200' : 'rgba(255, 255, 255, 0.4)',
+              opacity: open ? 0.95 : 0.7,
+              animation: !open ? 'pulseText 2s infinite ease-in-out' : 'none'
+            }}
+          >
+            {open ? '← Hover papers to expand →' : (isMobile ? 'Tap to Explore' : 'Click to Explore')}
+          </span>
+        </div>
+      )}
 
       <style>{`
         @keyframes pulseText {
@@ -328,16 +434,19 @@ export default function Reviews() {
           <Folder
             color="#ff6200"
             category="Residential"
+            rawReviews={residentialReviews}
             items={residentialReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
           />
           <Folder
             color="#27272a"
             category="Commercial"
+            rawReviews={commercialReviews}
             items={commercialReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
           />
           <Folder
             color="#cc4e00"
             category="Coastal"
+            rawReviews={coastalReviews}
             items={coastalReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
           />
         </div>
