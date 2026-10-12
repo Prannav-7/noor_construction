@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const darkenColor = (hex, percent) => {
@@ -25,68 +25,76 @@ function ReviewPaper({ review }) {
     <div className="w-full h-full p-3.5 sm:p-4 flex flex-col justify-between text-left select-text pointer-events-auto">
       {/* Top Header */}
       <div>
-        <div className="flex justify-between items-center mb-1">
-          <span className="font-sans font-bold text-[11px] text-neutral-800 truncate max-w-[130px]" title={review.name}>
+        <div className="flex justify-between items-baseline mb-1 gap-1.5">
+          <span className="font-sans font-bold text-[11.5px] sm:text-xs text-neutral-900 leading-tight">
             {review.name}
           </span>
-          <span className="font-mono text-[7.5px] text-neutral-400 shrink-0">
+          <span className="font-mono text-[7.5px] sm:text-[8px] text-neutral-400 shrink-0">
             {review.date}
           </span>
         </div>
         {/* Stars */}
         <div className="flex gap-0.5 mb-1.5">
           {[...Array(5)].map((_, idx) => (
-            <Star key={idx} className="w-2.5 h-2.5 fill-current text-orange-500" />
+            <Star key={idx} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current text-[#ff6200]" />
           ))}
         </div>
-        {/* Comment - full view without clipping */}
-        <p className="font-serif italic text-[10px] text-neutral-700 leading-relaxed">
+        {/* Comment - fully readable */}
+        <p className="font-serif italic text-[10px] sm:text-[10.5px] text-neutral-700 leading-relaxed">
           "{review.comment}"
         </p>
       </div>
 
       {/* Footer Info */}
-      <div className="pt-1.5 border-t border-neutral-100 flex justify-between items-center text-[7.5px] font-mono text-neutral-400">
-        <span className="truncate max-w-[110px]" title={review.metadata}>{review.metadata}</span>
+      <div className="pt-1.5 border-t border-neutral-100 flex justify-between items-center text-[7.5px] sm:text-[8px] font-mono text-neutral-400">
+        <span className="truncate max-w-[115px]" title={review.metadata}>{review.metadata}</span>
         <span className="text-[#ff6200] font-bold shrink-0">{review.authTag}</span>
       </div>
     </div>
   );
 }
 
-const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawReviews = [], className = '' }) => {
+const Folder = ({
+  color = '#5227FF',
+  category = 'RESIDENTIAL',
+  rawReviews = [],
+  isOpen = false,
+  onOpen,
+  onClose,
+  className = ''
+}) => {
   const maxItems = 3;
-  const papers = items.slice(0, maxItems);
+  const papers = rawReviews.slice(0, maxItems);
   while (papers.length < maxItems) {
     papers.push(null);
   }
 
-  const [open, setOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [activeMobileIndex, setActiveMobileIndex] = useState(0);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
 
   const folderBackColor = darkenColor(color, 0.12);
   const paper1 = darkenColor('#ffffff', 0.08);
   const paper2 = darkenColor('#ffffff', 0.04);
   const paper3 = '#ffffff';
 
-  const handleMouseEnter = () => {
-    if (!isMobile) setOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    if (!isMobile) setOpen(false);
-  };
+  // Keyboard navigation when folder is open
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight') {
+        setActiveIndex(prev => (prev === maxItems - 1 ? 0 : prev + 1));
+      } else if (e.key === 'ArrowLeft') {
+        setActiveIndex(prev => (prev === 0 ? maxItems - 1 : prev - 1));
+      } else if (e.key === 'Escape') {
+        if (onClose) onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   const getCardStyle = index => {
-    if (!open) {
+    if (!isOpen) {
       return {
         transform: 'translate(-50%, 0)',
         zIndex: 20,
@@ -96,78 +104,74 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawRe
       };
     }
 
-    if (isMobile) {
-      const offset = (index - activeMobileIndex + maxItems) % maxItems;
-      if (offset === 0) {
-        // Active Center Card: elevated completely above the folder pocket, enlarged and fully readable
-        return {
-          transform: 'translate(-50%, -92%) rotate(0deg) scale(1.1)',
-          zIndex: 40,
-          opacity: 1,
-          boxShadow: '0 20px 40px rgba(0,0,0,0.45)',
-          pointerEvents: 'auto',
-          cursor: 'default'
-        };
-      } else if (offset === 1) {
-        // Next Card: peeking out to the right
-        return {
-          transform: 'translate(-28%, -74%) rotate(7deg) scale(0.94)',
-          zIndex: 25,
-          opacity: 0.88,
-          boxShadow: '0 8px 22px rgba(0,0,0,0.25)',
-          pointerEvents: 'auto',
-          cursor: 'pointer'
-        };
-      } else {
-        // Previous Card: peeking out to the left
-        return {
-          transform: 'translate(-72%, -74%) rotate(-7deg) scale(0.94)',
-          zIndex: 24,
-          opacity: 0.88,
-          boxShadow: '0 8px 22px rgba(0,0,0,0.25)',
-          pointerEvents: 'auto',
-          cursor: 'pointer'
-        };
-      }
-    } else {
-      // Desktop fan out
-      let transform = '';
-      if (index === 0) transform = 'translate(-112%, -58%) rotate(-12deg) scale(1.15)';
-      if (index === 1) transform = 'translate(12%, -58%) rotate(12deg) scale(1.15)';
-      if (index === 2) transform = 'translate(-50%, -95%) rotate(2deg) scale(1.18)';
+    // Relative offset from currently active spotlight card
+    const offset = (index - activeIndex + maxItems) % maxItems;
+    const isHovered = hoveredCardIndex === index;
+
+    if (offset === 0) {
+      // Active / Spotlight Card: elevated, centered, perfectly straight, fully readable
       return {
-        transform,
-        zIndex: 20,
+        transform: isHovered
+          ? 'translate(-50%, -96%) rotate(0deg) scale(1.18)'
+          : 'translate(-50%, -90%) rotate(0deg) scale(1.14)',
+        zIndex: isHovered ? 55 : 42,
         opacity: 1,
-        boxShadow: '0 12px 32px rgba(0,0,0,0.3)',
-        pointerEvents: 'auto'
+        boxShadow: '0 24px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(255, 98, 0, 0.3)',
+        pointerEvents: 'auto',
+        cursor: 'default'
+      };
+    } else if (offset === 1) {
+      // Next Card: peeking out to the right wing
+      return {
+        transform: isHovered
+          ? 'translate(-15%, -82%) rotate(0deg) scale(1.1)'
+          : 'translate(-18%, -72%) rotate(7deg) scale(0.96)',
+        zIndex: isHovered ? 52 : 25,
+        opacity: isHovered ? 1 : 0.9,
+        boxShadow: isHovered ? '0 20px 40px rgba(0,0,0,0.4)' : '0 8px 24px rgba(0,0,0,0.25)',
+        pointerEvents: 'auto',
+        cursor: 'pointer'
+      };
+    } else {
+      // Previous Card: peeking out to the left wing
+      return {
+        transform: isHovered
+          ? 'translate(-85%, -82%) rotate(0deg) scale(1.1)'
+          : 'translate(-82%, -72%) rotate(-7deg) scale(0.96)',
+        zIndex: isHovered ? 52 : 24,
+        opacity: isHovered ? 1 : 0.9,
+        boxShadow: isHovered ? '0 20px 40px rgba(0,0,0,0.4)' : '0 8px 24px rgba(0,0,0,0.25)',
+        pointerEvents: 'auto',
+        cursor: 'pointer'
       };
     }
   };
 
   return (
     <div
-      className={`relative ${className} ${open && isMobile ? 'pt-28 pb-2' : 'pt-0 pb-0'} transition-all duration-300 ease-out`}
+      className={`relative ${className} ${isOpen ? 'pt-24 lg:pt-28 pb-4' : 'pt-0 pb-0'} transition-all duration-300 ease-out`}
       style={{ perspective: '1000px' }}
+      onMouseEnter={() => {
+        if (!isOpen && onOpen) onOpen();
+      }}
     >
       <button
         type="button"
         className={`group relative text-left transition-all duration-300 ease-out cursor-pointer border-0 bg-transparent p-0 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6200] rounded-xl ${
-          !open ? 'hover:-translate-y-2' : ''
+          !isOpen ? 'hover:-translate-y-2' : ''
         }`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
         onClick={() => {
-          setOpen(prev => {
-            const next = !prev;
-            if (next) setActiveMobileIndex(0);
-            return next;
-          });
+          if (isOpen && onClose) {
+            onClose();
+          } else if (onOpen) {
+            setActiveIndex(0);
+            onOpen();
+          }
         }}
-        aria-expanded={open}
-        aria-label={`Show verified reviews for ${category}`}
+        aria-expanded={isOpen}
+        aria-label={`Toggle verified reviews for ${category}`}
         style={{
-          transform: open ? 'translateY(-8px)' : undefined,
+          transform: isOpen ? 'translateY(-8px)' : undefined,
         }}
       >
         <div
@@ -189,20 +193,21 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawRe
           {/* Papers nested inside */}
           {papers.map((item, i) => {
             const cardStyle = getCardStyle(i);
-            const sizeClasses = isMobile ? 'w-[92%] h-[95%]' : (i === 2 ? 'w-[90%] h-[92%]' : 'w-[88%] h-[92%]');
 
             return (
               <div
                 key={i}
                 onClick={(e) => {
-                  if (isMobile && open) {
-                    e.stopPropagation();
-                    setActiveMobileIndex(i);
-                  }
+                  e.stopPropagation();
+                  setActiveIndex(i);
+                  if (!isOpen && onOpen) onOpen();
                 }}
-                className={`absolute bottom-[10%] left-1/2 transition-all duration-350 ease-out border border-neutral-100 ${
-                  !open ? 'transform translate-y-[5%] group-hover:translate-y-0' : (!isMobile ? 'hover:scale-[1.22] hover:z-50' : '')
-                } ${sizeClasses}`}
+                onMouseEnter={() => setHoveredCardIndex(i)}
+                onMouseLeave={() => setHoveredCardIndex(null)}
+                title={isOpen ? "Click to view full feedback" : "Click to open folder"}
+                className={`absolute bottom-[10%] left-1/2 transition-all duration-350 ease-out border border-neutral-100/90 w-[90%] h-[94%] ${
+                  !isOpen ? 'transform translate-y-[5%] group-hover:translate-y-0' : ''
+                }`}
                 style={{
                   ...cardStyle,
                   backgroundColor: i === 0 ? paper1 : i === 1 ? paper2 : paper3,
@@ -210,7 +215,7 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawRe
                   transformOrigin: 'center center'
                 }}
               >
-                {item}
+                <ReviewPaper review={item} />
               </div>
             );
           })}
@@ -218,59 +223,88 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawRe
           {/* Folder front flap 1 */}
           <div
             className={`absolute inset-0 origin-bottom transition-all duration-300 ease-out z-30 pointer-events-none ${
-              !open ? 'group-hover:[transform:skew(12deg)_scaleY(0.55)]' : ''
+              !isOpen ? 'group-hover:[transform:skew(12deg)_scaleY(0.55)]' : ''
             }`}
             style={{
               backgroundColor: color,
               borderRadius: '5px 12px 12px 12px',
-              transform: open ? 'skew(12deg) scaleY(0.55)' : undefined
+              transform: isOpen ? 'skew(12deg) scaleY(0.55)' : undefined
             }}
           ></div>
 
           {/* Folder front flap 2 */}
           <div
             className={`absolute inset-0 origin-bottom transition-all duration-300 ease-out z-30 pointer-events-none ${
-              !open ? 'group-hover:[transform:skew(-12deg)_scaleY(0.55)]' : ''
+              !isOpen ? 'group-hover:[transform:skew(-12deg)_scaleY(0.55)]' : ''
             }`}
             style={{
               backgroundColor: color,
               borderRadius: '5px 12px 12px 12px',
-              transform: open ? 'skew(-12deg) scaleY(0.55)' : undefined
+              transform: isOpen ? 'skew(-12deg) scaleY(0.55)' : undefined
             }}
           ></div>
         </div>
       </button>
 
-      {/* Mobile Feedback Navigation Bar */}
-      {isMobile && open ? (
+      {/* Unified Feedback Navigation Bar (Available on Desktop & Mobile) */}
+      {isOpen ? (
         <div
           onClick={(e) => e.stopPropagation()}
           className="mt-6 flex flex-col items-center gap-2 relative z-50 select-none animate-fadeIn"
         >
-          <div className="flex items-center gap-3 bg-neutral-900/95 border border-[#ff6200]/30 px-3.5 py-1.5 rounded-full shadow-xl backdrop-blur-md">
+          <div className="flex items-center gap-2.5 sm:gap-3 bg-neutral-900/95 border border-[#ff6200]/40 px-3.5 py-1.5 rounded-full shadow-2xl backdrop-blur-md">
             <button
               type="button"
-              onClick={() => setActiveMobileIndex(prev => (prev === 0 ? maxItems - 1 : prev - 1))}
-              className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#ff6200]/25 active:scale-90 flex items-center justify-center text-white transition-all cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIndex(prev => (prev === 0 ? maxItems - 1 : prev - 1));
+              }}
+              className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#ff6200]/30 active:scale-90 flex items-center justify-center text-white transition-all cursor-pointer"
               aria-label="Previous Feedback"
+              title="Previous feedback (or Left Arrow key)"
             >
               <ChevronLeft className="w-4 h-4 text-[#ff6200]" />
             </button>
 
+            {/* Quick Dot Selectors */}
+            <div className="flex items-center gap-1.5 px-1">
+              {[0, 1, 2].map((dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveIndex(dotIdx);
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
+                    activeIndex === dotIdx
+                      ? 'bg-[#ff6200] w-5'
+                      : 'bg-white/30 hover:bg-white/60'
+                  }`}
+                  aria-label={`Jump to feedback ${dotIdx + 1}`}
+                  title={rawReviews[dotIdx]?.name || `Feedback ${dotIdx + 1}`}
+                />
+              ))}
+            </div>
+
             <div className="flex items-center gap-1.5 px-1 font-mono text-[10px] text-neutral-300">
-              <span className="font-bold text-[#ff6200]">{activeMobileIndex + 1}</span>
+              <span className="font-bold text-[#ff6200]">{activeIndex + 1}</span>
               <span className="text-neutral-500">/</span>
               <span>{maxItems}</span>
-              <span className="text-white/80 font-medium ml-1.5 truncate max-w-[100px]">
-                {rawReviews[activeMobileIndex]?.name?.split(' ')[0] || `Review ${activeMobileIndex + 1}`}
+              <span className="text-white/90 font-medium ml-1 truncate max-w-[90px] sm:max-w-[120px]" title={rawReviews[activeIndex]?.name}>
+                {rawReviews[activeIndex]?.name}
               </span>
             </div>
 
             <button
               type="button"
-              onClick={() => setActiveMobileIndex(prev => (prev === maxItems - 1 ? 0 : prev + 1))}
-              className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#ff6200]/25 active:scale-90 flex items-center justify-center text-white transition-all cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveIndex(prev => (prev === maxItems - 1 ? 0 : prev + 1));
+              }}
+              className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#ff6200]/30 active:scale-90 flex items-center justify-center text-white transition-all cursor-pointer"
               aria-label="Next Feedback"
+              title="Next feedback (or Right Arrow key)"
             >
               <ChevronRight className="w-4 h-4 text-[#ff6200]" />
             </button>
@@ -278,12 +312,15 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawRe
 
           <div className="flex items-center gap-3 text-[9px] font-mono">
             <span className="text-neutral-400">
-              Tap cards or arrows to flip
+              Click cards or arrows to flip
             </span>
             <span className="text-neutral-600">•</span>
             <button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onClose) onClose();
+              }}
               className="text-[#ff6200] hover:text-[#ff8c39] uppercase tracking-wider font-bold cursor-pointer underline underline-offset-2"
             >
               Close Folder
@@ -291,25 +328,23 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawRe
           </div>
         </div>
       ) : (
-        /* Tutorial Label under the folder */
+        /* Tutorial / Click Label under folder */
         <div className="text-center mt-5 h-5 select-none pointer-events-none">
           <span
-            className="font-mono text-[9px] tracking-[0.25em] uppercase transition-all duration-300"
+            className="font-mono text-[9px] tracking-[0.25em] uppercase transition-all duration-300 text-white/40"
             style={{
-              color: open ? '#ff6200' : 'rgba(255, 255, 255, 0.4)',
-              opacity: open ? 0.95 : 0.7,
-              animation: !open ? 'pulseText 2s infinite ease-in-out' : 'none'
+              animation: 'pulseText 2s infinite ease-in-out'
             }}
           >
-            {open ? '← Hover papers to expand →' : (isMobile ? 'Tap to Explore' : 'Click to Explore')}
+            Click or Hover to Explore
           </span>
         </div>
       )}
 
       <style>{`
         @keyframes pulseText {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.8; }
+          0%, 100% { opacity: 0.35; }
+          50% { opacity: 0.85; }
         }
       `}</style>
     </div>
@@ -317,6 +352,8 @@ const Folder = ({ color = '#5227FF', category = 'RESIDENTIAL', items = [], rawRe
 };
 
 export default function Reviews() {
+  const [openCategory, setOpenCategory] = useState(null);
+
   const residentialReviews = [
     {
       name: "Yesrin Julias",
@@ -389,10 +426,21 @@ export default function Reviews() {
     }
   ];
 
+  // Close folder if clicking outside
+  useEffect(() => {
+    const handleDocumentClick = (e) => {
+      if (openCategory && !e.target.closest('#reviews-folders-container')) {
+        setOpenCategory(null);
+      }
+    };
+    document.addEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }, [openCategory]);
+
   return (
     <section
       id="reviews"
-      className="relative w-full lg:min-h-screen flex flex-col justify-center py-12 px-6 luxury-grain"
+      className="relative w-full lg:min-h-screen flex flex-col justify-center py-16 px-6 luxury-grain"
       style={{ background: '#18181b' }}
     >
       {/* Subtle orange radial glow */}
@@ -403,7 +451,7 @@ export default function Reviews() {
 
       <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col justify-center h-full">
         {/* Header Block */}
-        <div className="text-center mb-24 shrink-0">
+        <div className="text-center mb-10 sm:mb-14 shrink-0">
           <div className="flex justify-center items-center gap-3 mb-4">
             <div className="w-8 h-[1px]" style={{ background: '#ff6200' }} />
             <span
@@ -424,31 +472,42 @@ export default function Reviews() {
               Sign-Off
             </span>
           </h2>
-          <p className="font-sans text-[13px] leading-relaxed max-w-md mx-auto" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-            Hover over the category folders to open verified client feedback for each project section.
+          <p className="font-sans text-[13px] leading-relaxed max-w-lg mx-auto" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+            Hover over or click the category folders to open verified client feedback for each project section.
           </p>
         </div>
 
-        {/* Folders Layout Grid */}
-        <div className="flex flex-col lg:flex-row justify-center items-center gap-20 lg:gap-28 mt-8 w-full overflow-visible">
-          <Folder
-            color="#ff6200"
-            category="Residential"
-            rawReviews={residentialReviews}
-            items={residentialReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
-          />
-          <Folder
-            color="#27272a"
-            category="Commercial"
-            rawReviews={commercialReviews}
-            items={commercialReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
-          />
-          <Folder
-            color="#cc4e00"
-            category="Coastal"
-            rawReviews={coastalReviews}
-            items={coastalReviews.map((r, i) => <ReviewPaper key={i} review={r} />)}
-          />
+        {/* Folders Layout */}
+        <div className="flex flex-col items-center w-full">
+          <div
+            id="reviews-folders-container"
+            className="flex flex-col lg:flex-row justify-center items-center gap-20 lg:gap-24 w-full overflow-visible"
+          >
+            <Folder
+              color="#ff6200"
+              category="Residential"
+              rawReviews={residentialReviews}
+              isOpen={openCategory === 'Residential'}
+              onOpen={() => setOpenCategory('Residential')}
+              onClose={() => setOpenCategory(null)}
+            />
+            <Folder
+              color="#27272a"
+              category="Commercial"
+              rawReviews={commercialReviews}
+              isOpen={openCategory === 'Commercial'}
+              onOpen={() => setOpenCategory('Commercial')}
+              onClose={() => setOpenCategory(null)}
+            />
+            <Folder
+              color="#cc4e00"
+              category="Coastal"
+              rawReviews={coastalReviews}
+              isOpen={openCategory === 'Coastal'}
+              onOpen={() => setOpenCategory('Coastal')}
+              onClose={() => setOpenCategory(null)}
+            />
+          </div>
         </div>
       </div>
     </section>
