@@ -68,15 +68,21 @@ export default function ProjectDetail({ setAllocationModal, setSelectedProject }
         <span>BACK</span>
       </button>
 
-      {/* ── HERO BANNER ── */}
-      <div className="relative h-[50vh] min-h-[300px] max-h-[500px] overflow-hidden">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover object-center"
+      {/* ── HERO BANNER (Technical Blueprint — No Photo) ── */}
+      <div className="relative h-[45vh] min-h-[280px] max-h-[460px] overflow-hidden bg-gradient-to-br from-neutral-950 via-neutral-900 to-[#1c1c1f]">
+        {/* Architectural CAD blueprint grid */}
+        <div
+          className="absolute inset-0 opacity-25 pointer-events-none"
+          style={{
+            backgroundImage: 'linear-gradient(to right, rgba(255, 98, 0, 0.25) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 98, 0, 0.25) 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
         />
-        {/* Dark gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+        {/* Subtle radial glow */}
+        <div
+          className="absolute -top-24 -left-24 w-96 h-96 rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(255, 98, 0, 0.15) 0%, transparent 70%)', filter: 'blur(50px)' }}
+        />
 
         {/* Corner survey marks */}
         <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-black/15 pointer-events-none" />

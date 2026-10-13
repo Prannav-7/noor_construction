@@ -30,14 +30,24 @@ export default function AboutUs() {
 
   const stats = [
     {
+      icon: <Users className="w-5 h-5" />,
+      value: '150+',
+      label: 'Happy Customers',
+    },
+    {
+      icon: <Building2 className="w-5 h-5" />,
+      value: '72+',
+      label: 'Projects Delivered',
+    },
+    {
       icon: <ShieldCheck className="w-5 h-5" />,
       value: '99.88%',
       label: 'Structural Integrity',
     },
     {
-      icon: <Building2 className="w-5 h-5" />,
-      value: '450K+',
-      label: 'Sq Ft Delivered',
+      icon: <Award className="w-5 h-5" />,
+      value: '15+',
+      label: 'Years of Trust',
     },
   ];
 

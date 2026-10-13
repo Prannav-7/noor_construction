@@ -76,6 +76,7 @@ const CardNav = ({
   const navLinks = [
     { label: 'About Us', href: '#about' },
     { label: 'Portfolio', href: '#projects' },
+    { label: 'Architecture', href: '#architecture' },
     { label: 'Packages', href: '#packages' },
     { label: 'Contact', href: '#contact' },
   ];

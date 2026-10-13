@@ -8,6 +8,7 @@ import WhyUs from './components/WhyUs';
 import SmartHUD from './components/SmartHUD';
 import Reviews from './components/Reviews';
 import Packages from './components/Packages';
+import Architecture from './components/Architecture';
 import Footer from './components/Footer';
 import AllocationModal from './components/AllocationModal';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
@@ -376,6 +377,9 @@ function HomePage({
           </ScrollStackItem>
           <ScrollStackItem style={{ background: '#18181b' }}>
             <Packages setAllocationModal={setAllocationModal} setSelectedProject={setSelectedProject} />
+          </ScrollStackItem>
+          <ScrollStackItem style={{ background: '#121214' }}>
+            <Architecture setAllocationModal={setAllocationModal} />
           </ScrollStackItem>
           <ScrollStackItem style={{ background: '#18181b' }}>
             <Footer timeText={timeText} />

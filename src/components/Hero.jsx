@@ -4,9 +4,9 @@ import TypewriterText from './TypewriterText';
 import Carousel from './Carousel';
 
 const stats = [
+  { value: '150+', label: 'Happy Customers' },
+  { value: '72+', label: 'Projects Completed' },
   { value: '15+', label: 'Years of Excellence' },
-  { value: '450K+', label: 'Sq Ft Delivered' },
-  { value: '6+', label: 'Happy Clients' },
 ];
 
 export default function Hero({ timeText, setAllocationModal, combined = false }) {
@@ -115,23 +115,20 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-3 items-center mb-6 lg:mb-10">
-            <button
-              onClick={() => {
-                const el = document.getElementById('projects');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
+            <a
+              href="#estimator"
               className="glow-btn btn-gold px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2.5 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
-              View Projects
+              Cost Estimator
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </a>
             <a
-              href="#estimator"
+              href="#architecture"
               className="btn-ghost px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
-              Cost Estimator
+              Tamil Nadu Architecture
             </a>
           </div>
 

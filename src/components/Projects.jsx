@@ -58,102 +58,82 @@ function ProjectCard({ project, index, onClick }) {
       <div
         className="relative overflow-hidden rounded-2xl border transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-1"
         style={{
-          background: 'rgba(255, 255, 255, 0.6)',
+          background: 'rgba(255, 255, 255, 0.75)',
           backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(0, 0, 0, 0.06)',
+          border: '1px solid rgba(0, 0, 0, 0.08)',
           boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
         }}
       >
-        {/* Image Section */}
-        <div className="relative h-[220px] sm:h-[260px] overflow-hidden">
-          <img
-            src={project.image}
-            alt={project.title}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
+        {/* Technical Blueprint Header (No photo) */}
+        <div
+          className="relative p-5 sm:p-6 border-b transition-colors duration-500 overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, #18181b 0%, #27272a 100%)',
+            borderBottom: '1px solid rgba(255, 98, 0, 0.25)',
+          }}
+        >
+          {/* Subtle blueprint CAD grid */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-20"
+            style={{
+              backgroundImage: 'linear-gradient(to right, rgba(255, 98, 0, 0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 98, 0, 0.2) 1px, transparent 1px)',
+              backgroundSize: '20px 20px',
+            }}
           />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          {/* Corner CAD drafting ticks */}
+          <div className="absolute top-2.5 left-2.5 w-2.5 h-2.5 border-t border-l border-[#ff6200]/60" />
+          <div className="absolute top-2.5 right-2.5 w-2.5 h-2.5 border-t border-r border-[#ff6200]/60" />
+          <div className="absolute bottom-2.5 left-2.5 w-2.5 h-2.5 border-b border-l border-[#ff6200]/40" />
+          <div className="absolute bottom-2.5 right-2.5 w-2.5 h-2.5 border-b border-r border-[#ff6200]/40" />
 
-          {/* Status Badge */}
-          <div className="absolute top-4 left-4">
+          {/* Top badges row */}
+          <div className="flex items-center justify-between gap-2 mb-3.5 relative z-10">
             <span
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-[9px] font-bold tracking-wider uppercase"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded font-mono text-[9px] font-bold tracking-widest uppercase"
               style={{
-                background: isComplete ? 'rgba(74,222,128,0.2)' : 'rgba(255, 98, 0, 0.2)',
+                background: 'rgba(255, 98, 0, 0.15)',
+                color: '#ff6200',
+                border: '1px solid rgba(255, 98, 0, 0.3)',
+              }}
+            >
+              {project.category} // {project.year}
+            </span>
+
+            <span
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded font-mono text-[9px] font-bold tracking-wider uppercase"
+              style={{
+                background: isComplete ? 'rgba(74,222,128,0.15)' : 'rgba(255, 98, 0, 0.15)',
                 color: isComplete ? '#4ade80' : '#ff6200',
-                backdropFilter: 'blur(8px)',
                 border: `1px solid ${isComplete ? 'rgba(74,222,128,0.3)' : 'rgba(255, 98, 0, 0.3)'}`,
               }}
             >
               {isComplete ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-              {isComplete ? 'Completed' : `${project.progress}%`}
+              {isComplete ? 'Completed' : `${project.progress}% In Progress`}
             </span>
           </div>
 
-          {/* Progress Arc */}
-          <div className="absolute top-4 right-4">
-            <svg className="w-10 h-10" viewBox="0 0 36 36">
-              <path
-                className="text-white/10"
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              />
-              <path
-                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none"
-                stroke={isComplete ? '#4ade80' : '#ff6200'}
-                strokeWidth="2.5"
-                strokeDasharray={`${project.progress}, 100`}
-                strokeLinecap="round"
-                className="transition-all duration-1000"
-              />
-              <text
-                x="18" y="20.5"
-                textAnchor="middle"
-                fill="white"
-                className="text-[8px] font-bold"
-                style={{ fontFamily: 'var(--font-mono)' }}
-              >
-                {project.progress}%
-              </text>
-            </svg>
-          </div>
-
-          {/* Location Badge */}
-          <div className="absolute bottom-4 left-4 flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-[#ff6200]" />
-            <span className="text-[11px] font-sans text-white/90">{project.location}</span>
-          </div>
-
-          {/* Year Badge */}
-          <div className="absolute bottom-4 right-4">
-            <span
-              className="text-[10px] font-mono font-bold tracking-widest text-white/60 uppercase"
-            >
-              {project.category} // {project.year}
-            </span>
+          {/* Blueprint Title & ID */}
+          <div className="relative z-10">
+            <div className="flex items-baseline justify-between gap-2 mb-1.5">
+              <span className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 uppercase">
+                SPEC #{project.id.toUpperCase()}
+              </span>
+              <div className="flex items-center gap-1 text-[11px] font-sans text-neutral-300">
+                <MapPin className="w-3 h-3 text-[#ff6200]" />
+                <span>{project.location}</span>
+              </div>
+            </div>
+            <h3 className="font-display font-extrabold text-xl sm:text-2xl text-white leading-tight transition-colors duration-300 group-hover:text-[#ff6200]">
+              {project.title}
+            </h3>
+            <p className="font-mono text-[10px] tracking-wider text-orange-400 uppercase mt-1">
+              {project.tagline}
+            </p>
           </div>
         </div>
 
         {/* Content Section */}
         <div className="p-5 sm:p-6">
-          {/* Title & Tagline */}
-          <h3
-            className="font-display font-extrabold text-lg sm:text-xl leading-tight mb-1 transition-colors duration-300 group-hover:text-[#ff6200]"
-            style={{ color: '#1c1c1f' }}
-          >
-            {project.title}
-          </h3>
-          <p
-            className="font-mono text-[10px] tracking-wider uppercase mb-4"
-            style={{ color: '#9A9080' }}
-          >
-            {project.tagline}
-          </p>
-
           {/* Progress Bar */}
           <div className="mb-4">
             <div className="flex justify-between items-center mb-1.5">
@@ -178,7 +158,7 @@ function ProjectCard({ project, index, onClick }) {
               <div
                 key={i}
                 className="flex items-center gap-2 p-2 rounded-lg transition-colors duration-300"
-                style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.04)' }}
+                style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)' }}
               >
                 {spec.icon}
                 <div>
@@ -190,24 +170,24 @@ function ProjectCard({ project, index, onClick }) {
           </div>
 
           {/* Features Highlight */}
-          <div className="space-y-1 mb-4">
+          <div className="space-y-1 mb-5">
             {project.features.slice(0, 2).map((feat, i) => (
               <div key={i} className="text-[10px] leading-snug">
                 <span className="font-bold text-[#ff6200] font-sans">✓ {feat.title}</span>
-                <span className="text-neutral-500">: {feat.desc.slice(0, 60)}{feat.desc.length > 60 ? '…' : ''}</span>
+                <span className="text-neutral-600">: {feat.desc.slice(0, 60)}{feat.desc.length > 60 ? '…' : ''}</span>
               </div>
             ))}
           </div>
 
-          {/* CTA Button (Visual only to avoid nested interactive elements) */}
+          {/* CTA Button */}
           <div
-            className="w-full py-3 rounded-lg font-mono text-[10px] font-bold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-500 group-hover:shadow-lg"
+            className="w-full py-3 rounded-lg font-mono text-[10px] font-bold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-500 group-hover:shadow-lg group-hover:bg-[#e05600]"
             style={{
               background: '#ff6200',
               color: '#ffffff',
             }}
           >
-            View Blueprint Details
+            View Blueprint & Specs
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </div>
@@ -288,11 +268,11 @@ export default function Projects({ projects }) {
             </div>
 
             {/* Stat bar */}
-            <div className="flex items-center gap-6 shrink-0 bg-white/40 backdrop-blur-sm border border-black/5 px-5 py-3 rounded-xl">
+            <div className="flex items-center gap-6 shrink-0 bg-white/60 backdrop-blur-sm border border-black/10 px-6 py-3.5 rounded-xl shadow-sm">
               {[
-                { num: totalCount, label: 'Projects' },
-                { num: completedCount, label: 'Completed', gold: true },
-                { num: totalCount - completedCount, label: 'Active' },
+                { num: '72+', label: 'Projects Built' },
+                { num: '150+', label: 'Happy Customers', gold: true },
+                { num: '100%', label: 'RERA Certified' },
               ].map((s, i) => (
                 <React.Fragment key={i}>
                   <div className="text-center">
@@ -303,13 +283,13 @@ export default function Projects({ projects }) {
                       {s.num}
                     </div>
                     <div
-                      className="text-[8px] tracking-[0.2em] uppercase"
+                      className="text-[8px] tracking-[0.2em] uppercase font-bold"
                       style={{ color: '#6e6e73', fontFamily: 'var(--font-mono)' }}
                     >
                       {s.label}
                     </div>
                   </div>
-                  {i < 2 && <div className="w-px h-6" style={{ background: 'rgba(0,0,0,0.08)' }} />}
+                  {i < 2 && <div className="w-px h-6" style={{ background: 'rgba(0,0,0,0.12)' }} />}
                 </React.Fragment>
               ))}
             </div>
@@ -399,7 +379,10 @@ export default function Projects({ projects }) {
             </p>
 
             <div className="w-full h-44 rounded-xl overflow-hidden border border-neutral-200 mb-4 relative">
-              <img src={mobileDrawerProject.image} alt={mobileDrawerProject.title} className="w-full h-full object-cover" />
+              <div className="w-full h-full bg-neutral-900 flex flex-col items-center justify-center p-4">
+                <span className="font-mono text-[9px] text-[#ff6200] tracking-widest uppercase font-bold">// BLUEPRINT SPEC #{mobileDrawerProject.id.toUpperCase()}</span>
+                <span className="font-display font-bold text-base text-white text-center mt-1">{mobileDrawerProject.title}</span>
+              </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-white">
                 <MapPin className="w-3.5 h-3.5 text-[#ff6200]" />
