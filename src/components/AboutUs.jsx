@@ -30,9 +30,9 @@ export default function AboutUs() {
 
   const stats = [
     {
-      icon: <Users className="w-5 h-5" />,
-      value: '150+',
-      label: 'Happy Customers',
+      icon: <ShieldCheck className="w-5 h-5" />,
+      value: '99.88%',
+      label: 'Structural Integrity',
     },
     {
       icon: <Building2 className="w-5 h-5" />,
@@ -40,14 +40,9 @@ export default function AboutUs() {
       label: 'Projects Delivered',
     },
     {
-      icon: <ShieldCheck className="w-5 h-5" />,
-      value: '99.88%',
-      label: 'Structural Integrity',
-    },
-    {
-      icon: <Award className="w-5 h-5" />,
-      value: '15+',
-      label: 'Years of Trust',
+      icon: <Users className="w-5 h-5" />,
+      value: '150+',
+      label: 'Happy Customers',
     },
   ];
 
@@ -132,8 +127,8 @@ export default function AboutUs() {
           {/* RIGHT: Stats + Mission */}
           <div className="lg:col-span-7">
 
-            {/* Two stat cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 about-reveal">
+            {/* Three stat cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 about-reveal">
               {stats.map((item, i) => (
                 <div
                   key={i}

@@ -58,82 +58,139 @@ function ProjectCard({ project, index, onClick }) {
       <div
         className="relative overflow-hidden rounded-2xl border transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-1"
         style={{
-          background: 'rgba(255, 255, 255, 0.75)',
+          background: 'rgba(255, 255, 255, 0.6)',
           backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(0, 0, 0, 0.08)',
+          border: '1px solid rgba(0, 0, 0, 0.06)',
           boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
         }}
       >
-        {/* Technical Blueprint Header (No photo) */}
-        <div
-          className="relative p-5 sm:p-6 border-b transition-colors duration-500 overflow-hidden"
+        {/* Architectural Blueprint Schematic Section (No Photo) */}
+        <div 
+          className="relative h-[220px] sm:h-[260px] overflow-hidden p-5 flex flex-col justify-between"
           style={{
-            background: 'linear-gradient(135deg, #18181b 0%, #27272a 100%)',
-            borderBottom: '1px solid rgba(255, 98, 0, 0.25)',
+            background: 'linear-gradient(135deg, #131318 0%, #1c1c24 100%)',
           }}
         >
-          {/* Subtle blueprint CAD grid */}
+          {/* Blueprint Drafting Grid Overlay */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-20"
+            className="absolute inset-0 opacity-20 pointer-events-none"
             style={{
-              backgroundImage: 'linear-gradient(to right, rgba(255, 98, 0, 0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 98, 0, 0.2) 1px, transparent 1px)',
-              backgroundSize: '20px 20px',
+              backgroundImage: 'linear-gradient(rgba(255, 98, 0, 0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 98, 0, 0.4) 1px, transparent 1px)',
+              backgroundSize: '18px 18px',
             }}
           />
-          {/* Corner CAD drafting ticks */}
-          <div className="absolute top-2.5 left-2.5 w-2.5 h-2.5 border-t border-l border-[#ff6200]/60" />
-          <div className="absolute top-2.5 right-2.5 w-2.5 h-2.5 border-t border-r border-[#ff6200]/60" />
-          <div className="absolute bottom-2.5 left-2.5 w-2.5 h-2.5 border-b border-l border-[#ff6200]/40" />
-          <div className="absolute bottom-2.5 right-2.5 w-2.5 h-2.5 border-b border-r border-[#ff6200]/40" />
 
-          {/* Top badges row */}
-          <div className="flex items-center justify-between gap-2 mb-3.5 relative z-10">
-            <span
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded font-mono text-[9px] font-bold tracking-widest uppercase"
-              style={{
-                background: 'rgba(255, 98, 0, 0.15)',
-                color: '#ff6200',
-                border: '1px solid rgba(255, 98, 0, 0.3)',
-              }}
-            >
-              {project.category} // {project.year}
-            </span>
+          {/* Corner Drafting Crosshairs */}
+          <div className="absolute top-2.5 left-2.5 w-3 h-3 border-t border-l border-[#ff6200]/50" />
+          <div className="absolute top-2.5 right-2.5 w-3 h-3 border-t border-r border-[#ff6200]/50" />
+          <div className="absolute bottom-2.5 left-2.5 w-3 h-3 border-b border-l border-[#ff6200]/50" />
+          <div className="absolute bottom-2.5 right-2.5 w-3 h-3 border-b border-r border-[#ff6200]/50" />
 
-            <span
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded font-mono text-[9px] font-bold tracking-wider uppercase"
-              style={{
-                background: isComplete ? 'rgba(74,222,128,0.15)' : 'rgba(255, 98, 0, 0.15)',
-                color: isComplete ? '#4ade80' : '#ff6200',
-                border: `1px solid ${isComplete ? 'rgba(74,222,128,0.3)' : 'rgba(255, 98, 0, 0.3)'}`,
-              }}
-            >
-              {isComplete ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-              {isComplete ? 'Completed' : `${project.progress}% In Progress`}
-            </span>
+          {/* Blueprint Elevation / Floorplan Vector Diagram in Background */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none">
+            <svg viewBox="0 0 200 120" className="w-52 h-32 text-[#ff6200]" stroke="currentColor" fill="none" strokeWidth="1">
+              <rect x="20" y="20" width="160" height="80" strokeDasharray="4 2" />
+              <line x1="20" y1="60" x2="180" y2="60" />
+              <line x1="80" y1="20" x2="80" y2="100" />
+              <line x1="130" y1="60" x2="130" y2="100" />
+              <circle cx="50" cy="40" r="14" strokeDasharray="2 2" />
+              <path d="M90 30 L115 30 L115 50 L90 50 Z" />
+              <text x="25" y="15" fill="currentColor" fontSize="6" fontFamily="monospace">CAD // AXIS: A-1 // ELEV: +12.4M</text>
+            </svg>
           </div>
 
-          {/* Blueprint Title & ID */}
-          <div className="relative z-10">
-            <div className="flex items-baseline justify-between gap-2 mb-1.5">
-              <span className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 uppercase">
-                SPEC #{project.id.toUpperCase()}
+          {/* Top Bar: Status Badge + Drawing Code + Progress Ring */}
+          <div className="relative z-10 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-[9px] font-bold tracking-wider uppercase"
+                style={{
+                  background: isComplete ? 'rgba(74,222,128,0.2)' : 'rgba(255, 98, 0, 0.2)',
+                  color: isComplete ? '#4ade80' : '#ff6200',
+                  backdropFilter: 'blur(8px)',
+                  border: `1px solid ${isComplete ? 'rgba(74,222,128,0.3)' : 'rgba(255, 98, 0, 0.3)'}`,
+                }}
+              >
+                {isComplete ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+                {isComplete ? 'Completed' : `${project.progress}% In Progress`}
               </span>
-              <div className="flex items-center gap-1 text-[11px] font-sans text-neutral-300">
-                <MapPin className="w-3 h-3 text-[#ff6200]" />
-                <span>{project.location}</span>
-              </div>
             </div>
-            <h3 className="font-display font-extrabold text-xl sm:text-2xl text-white leading-tight transition-colors duration-300 group-hover:text-[#ff6200]">
-              {project.title}
-            </h3>
-            <p className="font-mono text-[10px] tracking-wider text-orange-400 uppercase mt-1">
-              {project.tagline}
-            </p>
+
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[8px] text-[#ff6200] tracking-widest uppercase bg-black/60 px-2 py-0.5 rounded border border-[#ff6200]/30">
+                DWG #{project.id?.toUpperCase()}
+              </span>
+              {/* Progress Arc */}
+              <svg className="w-9 h-9" viewBox="0 0 36 36">
+                <path
+                  className="text-white/10"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                />
+                <path
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke={isComplete ? '#4ade80' : '#ff6200'}
+                  strokeWidth="2.5"
+                  strokeDasharray={`${project.progress}, 100`}
+                  strokeLinecap="round"
+                  className="transition-all duration-1000"
+                />
+                <text
+                  x="18" y="20.5"
+                  textAnchor="middle"
+                  fill="white"
+                  className="text-[8px] font-bold"
+                  style={{ fontFamily: 'var(--font-mono)' }}
+                >
+                  {project.progress}%
+                </text>
+              </svg>
+            </div>
+          </div>
+
+          {/* Middle: Architectural Blueprint Technical Stamp */}
+          <div className="relative z-10 my-auto py-2">
+            <span className="font-mono text-[9px] text-[#ff6200] tracking-[0.25em] uppercase font-bold block mb-1">
+              ARCHITECTURAL SPECIFICATION
+            </span>
+            <div className="font-mono text-xs text-neutral-300 flex items-center gap-3">
+              <span>SCALE 1:100</span>
+              <span className="text-white/30">•</span>
+              <span>TN RERA APPROVED</span>
+            </div>
+          </div>
+
+          {/* Bottom Bar: Location & Category */}
+          <div className="relative z-10 flex items-center justify-between pt-2 border-t border-white/10">
+            <div className="flex items-center gap-1.5 text-white/90">
+              <MapPin className="w-3.5 h-3.5 text-[#ff6200]" />
+              <span className="text-[11px] font-sans truncate max-w-[170px]">{project.location}</span>
+            </div>
+            <span className="text-[10px] font-mono font-bold tracking-widest text-[#ff6200] uppercase">
+              {project.category} // {project.year}
+            </span>
           </div>
         </div>
 
         {/* Content Section */}
         <div className="p-5 sm:p-6">
+          {/* Title & Tagline */}
+          <h3
+            className="font-display font-extrabold text-lg sm:text-xl leading-tight mb-1 transition-colors duration-300 group-hover:text-[#ff6200]"
+            style={{ color: '#1c1c1f' }}
+          >
+            {project.title}
+          </h3>
+          <p
+            className="font-mono text-[10px] tracking-wider uppercase mb-4"
+            style={{ color: '#9A9080' }}
+          >
+            {project.tagline}
+          </p>
+
           {/* Progress Bar */}
           <div className="mb-4">
             <div className="flex justify-between items-center mb-1.5">
@@ -158,7 +215,7 @@ function ProjectCard({ project, index, onClick }) {
               <div
                 key={i}
                 className="flex items-center gap-2 p-2 rounded-lg transition-colors duration-300"
-                style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)' }}
+                style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.04)' }}
               >
                 {spec.icon}
                 <div>
@@ -170,24 +227,24 @@ function ProjectCard({ project, index, onClick }) {
           </div>
 
           {/* Features Highlight */}
-          <div className="space-y-1 mb-5">
+          <div className="space-y-1 mb-4">
             {project.features.slice(0, 2).map((feat, i) => (
               <div key={i} className="text-[10px] leading-snug">
                 <span className="font-bold text-[#ff6200] font-sans">✓ {feat.title}</span>
-                <span className="text-neutral-600">: {feat.desc.slice(0, 60)}{feat.desc.length > 60 ? '…' : ''}</span>
+                <span className="text-neutral-500">: {feat.desc.slice(0, 60)}{feat.desc.length > 60 ? '…' : ''}</span>
               </div>
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button (Visual only to avoid nested interactive elements) */}
           <div
-            className="w-full py-3 rounded-lg font-mono text-[10px] font-bold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-500 group-hover:shadow-lg group-hover:bg-[#e05600]"
+            className="w-full py-3 rounded-lg font-mono text-[10px] font-bold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-500 group-hover:shadow-lg"
             style={{
               background: '#ff6200',
               color: '#ffffff',
             }}
           >
-            View Blueprint & Specs
+            View Blueprint Details
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </div>
         </div>
@@ -268,11 +325,11 @@ export default function Projects({ projects }) {
             </div>
 
             {/* Stat bar */}
-            <div className="flex items-center gap-6 shrink-0 bg-white/60 backdrop-blur-sm border border-black/10 px-6 py-3.5 rounded-xl shadow-sm">
+            <div className="flex items-center gap-6 shrink-0 bg-white/40 backdrop-blur-sm border border-black/5 px-5 py-3 rounded-xl">
               {[
-                { num: '72+', label: 'Projects Built' },
+                { num: '72+', label: 'Projects Delivered' },
                 { num: '150+', label: 'Happy Customers', gold: true },
-                { num: '100%', label: 'RERA Certified' },
+                { num: '100%', label: 'RERA Compliance' },
               ].map((s, i) => (
                 <React.Fragment key={i}>
                   <div className="text-center">
@@ -283,13 +340,13 @@ export default function Projects({ projects }) {
                       {s.num}
                     </div>
                     <div
-                      className="text-[8px] tracking-[0.2em] uppercase font-bold"
+                      className="text-[8px] tracking-[0.2em] uppercase"
                       style={{ color: '#6e6e73', fontFamily: 'var(--font-mono)' }}
                     >
                       {s.label}
                     </div>
                   </div>
-                  {i < 2 && <div className="w-px h-6" style={{ background: 'rgba(0,0,0,0.12)' }} />}
+                  {i < 2 && <div className="w-px h-6" style={{ background: 'rgba(0,0,0,0.08)' }} />}
                 </React.Fragment>
               ))}
             </div>
@@ -378,13 +435,29 @@ export default function Projects({ projects }) {
               {mobileDrawerProject.tagline}
             </p>
 
-            <div className="w-full h-44 rounded-xl overflow-hidden border border-neutral-200 mb-4 relative">
-              <div className="w-full h-full bg-neutral-900 flex flex-col items-center justify-center p-4">
-                <span className="font-mono text-[9px] text-[#ff6200] tracking-widest uppercase font-bold">// BLUEPRINT SPEC #{mobileDrawerProject.id.toUpperCase()}</span>
-                <span className="font-display font-bold text-base text-white text-center mt-1">{mobileDrawerProject.title}</span>
+            {/* Blueprint Header (No Photo) */}
+            <div 
+              className="w-full h-44 rounded-xl overflow-hidden border border-neutral-800 mb-4 relative p-4 flex flex-col justify-between"
+              style={{ background: 'linear-gradient(135deg, #131318 0%, #1c1c24 100%)' }}
+            >
+              <div
+                className="absolute inset-0 opacity-20 pointer-events-none"
+                style={{
+                  backgroundImage: 'linear-gradient(rgba(255, 98, 0, 0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 98, 0, 0.4) 1px, transparent 1px)',
+                  backgroundSize: '16px 16px',
+                }}
+              />
+              <div className="relative z-10 flex items-center justify-between">
+                <span className="font-mono text-[8px] text-[#ff6200] tracking-widest uppercase bg-black/60 px-2 py-0.5 rounded border border-[#ff6200]/30">
+                  DWG #{mobileDrawerProject.id?.toUpperCase()}
+                </span>
+                <span className="font-mono text-[9px] text-neutral-400">SCALE 1:100</span>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-white">
+              <div className="relative z-10">
+                <div className="font-mono text-[9px] text-orange-400 uppercase tracking-widest font-bold">ARCHITECTURAL BLUEPRINT</div>
+                <div className="font-mono text-[10px] text-white">GOVT RERA REGISTERED // STRUCTURAL ENGINEER CLASS-I</div>
+              </div>
+              <div className="relative z-10 flex items-center gap-1.5 text-white">
                 <MapPin className="w-3.5 h-3.5 text-[#ff6200]" />
                 <span className="text-[11px] font-sans">{mobileDrawerProject.location}</span>
               </div>

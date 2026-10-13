@@ -20,9 +20,9 @@ function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, trans
 
   const backgroundStyle = item.image
     ? {
-      backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.80) 100%), url(${item.image})`,
+      backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.82) 100%), url(${item.image})`,
       backgroundSize: 'cover',
-      backgroundPosition: 'center'
+      backgroundPosition: 'center',
     }
     : { background: 'linear-gradient(135deg, #2d2d35 0%, #222227 50%, #f8f9fa 100%)' };
 

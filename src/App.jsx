@@ -8,7 +8,6 @@ import WhyUs from './components/WhyUs';
 import SmartHUD from './components/SmartHUD';
 import Reviews from './components/Reviews';
 import Packages from './components/Packages';
-import Architecture from './components/Architecture';
 import Footer from './components/Footer';
 import AllocationModal from './components/AllocationModal';
 import ScrollStack, { ScrollStackItem } from './components/ScrollStack';
@@ -16,6 +15,7 @@ import ProjectDetail from './pages/ProjectDetail';
 import { PROJECTS_BY_CATEGORY } from './data/projects';
 import IntroSection from './components/IntroSection';
 import IntroSequenceSection from './components/IntroSequence';
+import ArchitectureSection from './components/ArchitectureSection';
 
 
 function App() {
@@ -195,6 +195,12 @@ function App() {
 
   return (
     <>
+      {/* Global sticky header navigation - ALWAYS VISIBLE WITH LOGO & TOP-RIGHT MENU BAR */}
+      <Header 
+        setAllocationModal={setAllocationModal} 
+        showNav={true} 
+      />
+
       {introState !== 'completed' && (
         <IntroSection
           onStartReveal={() => setIntroState('unfolding')}
@@ -207,12 +213,6 @@ function App() {
             : 'opacity-100 scale-100'
           }`}
       >
-        {/* Global sticky header navigation */}
-        <Header 
-          setAllocationModal={setAllocationModal} 
-          showNav={true} 
-        />
-
         <Routes>
           <Route path="/project/:id" element={
             <ProjectDetail 
@@ -378,8 +378,8 @@ function HomePage({
           <ScrollStackItem style={{ background: '#18181b' }}>
             <Packages setAllocationModal={setAllocationModal} setSelectedProject={setSelectedProject} />
           </ScrollStackItem>
-          <ScrollStackItem style={{ background: '#121214' }}>
-            <Architecture setAllocationModal={setAllocationModal} />
+          <ScrollStackItem style={{ background: '#FED8B1' }}>
+            <ArchitectureSection setAllocationModal={setAllocationModal} />
           </ScrollStackItem>
           <ScrollStackItem style={{ background: '#18181b' }}>
             <Footer timeText={timeText} />

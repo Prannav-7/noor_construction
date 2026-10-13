@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, X, Compass, PhoneCall, MapPin } from 'lucide-react';
 
 const WhatsAppIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -22,11 +22,9 @@ const CardNav = ({
   logoAlt = 'Logo',
   className = '',
   onCtaClick,
-  showNav: propShowNav
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [showNav, setShowNav] = useState(true);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,23 +43,22 @@ const CardNav = ({
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY;
-      setScrolled(scrollY > 40);
-      setShowNav(true);
+      setScrolled(scrollY > 20);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, [location.pathname]);
 
-  const handleLinkClick = (e, href, isMobileClick = false) => {
+  const handleLinkClick = (e, href, isDrawerClick = false) => {
     if (href === '#enquire') {
       e.preventDefault();
       onCtaClick?.();
-      if (isMobileClick) setIsMenuOpen(false);
+      if (isDrawerClick) setIsMenuOpen(false);
     } else if (location.pathname !== '/') {
       e.preventDefault();
       navigate('/' + href);
-      if (isMobileClick) setIsMenuOpen(false);
+      if (isDrawerClick) setIsMenuOpen(false);
     } else {
       const id = href.replace('#', '');
       const el = document.getElementById(id);
@@ -69,128 +66,88 @@ const CardNav = ({
         e.preventDefault();
         el.scrollIntoView({ behavior: 'smooth' });
       }
-      if (isMobileClick) setIsMenuOpen(false);
+      if (isDrawerClick) setIsMenuOpen(false);
     }
   };
 
   const navLinks = [
-    { label: 'About Us', href: '#about' },
-    { label: 'Portfolio', href: '#projects' },
-    { label: 'Architecture', href: '#architecture' },
-    { label: 'Packages', href: '#packages' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'About Us', href: '#about', tag: '01' },
+    { label: 'The Way of Architecture', href: '#architecture', tag: '02' },
+    { label: 'Portfolio', href: '#projects', tag: '03' },
+    { label: 'Cost Estimator', href: '#estimator', tag: '04' },
+    { label: 'Packages', href: '#packages', tag: '05' },
+    { label: 'Reviews', href: '#reviews', tag: '06' },
+    { label: 'Contact', href: '#contact', tag: '07' },
   ];
 
   return (
     <>
+      {/* ── MINIMALIST LUXURY NAVIGATION BAR ── */}
       <header
-        className={`fixed top-0 left-0 right-0 z-[950] w-full flex items-center justify-between px-6 md:px-12 transition-all duration-500 ${
-          (propShowNav !== undefined ? (propShowNav && showNav) : showNav)
-            ? 'translate-y-0 opacity-100'
-            : '-translate-y-full opacity-0 pointer-events-none'
-        } ${
+        className={`fixed top-0 left-0 right-0 z-[1000] w-full flex items-center justify-between px-6 sm:px-10 md:px-14 transition-all duration-300 ${
           scrolled 
-            ? 'h-16 bg-neutral-950/85 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.3)]' 
+            ? 'h-16 bg-neutral-950/85 backdrop-blur-md border-b border-white/8 shadow-[0_4px_30px_rgba(0,0,0,0.3)]' 
             : 'h-20 bg-transparent border-b border-white/5'
         } ${className}`}
       >
-        {/* LOGO CONTAINER */}
+        {/* LOGO: ALWAYS ANCHORED ON THE LEFT */}
         <div className="flex items-center">
           <a
             href="#hero"
             onClick={(e) => handleLinkClick(e, '#hero')}
-            className="flex items-center gap-2.5 group"
+            className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
           >
             <img
               src={logo}
               alt={logoAlt}
-              className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-7 sm:h-8 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
             <div className="flex flex-col leading-none">
-              <span className="font-display font-extrabold text-[13px] md:text-[15px] text-white tracking-widest uppercase">
+              <span className="font-display font-extrabold text-[13px] sm:text-[14px] text-white tracking-widest uppercase">
                 NOOR
               </span>
-              <span className="font-mono text-[7px] md:text-[8px] text-[#ff6200] font-bold tracking-[0.25em] uppercase mt-0.5">
+              <span className="font-mono text-[7px] text-[#ff6200] font-bold tracking-[0.25em] uppercase mt-0.5">
                 Infrastructure
               </span>
             </div>
           </a>
         </div>
 
-        {/* DESKTOP NAV LINKS & ACTIONS (Right aligned) */}
-        <div className="hidden lg:flex items-center gap-8">
-          <nav className="flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-white/80 hover:text-[#ff6200] transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="h-4 w-px bg-white/15" />
-
-          <div className="flex items-center gap-4">
-            <a
-              href="https://wa.me/917305130207"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
-              aria-label="Contact on WhatsApp"
-            >
-              <WhatsAppIcon className="w-4 h-4" />
-            </a>
-            <a
-              href="https://www.instagram.com/noor_constructions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-300 hover:scale-105 hover:bg-[#ff6200] text-[#ff6200] hover:text-white border border-[#ff6200]/25 bg-white/5 cursor-pointer"
-              aria-label="Follow on Instagram"
-            >
-              <InstagramIcon className="w-4 h-4" />
-            </a>
-            
-            <button
-              onClick={() => onCtaClick?.()}
-              className="btn-gold px-6 py-2.5 rounded-lg font-mono text-[11px] font-bold tracking-widest uppercase transition-all shadow-md hover:shadow-orange-500/10 cursor-pointer"
-            >
-              INQUIRE NOW
-            </button>
-          </div>
-        </div>
-
-        {/* MOBILE CONTROLS */}
-        <div className="flex lg:hidden items-center gap-3">
+        {/* TOP RIGHT: MINIMALIST MENU TRIGGER */}
+        <div className="flex items-center gap-3">
           <a
             href="https://wa.me/917305130207"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-[#ff6200] border border-[#ff6200]/20 bg-white/5"
+            className="w-9 h-9 flex items-center justify-center rounded-full text-white/70 hover:text-[#ff6200] hover:bg-white/5 transition-all cursor-pointer"
             aria-label="Contact on WhatsApp"
           >
-            <WhatsAppIcon className="w-3.5 h-3.5" />
+            <WhatsAppIcon className="w-4 h-4" />
           </a>
 
+          {/* Minimalist Architectural Menu Button */}
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10 transition-colors"
-            aria-label="Toggle Menu"
+            onClick={() => setIsMenuOpen(true)}
+            className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/15 hover:border-[#ff6200] bg-black/40 hover:bg-[#ff6200] text-white transition-all cursor-pointer backdrop-blur-md shadow-sm group"
+            aria-label="Open Menu"
           >
-            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <span className="font-mono text-[10px] tracking-[0.22em] uppercase font-bold text-white/90 group-hover:text-white">
+              MENU
+            </span>
+            <div className="flex flex-col gap-1 w-3.5">
+              <span className="w-full h-[1.5px] bg-[#ff6200] group-hover:bg-white transition-colors rounded-full" />
+              <span className="w-2.5 h-[1.5px] bg-[#ff6200] group-hover:bg-white transition-colors rounded-full ml-auto" />
+            </div>
           </button>
         </div>
       </header>
 
-      {/* MOBILE FULL-SCREEN MENU DRAWER */}
+      {/* ── EXPANSIVE LUXURY ARCHITECTURAL MENU DRAWER ── */}
       {isMenuOpen && createPortal(
-        <div className="fixed inset-0 z-[9999] lg:hidden bg-neutral-950/98 backdrop-blur-xl flex flex-col justify-center px-8">
-          {/* Top Bar inside mobile drawer to close */}
-          <div className="absolute top-0 inset-x-0 h-20 flex items-center justify-between px-6 border-b border-white/5 bg-neutral-950/50">
-            <div className="flex items-center gap-2.5">
+        <div className="fixed inset-0 z-[10000] bg-neutral-950/98 backdrop-blur-2xl flex flex-col justify-between overflow-y-auto animate-fadeIn">
+          {/* Top Bar inside Drawer */}
+          <div className="h-20 flex items-center justify-between px-6 sm:px-12 border-b border-white/8 bg-neutral-950/80 shrink-0">
+            <div className="flex items-center gap-2.5 sm:gap-3">
               <img src={logo} alt={logoAlt} className="h-8 w-auto object-contain" />
               <div className="flex flex-col leading-none">
                 <span className="font-display font-extrabold text-[13px] text-white tracking-widest uppercase">
@@ -207,63 +164,133 @@ const CardNav = ({
                 href="https://wa.me/917305130207"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 flex items-center justify-center rounded-lg text-[#ff6200] border border-[#ff6200]/20 bg-white/5"
+                className="w-9 h-9 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5 hover:bg-[#ff6200] hover:text-white transition-colors"
+                aria-label="Contact on WhatsApp"
               >
-                <WhatsAppIcon className="w-3.5 h-3.5" />
+                <WhatsAppIcon className="w-4 h-4" />
               </a>
               <button
                 onClick={() => setIsMenuOpen(false)}
-                className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10 transition-colors"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-[#ff6200] text-white border border-white/15 transition-colors cursor-pointer"
                 aria-label="Close menu"
               >
-                <X className="w-5 h-5" />
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest">CLOSE</span>
+                <X className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          <nav className="flex flex-col gap-6 text-center mt-12">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href, true)}
-                className="font-display font-extrabold text-2xl tracking-tight text-white hover:text-[#ff6200] transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+          {/* Drawer Body */}
+          <div className="max-w-6xl w-full mx-auto px-6 sm:px-12 py-10 my-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left: Architectural Credentials & Scale */}
+            <div className="lg:col-span-5 space-y-6 hidden sm:block">
+              <div className="flex items-center gap-2">
+                <Compass className="w-4 h-4 text-[#ff6200]" />
+                <span className="font-mono text-[10px] tracking-[0.25em] text-[#ff6200] uppercase font-bold">
+                  ARCHITECTURAL DIRECTORY
+                </span>
+              </div>
 
-            <div className="h-px bg-white/10 my-4" />
+              <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-white leading-tight">
+                Engineering Legacies Along the Tamil Nadu Coast.
+              </h2>
 
-            <button
-              onClick={() => {
-                setIsMenuOpen(false);
-                onCtaClick?.();
-              }}
-              className="btn-gold w-full py-3.5 rounded-xl font-mono text-xs font-bold tracking-widest uppercase"
-            >
-              INQUIRE NOW
-            </button>
+              <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                Supervised by Er. K. Noor Mohammed (Chief Principal Architect). From passive Dravidian courtyards to 2026 4D BIM digital twin construction.
+              </p>
 
-            <div className="flex items-center justify-center gap-4 mt-6">
-              <a
-                href="https://wa.me/917305130207"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5"
-              >
-                <WhatsAppIcon className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.instagram.com/noor_constructions"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5"
-              >
-                <InstagramIcon className="w-5 h-5" />
-              </a>
+              {/* Verified Metrics */}
+              <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-white/5 border border-white/10">
+                <div>
+                  <div className="font-display font-extrabold text-xl text-[#ff6200] leading-none mb-1">150+</div>
+                  <div className="font-mono text-[8px] text-neutral-400 uppercase tracking-wider">Happy Customers</div>
+                </div>
+                <div>
+                  <div className="font-display font-extrabold text-xl text-white leading-none mb-1">72+</div>
+                  <div className="font-mono text-[8px] text-neutral-400 uppercase tracking-wider">Projects Built</div>
+                </div>
+                <div>
+                  <div className="font-display font-extrabold text-xl text-[#ff6200] leading-none mb-1">15+</div>
+                  <div className="font-mono text-[8px] text-neutral-400 uppercase tracking-wider">Years Heritage</div>
+                </div>
+              </div>
+
+              <div className="text-neutral-400 font-mono text-[10px] space-y-1">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-3.5 h-3.5 text-[#ff6200]" />
+                  <span>East Coast Road, Pudupattinam & Kalpakkam, Tamil Nadu</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <PhoneCall className="w-3.5 h-3.5 text-[#ff6200]" />
+                  <span>+91 73051 30207 • info@noorconstruction.com</span>
+                </div>
+              </div>
             </div>
-          </nav>
+
+            {/* Right: Navigation Links */}
+            <div className="lg:col-span-7 flex flex-col justify-center">
+              <nav className="flex flex-col space-y-3 sm:space-y-4">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => handleLinkClick(e, link.href, true)}
+                    className="group flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-all"
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="font-mono text-[11px] font-bold text-[#ff6200] group-hover:scale-110 transition-transform">
+                        {link.tag} //
+                      </span>
+                      <span className="font-display font-extrabold text-xl sm:text-2xl text-white group-hover:text-[#ff6200] transition-colors">
+                        {link.label}
+                      </span>
+                    </div>
+                    <ArrowUpRight className="w-5 h-5 text-neutral-600 group-hover:text-[#ff6200] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                  </a>
+                ))}
+              </nav>
+
+              <div className="pt-6 mt-4 border-t border-white/10 flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    onCtaClick?.();
+                  }}
+                  className="glow-btn btn-gold flex-1 py-3.5 rounded-xl font-mono text-xs font-bold tracking-widest uppercase cursor-pointer"
+                >
+                  TRANSMIT ALLOCATION DEED
+                </button>
+
+                <div className="flex items-center justify-center gap-3">
+                  <a
+                    href="https://wa.me/917305130207"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5 hover:bg-[#ff6200] hover:text-white transition-colors"
+                    aria-label="WhatsApp"
+                  >
+                    <WhatsAppIcon className="w-5 h-5" />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/noor_constructions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5 hover:bg-[#ff6200] hover:text-white transition-colors"
+                    aria-label="Instagram"
+                  >
+                    <InstagramIcon className="w-5 h-5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Drawer Bottom Bar */}
+          <div className="py-4 px-6 sm:px-12 border-t border-white/8 text-center text-neutral-500 font-mono text-[9px] uppercase tracking-widest shrink-0">
+            NOOR INFRASTRUCTURE & ARCHITECTURAL SOLUTIONS • RERA GOVT OF TAMIL NADU REGISTERED
+          </div>
         </div>,
         document.body
       )}
@@ -272,4 +299,3 @@ const CardNav = ({
 };
 
 export default CardNav;
-

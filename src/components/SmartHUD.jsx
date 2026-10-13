@@ -184,7 +184,7 @@ export default function SmartHUD({
               <div className="font-mono text-[8px] text-neutral-450 uppercase tracking-widest mt-0.5">Structure Warranty</div>
             </div>
             <div className="bg-white border border-neutral-200 rounded p-2.5 text-center shadow-sm">
-              <div className="font-mono font-bold text-neutral-900 text-lg leading-none">ISO</div>
+              <div className="font-mono font-bold text-neutral-900 text-lg leading-none">100%</div>
               <div className="font-mono text-[8px] text-neutral-450 uppercase tracking-widest mt-0.5">Quality Certified</div>
             </div>
           </div>

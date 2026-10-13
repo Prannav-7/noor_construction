@@ -276,7 +276,6 @@ export default function Footer({ timeText }) {
               <ul className="space-y-3">
                 {[
                   { label: 'Projects', action: () => scrollTo('projects') },
-                  { label: 'Architecture', action: () => scrollTo('architecture') },
                   { label: 'Process', action: () => scrollTo('why-us') },
                   { label: 'Estimator', action: () => scrollTo('estimator') },
                   { label: 'Reviews', action: () => scrollTo('reviews') },

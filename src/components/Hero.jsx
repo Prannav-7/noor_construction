@@ -4,9 +4,9 @@ import TypewriterText from './TypewriterText';
 import Carousel from './Carousel';
 
 const stats = [
-  { value: '150+', label: 'Happy Customers' },
-  { value: '72+', label: 'Projects Completed' },
   { value: '15+', label: 'Years of Excellence' },
+  { value: '72+', label: 'Projects Delivered' },
+  { value: '150+', label: 'Happy Customers' },
 ];
 
 export default function Hero({ timeText, setAllocationModal, combined = false }) {
@@ -113,7 +113,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
             Where every corner of the East Coast Road tells a story of craft — we build homes that stand as your greatest legacy, engineered with precision and finished with artistry.
           </p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - No home page cta for project scroll */}
           <div className="flex flex-wrap gap-3 items-center mb-6 lg:mb-10">
             <a
               href="#estimator"
@@ -128,7 +128,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
               className="btn-ghost px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
-              Tamil Nadu Architecture
+              The Way of Architecture
             </a>
           </div>
 

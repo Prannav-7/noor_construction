@@ -68,45 +68,72 @@ export default function ProjectDetail({ setAllocationModal, setSelectedProject }
         <span>BACK</span>
       </button>
 
-      {/* ── HERO BANNER (Technical Blueprint — No Photo) ── */}
-      <div className="relative h-[45vh] min-h-[280px] max-h-[460px] overflow-hidden bg-gradient-to-br from-neutral-950 via-neutral-900 to-[#1c1c1f]">
-        {/* Architectural CAD blueprint grid */}
-        <div
-          className="absolute inset-0 opacity-25 pointer-events-none"
+      {/* ── ARCHITECTURAL BLUEPRINT HERO BANNER (NO PHOTO) ── */}
+      <div 
+        className="relative h-[48vh] min-h-[340px] max-h-[520px] overflow-hidden p-6 md:p-12 flex flex-col justify-between"
+        style={{ background: 'linear-gradient(135deg, #111116 0%, #1a1a24 60%, #121217 100%)' }}
+      >
+        {/* Technical Blueprint Grid Background */}
+        <div 
+          className="absolute inset-0 opacity-20 pointer-events-none"
           style={{
-            backgroundImage: 'linear-gradient(to right, rgba(255, 98, 0, 0.25) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 98, 0, 0.25) 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(rgba(255, 98, 0, 0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 98, 0, 0.35) 1px, transparent 1px)',
             backgroundSize: '24px 24px',
           }}
         />
-        {/* Subtle radial glow */}
-        <div
-          className="absolute -top-24 -left-24 w-96 h-96 rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(255, 98, 0, 0.15) 0%, transparent 70%)', filter: 'blur(50px)' }}
-        />
 
-        {/* Corner survey marks */}
-        <div className="absolute top-4 left-4 w-5 h-5 border-t-2 border-l-2 border-black/15 pointer-events-none" />
-        <div className="absolute top-4 right-4 w-5 h-5 border-t-2 border-r-2 border-black/15 pointer-events-none" />
+        {/* Blueprint CAD Vector Schematic Artwork in Background */}
+        <div className="absolute right-4 sm:right-16 top-1/2 -translate-y-1/2 opacity-20 pointer-events-none hidden md:block">
+          <svg viewBox="0 0 320 220" className="w-80 h-56 text-[#ff6200]" stroke="currentColor" fill="none" strokeWidth="1.2">
+            <rect x="20" y="20" width="280" height="180" strokeDasharray="6 3" />
+            <line x1="20" y1="90" x2="300" y2="90" />
+            <line x1="160" y1="20" x2="160" y2="200" />
+            <rect x="40" y="40" width="80" height="40" />
+            <rect x="180" y="110" width="100" height="70" />
+            <circle cx="230" cy="55" r="22" strokeDasharray="3 3" />
+            <text x="30" y="15" fill="currentColor" fontSize="8" fontFamily="monospace">NCS STRUCTURAL ARCHITECTURE // METRIC 1:100</text>
+            <text x="185" y="105" fill="currentColor" fontSize="7" fontFamily="monospace">ZONE-III SEISMIC MONOLITHIC FRAME</text>
+          </svg>
+        </div>
 
-        {/* Text overlay - bottom left */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex flex-wrap items-center gap-3 mb-3">
-              <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-[10px] font-bold tracking-wider ${isDone ? 'bg-green-500 text-white' : 'bg-[#ff6200] text-white'}`}>
-                {isDone ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-                {isDone ? 'COMPLETED' : `${project.progress}% IN PROGRESS`}
-              </span>
-              {project.category && (
-                <span className="font-mono text-[9px] text-white/50 tracking-widest uppercase bg-white/10 px-2 py-1 rounded">
-                  {project.category} PROJECT
-                </span>
-              )}
-            </div>
-            <p className="font-mono text-[10px] tracking-[0.3em] text-orange-400 font-bold uppercase mb-2">{project.tagline}</p>
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white leading-tight tracking-tight">
-              {project.title}
-            </h1>
+        {/* Corner Survey Registration Marks */}
+        <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-[#ff6200]/40 pointer-events-none" />
+        <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-[#ff6200]/40 pointer-events-none" />
+        <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-[#ff6200]/40 pointer-events-none" />
+        <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-[#ff6200]/40 pointer-events-none" />
+
+        {/* Top Blueprint Data Header */}
+        <div className="relative z-10 max-w-5xl mx-auto w-full flex items-center justify-between pt-8 sm:pt-4">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[9px] text-[#ff6200] tracking-widest uppercase bg-black/60 px-2.5 py-1 rounded border border-[#ff6200]/30 font-bold">
+              CAD SPECIFICATION SHEET // DWG #{project.id?.toUpperCase()}-2026
+            </span>
+            <span className="hidden sm:inline-block font-mono text-[9px] text-neutral-400">
+              SCALE: 1:100 METRIC
+            </span>
           </div>
+          <span className="font-mono text-[9px] text-[#4ade80] tracking-wider uppercase bg-green-500/10 px-2.5 py-1 rounded border border-green-500/20">
+            ✓ TN RERA VALIDATED
+          </span>
+        </div>
+
+        {/* Bottom Hero Info */}
+        <div className="relative z-10 max-w-5xl mx-auto w-full pb-2">
+          <div className="flex flex-wrap items-center gap-3 mb-3">
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-mono text-[10px] font-bold tracking-wider ${isDone ? 'bg-green-500 text-white' : 'bg-[#ff6200] text-white'}`}>
+              {isDone ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+              {isDone ? 'COMPLETED' : `${project.progress}% IN PROGRESS`}
+            </span>
+            {project.category && (
+              <span className="font-mono text-[9px] text-white/70 tracking-widest uppercase bg-white/10 px-2.5 py-1 rounded border border-white/10">
+                {project.category} ARCHITECTURE
+              </span>
+            )}
+          </div>
+          <p className="font-mono text-[10px] tracking-[0.3em] text-[#ff6200] font-bold uppercase mb-2">{project.tagline}</p>
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white leading-tight tracking-tight">
+            {project.title}
+          </h1>
         </div>
       </div>
 
