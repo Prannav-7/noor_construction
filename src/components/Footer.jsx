@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Phone, Clock, ArrowUpRight, Shield, X } from 'lucide-react';
+import { MapPin, Phone, Clock, ArrowUpRight, Shield, X, MessageCircle } from 'lucide-react';
 
 /* ─── Modal content ─────────────────────────────────────────── */
 const PRIVACY_CONTENT = {
@@ -16,7 +16,7 @@ const PRIVACY_CONTENT = {
     },
     {
       heading: 'Your Rights & Contact',
-      body: 'You may request access, correction, or deletion of your data at any time by calling +91 73051 30207 or visiting our office at 5, East Coast Rd, Kalpakkam, Tamil Nadu 603102.',
+      body: 'You may request access, correction, or deletion of your data at any time by calling +91 72006 29949 or visiting our office at 5, East Coast Rd, Kalpakkam, Tamil Nadu 603102.',
     },
   ],
 };
@@ -224,13 +224,27 @@ export default function Footer({ timeText }) {
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 shrink-0" style={{ color: '#ff6200' }} />
                 <a
-                  href="tel:+917305130207"
+                  href="tel:+917200629949"
                   className="text-[12px] font-medium transition-colors"
                   style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: 'var(--font-mono)' }}
                   onMouseEnter={e => e.target.style.color = '#ff6200'}
                   onMouseLeave={e => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
                 >
-                  073051 30207
+                  072006 29949
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <MessageCircle className="w-4 h-4 shrink-0" style={{ color: '#25D366' }} />
+                <a
+                  href="https://wa.me/917200629949?text=Hello%20Noor%20Infrastructure!%20I%20would%20like%20to%20enquire%20about%20a%20construction%20project."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[12px] font-medium transition-colors"
+                  style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: 'var(--font-mono)' }}
+                  onMouseEnter={e => e.target.style.color = '#25D366'}
+                  onMouseLeave={e => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
+                >
+                  WhatsApp Us
                 </a>
               </div>
               <div className="flex items-center gap-3">

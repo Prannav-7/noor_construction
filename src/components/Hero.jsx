@@ -1,69 +1,52 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronRight, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
 import TypewriterText from './TypewriterText';
-import Carousel from './Carousel';
 
 const stats = [
-  { value: '15+', label: 'Years of Excellence' },
+  { value: '15+', label: 'Years of Craft' },
   { value: '72+', label: 'Projects Delivered' },
-  { value: '150+', label: 'Happy Customers' },
+  { value: '150+', label: 'Client Partnerships' },
+];
+
+const projectHighlights = [
+  'Design-led construction planning',
+  'Transparent budgeting and delivery',
+  'Tailored execution for premium spaces',
 ];
 
 export default function Hero({ timeText, setAllocationModal, combined = false }) {
-  const containerRef = useRef(null);
-  const [carouselWidth, setCarouselWidth] = useState(320);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    const observer = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const width = entry.contentRect.width;
-        if (width > 0) {
-          setCarouselWidth(width);
-        }
-      }
-    });
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section
       id="hero"
       className={`relative pt-48 pb-8 md:pt-32 lg:pt-36 lg:pb-12 px-4 md:px-8 lg:px-12 min-h-screen w-full z-10 text-white ${!combined ? 'luxury-grain overflow-hidden' : 'overflow-visible'}`}
-      style={{ background: combined ? 'transparent' : '#18181b' }}
+      style={{ background: combined ? 'transparent' : '#101316' }}
     >
-      {/* Real-time Construction Workers Background Image */}
       {!combined && (
         <div
           className="absolute inset-0 bg-cover bg-center pointer-events-none z-0"
           style={{
             backgroundImage: "url('/hero_bg_local_construction.png')",
-            filter: 'brightness(0.4) contrast(1.1) grayscale(15%)'
+            filter: 'brightness(0.38) contrast(1.15) grayscale(18%)'
           }}
         />
       )}
 
-      {/* Dark gradient overlay to ensure text contrast and seamless footer/section transition */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          background: 'linear-gradient(to bottom, rgba(24, 24, 27, 0.3) 0%, rgba(24, 24, 27, 0.6) 60%, #18181b 100%)'
+          background: 'linear-gradient(to bottom, rgba(16, 19, 22, 0.3) 0%, rgba(16, 19, 22, 0.68) 55%, rgba(16, 19, 22, 0.96) 100%)'
         }}
       />
 
-      {/* Blind shadow overlay */}
       <div
         className="absolute inset-0 pointer-events-none z-5"
         style={{
-          background: 'repeating-linear-gradient(130deg, transparent, transparent 140px, rgba(255, 255, 255, 0.015) 140px, rgba(255, 255, 255, 0.015) 280px)',
+          background: 'repeating-linear-gradient(130deg, transparent, transparent 140px, rgba(255, 255, 255, 0.02) 140px, rgba(255, 255, 255, 0.02) 280px)',
           mixBlendMode: 'overlay',
           opacity: 0.8,
         }}
       />
 
-      {/* Background Watermark — brand identity */}
       <div
         className="absolute right-6 md:right-12 bottom-6 md:bottom-10 font-display font-black text-[10vw] leading-none pointer-events-none select-none z-0 text-white/[0.03] uppercase tracking-tighter"
         aria-hidden="true"
@@ -71,34 +54,24 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
         NCS
       </div>
 
-      {/* Floating brand badge */}
-      <div
-        className="absolute top-28 md:top-36 right-6 md:right-12 flex items-center gap-2 z-20 pointer-events-none"
-        aria-hidden="true"
-      >
-        <img
-          src="/ncs-logo.png"
-          alt=""
-          className="h-6 md:h-8 w-auto object-contain opacity-25"
-        />
-      </div>
-
-      {/* Main grid */}
-      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 lg:gap-8 items-center lg:items-start w-full max-w-7xl mx-auto relative z-10 mt-6 md:mt-10 lg:mt-24">
-
-        {/* ── LEFT: Text ── */}
-        <div className="lg:col-span-6 flex flex-col justify-center reveal-on-scroll relative z-10">
-
-          {/* Headline */}
-          <h1
-            className="font-display font-extrabold leading-[1.0] tracking-tight mb-3 text-white"
-            style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)' }}
+      <div className="relative z-10 mx-auto mt-6 grid w-full max-w-7xl gap-10 md:mt-10 lg:mt-20 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+        <div className="flex flex-col justify-center reveal-on-scroll">
+          <div
+            className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-neutral-200 backdrop-blur-sm"
+            style={{ fontFamily: 'var(--font-mono)' }}
           >
-            BUILDING
+            Trusted construction partner
+          </div>
+
+          <h1
+            className="font-display font-extrabold leading-[0.97] tracking-[-0.06em] text-white"
+            style={{ fontSize: 'clamp(2.8rem, 5vw, 5rem)' }}
+          >
+            Building
             <br />
             <span className="font-serif italic font-normal text-[#ff6200]">
               <TypewriterText
-                words={['Excellence.', 'Your Future.', 'Dreams.', 'Legacies.']}
+                words={['Legacy Homes.', 'Better Spaces.', 'Enduring Value.']}
                 speed={95}
                 delay={2000}
                 eraseSpeed={55}
@@ -107,20 +80,17 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
             </span>
           </h1>
 
-          <p
-            className="font-sans text-sm md:text-base mb-4 leading-relaxed max-w-md text-neutral-400"
-          >
-            Where every corner of the East Coast Road tells a story of craft — we build homes that stand as your greatest legacy, engineered with precision and finished with artistry.
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-300 md:text-base">
+            We create refined, high-performance spaces with disciplined execution, transparent communication, and craftsmanship that stands the test of time.
           </p>
 
-          {/* CTA Buttons - No home page cta for project scroll */}
-          <div className="flex flex-wrap gap-3 items-center mb-6 lg:mb-10">
+          <div className="mt-7 flex flex-wrap items-center gap-3">
             <a
               href="#estimator"
               className="glow-btn btn-gold px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2.5 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
-              Cost Estimator
+              Book a Consultation
               <ArrowRight className="w-4 h-4" />
             </a>
             <a
@@ -128,13 +98,12 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
               className="btn-ghost px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
-              The Way of Architecture
+              View Projects
             </a>
           </div>
 
-          {/* Stat Strip */}
           <div
-            className="grid grid-cols-3 gap-2 sm:gap-4 pt-6 sm:pt-8 w-full"
+            className="mt-8 grid w-full max-w-2xl grid-cols-3 gap-2 sm:gap-4 pt-6 sm:pt-8"
             style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}
           >
             {stats.map((stat, i) => (
@@ -147,7 +116,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
                 </div>
                 <div
                   className="text-[8px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase leading-tight"
-                  style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}
+                  style={{ color: 'rgba(255, 255, 255, 0.6)', fontFamily: 'var(--font-mono)' }}
                 >
                   {stat.label}
                 </div>
@@ -162,85 +131,65 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
           </div>
         </div>
 
-        {/* ── RIGHT: Visual Panel ── */}
-        <div className="lg:col-span-6 relative flex items-center justify-center reveal-on-scroll z-10">
-
-          {/* Ambient gold glow behind panel */}
+        <div className="relative hidden lg:block">
           <div
-            className="absolute w-72 h-72 rounded-full blur-[100px] pointer-events-none z-0"
-            style={{ background: 'rgba(255, 98, 0, 0.05)' }}
-          />
-
-          {/* Elegant thin-bordered panel */}
-          <div
-            className="relative w-[92vw] max-w-[92vw] sm:w-full sm:max-w-[380px] lg:max-w-[440px] aspect-[4/3] sm:aspect-[1.0] lg:aspect-[4/5] overflow-hidden flex flex-col justify-center z-10 lg:-translate-y-10"
-            style={{
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              background: 'rgba(24, 24, 27, 0.75)',
-              backdropFilter: 'blur(12px)',
-              boxShadow: '0 40px 100px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-            }}
+            className="relative overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm"
+            style={{ boxShadow: '0 25px 80px rgba(0,0,0,0.45)' }}
           >
-            {/* Corner tick marks — gold */}
-            <div className="absolute top-4 left-4 w-4 h-4 border-t border-l" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
-            <div className="absolute top-4 right-4 w-4 h-4 border-t border-r" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
-            <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
-            <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r" style={{ borderColor: 'rgba(255, 98, 0, 0.4)' }} />
-
-            {/* Carousel */}
-            <div ref={containerRef} className="relative flex-1 overflow-hidden m-2 sm:m-4 rounded-sm" style={{ background: '#18181b' }}>
-              <Carousel baseWidth={carouselWidth} autoplay={true} loop={true} autoplayDelay={3800} />
-
-              {/* Subtle annotation overlays */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#ff6200]/10 via-transparent to-white/5" />
+            <div className="relative">
               <div
-                className="absolute top-12 left-3 font-serif italic text-[9px] -rotate-6 pointer-events-none"
-                style={{ color: 'rgba(255, 98, 0, 0.7)' }}
+                className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#ff6200]/30 bg-[#ff6200]/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[#ffb38a]"
+                style={{ fontFamily: 'var(--font-mono)' }}
               >
-                ↖ LOAD BEARING WALL
+                Project Delivery
               </div>
-              <div
-                className="absolute bottom-7 right-5 font-serif italic text-[9px] rotate-3 pointer-events-none"
-                style={{ color: 'rgba(255, 98, 0, 0.7)' }}
-              >
-                FOUNDATION: 12.4m →
-              </div>
-            </div>
 
-            {/* Bottom info strip */}
-            <div
-              className="px-5 py-3 flex items-center justify-between"
-              style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}
-            >
-              <div className="flex items-center gap-2">
-                <img src="/ncs-logo.png" alt="NCS" className="h-4 w-auto object-contain opacity-60" />
-                <div>
-                  <span
-                    className="text-[9px] tracking-[0.25em] uppercase block mb-0.5"
-                    style={{ color: '#ff6200', fontFamily: 'var(--font-mono)' }}
-                  >
-                    Live Preview
-                  </span>
-                  <span className="text-[11px] font-medium" style={{ color: '#ffffff' }}>
-                    Current Portfolio
-                  </span>
+              <div className="mb-6 rounded-2xl border border-white/10 bg-[#171b1d] p-4">
+                <div className="mb-4 flex items-center justify-between">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-neutral-400" style={{ fontFamily: 'var(--font-mono)' }}>
+                      Active portfolio
+                    </div>
+                    <div className="mt-2 text-3xl font-display font-extrabold text-white">28</div>
+                  </div>
+                  <div className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-emerald-300" style={{ fontFamily: 'var(--font-mono)' }}>
+                    On track
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {projectHighlights.map((item) => (
+                    <div key={item} className="flex items-start gap-3 text-sm text-neutral-200">
+                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#ff6200]" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div
-                className="text-[10px] font-mono"
-                style={{ color: '#ff6200' }}
-              >
-                {timeText} IST
+
+              <div className="grid grid-cols-2 gap-3 text-sm text-neutral-200">
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-neutral-400" style={{ fontFamily: 'var(--font-mono)' }}>
+                    Budget clarity
+                  </div>
+                  <div className="mt-2 text-xl font-semibold text-white">98%</div>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-neutral-400" style={{ fontFamily: 'var(--font-mono)' }}>
+                    Client retention
+                  </div>
+                  <div className="mt-2 text-xl font-semibold text-white">89%</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom fade into next section */}
       {!combined && (
         <div
           className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
-          style={{ background: 'linear-gradient(to top, #18181b, transparent)' }}
+          style={{ background: 'linear-gradient(to top, #101316, transparent)' }}
         />
       )}
     </section>

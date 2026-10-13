@@ -196,9 +196,9 @@ function App() {
   return (
     <>
       {/* Global sticky header navigation - ALWAYS VISIBLE WITH LOGO & TOP-RIGHT MENU BAR */}
-      <Header 
-        setAllocationModal={setAllocationModal} 
-        showNav={true} 
+      <Header
+        setAllocationModal={setAllocationModal}
+        showNav={true}
       />
 
       {introState !== 'completed' && (
@@ -209,13 +209,13 @@ function App() {
       )}
       <div
         className={`transition-all duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) ${introState === 'playing'
-            ? 'opacity-0 scale-95 pointer-events-none'
-            : 'opacity-100 scale-100'
+          ? 'opacity-0 scale-95 pointer-events-none'
+          : 'opacity-100 scale-100'
           }`}
       >
         <Routes>
           <Route path="/project/:id" element={
-            <ProjectDetail 
+            <ProjectDetail
               setAllocationModal={setAllocationModal}
               setSelectedProject={setSelectedProject}
             />
@@ -350,10 +350,10 @@ function HomePage({
           disableStacking={true}
           isLocked={introState !== 'completed' || !introCompleted}
         >
-          <IntroSequenceSection 
-            timeText={timeText} 
-            setAllocationModal={setAllocationModal} 
-            onComplete={() => setIntroCompleted(true)} 
+          <IntroSequenceSection
+            timeText={timeText}
+            setAllocationModal={setAllocationModal}
+            onComplete={() => setIntroCompleted(true)}
           />
           <ScrollStackItem style={{ background: '#FED8B1' }}>
             <AboutUs />

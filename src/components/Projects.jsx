@@ -5,10 +5,10 @@ import { MapPin, ArrowRight, Home, Compass, Ruler, Car, X, CheckCircle2, Clock }
 import { PROJECTS_BY_CATEGORY } from '../data/projects';
 
 const TAB_CONFIG = [
-  { key: 'all',         label: 'All' },
+  { key: 'all', label: 'All' },
   { key: 'residential', label: 'Residential' },
-  { key: 'commercial',  label: 'Commercial' },
-  { key: 'coastal',     label: 'Coastal' },
+  { key: 'commercial', label: 'Commercial' },
+  { key: 'coastal', label: 'Coastal' },
 ];
 
 function ProgressBar({ value }) {
@@ -65,7 +65,7 @@ function ProjectCard({ project, index, onClick }) {
         }}
       >
         {/* Architectural Blueprint Schematic Section (No Photo) */}
-        <div 
+        <div
           className="relative h-[220px] sm:h-[260px] overflow-hidden p-5 flex flex-col justify-between"
           style={{
             background: 'linear-gradient(135deg, #131318 0%, #1c1c24 100%)',
@@ -379,7 +379,7 @@ export default function Projects({ projects }) {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {displayed.map((project, idx) => (
             <ProjectCard
               key={project.id}
@@ -436,7 +436,7 @@ export default function Projects({ projects }) {
             </p>
 
             {/* Blueprint Header (No Photo) */}
-            <div 
+            <div
               className="w-full h-44 rounded-xl overflow-hidden border border-neutral-800 mb-4 relative p-4 flex flex-col justify-between"
               style={{ background: 'linear-gradient(135deg, #131318 0%, #1c1c24 100%)' }}
             >
