@@ -198,12 +198,6 @@ export default function SmartHUD({
             TRANSMIT ALLOCATION DEED
           </button>
 
-          {/* Approved Stamp Watermark */}
-          <div className="flex justify-center pt-1">
-            <div className="stamp-seal border-[#ff6200] text-[#ff6200] opacity-85">
-              APPROVED<br />FOR<br />CONSTRUCTION
-            </div>
-          </div>
         </div>
 
         {/* RIGHT COLUMN: Construction Cost Calculator Spreadsheet (Span 7) */}

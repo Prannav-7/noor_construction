@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const darkenColor = (hex, percent) => {
@@ -58,6 +59,7 @@ const Folder = ({
   color = '#5227FF',
   category = 'RESIDENTIAL',
   rawReviews = [],
+  detailProjectId = null,
   isOpen = false,
   onOpen,
   onClose,
@@ -71,6 +73,8 @@ const Folder = ({
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const navigate = useNavigate();
 
   const folderBackColor = darkenColor(color, 0.12);
   const paper1 = darkenColor('#ffffff', 0.08);
@@ -152,8 +156,10 @@ const Folder = ({
       className={`relative ${className} ${isOpen ? 'pt-24 lg:pt-28 pb-4' : 'pt-0 pb-0'} transition-all duration-300 ease-out`}
       style={{ perspective: '1000px' }}
       onMouseEnter={() => {
+        setIsHovering(true);
         if (!isOpen && onOpen) onOpen();
       }}
+      onMouseLeave={() => setIsHovering(false)}
     >
       <button
         type="button"
@@ -189,6 +195,34 @@ const Folder = ({
             <span className="font-mono text-[9px] tracking-widest text-white/30 mb-0.5 uppercase">// NCS_VERIFIED_DEED</span>
             <span className="font-display font-extrabold text-xl text-white tracking-widest uppercase">{category}</span>
           </div>
+
+          {(isHovering || isOpen) && (
+            <div className="absolute inset-0 z-50 flex items-center justify-center gap-2 bg-black/35 backdrop-blur-[1px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px]">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onOpen) {
+                    setActiveIndex(0);
+                    onOpen();
+                  }
+                }}
+                className="px-3 py-2 rounded bg-white text-[#111111] text-[9px] font-bold uppercase tracking-[0.18em] cursor-pointer hover:bg-[#f1f1f1]"
+              >
+                View Overview
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (detailProjectId) navigate(`/project/${detailProjectId}`);
+                }}
+                className="px-3 py-2 rounded bg-[#111111] text-white text-[9px] font-bold uppercase tracking-[0.18em] cursor-pointer hover:bg-[#222222]"
+              >
+                View More Details
+              </button>
+            </div>
+          )}
 
           {/* Papers nested inside */}
           {papers.map((item, i) => {
@@ -440,7 +474,7 @@ export default function Reviews() {
   return (
     <section
       id="reviews"
-      className="relative w-full lg:min-h-screen flex flex-col justify-center py-16 px-6 luxury-grain"
+      className="relative w-full lg:min-h-screen flex flex-col justify-center py-8 md:py-12 px-6 luxury-grain"
       style={{ background: '#18181b' }}
     >
       {/* Subtle orange radial glow */}
@@ -451,7 +485,7 @@ export default function Reviews() {
 
       <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col justify-center h-full">
         {/* Header Block */}
-        <div className="text-center mb-10 sm:mb-14 shrink-0">
+        <div className="text-center mb-5 sm:mb-8 shrink-0">
           <div className="flex justify-center items-center gap-3 mb-4">
             <div className="w-8 h-[1px]" style={{ background: '#ff6200' }} />
             <span
@@ -487,6 +521,7 @@ export default function Reviews() {
               color="#ff6200"
               category="Residential"
               rawReviews={residentialReviews}
+              detailProjectId="r1"
               isOpen={openCategory === 'Residential'}
               onOpen={() => setOpenCategory('Residential')}
               onClose={() => setOpenCategory(null)}
@@ -495,6 +530,7 @@ export default function Reviews() {
               color="#27272a"
               category="Commercial"
               rawReviews={commercialReviews}
+              detailProjectId="c1"
               isOpen={openCategory === 'Commercial'}
               onOpen={() => setOpenCategory('Commercial')}
               onClose={() => setOpenCategory(null)}
@@ -503,6 +539,7 @@ export default function Reviews() {
               color="#cc4e00"
               category="Coastal"
               rawReviews={coastalReviews}
+              detailProjectId="co1"
               isOpen={openCategory === 'Coastal'}
               onOpen={() => setOpenCategory('Coastal')}
               onClose={() => setOpenCategory(null)}

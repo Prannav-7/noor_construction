@@ -298,55 +298,20 @@ export default function Projects({ projects }) {
   const totalCount = allProjects.length;
   const completedCount = allProjects.filter(p => p.progress === 100).length;
 
-  const categoryCards = [
-    {
-      key: 'residential',
-      label: 'Villas',
-      tone: 'light',
-      art: 'aurora',
-      action: 'add',
-      labelPlacement: 'bottom-left',
-      files: (resolvedProjects.residential || []).slice(0, 3).map(project => ({
-        name: project.title,
-        meta: project.location?.split(',')[0] || project.year,
-        image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
-      })),
-    },
-    {
-      key: 'commercial',
-      label: 'Commercial',
-      tone: 'dark',
-      art: 'dusk',
-      action: 'more',
-      labelPlacement: 'top-left',
-      files: (resolvedProjects.commercial || []).slice(0, 3).map((project, idx) => ({
-        name: project.title,
-        meta: project.location?.split(',')[0] || `${project.progress}% built`,
-        image: [
-          'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80',
-          'https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=900&q=80',
-          'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80',
-        ][idx % 3],
-      })),
-    },
-    {
-      key: 'coastal',
-      label: 'Coastal',
-      tone: 'light',
-      art: 'verdant',
-      action: 'none',
-      labelPlacement: 'top-right',
-      files: (resolvedProjects.coastal || []).slice(0, 3).map((project, idx) => ({
-        name: project.title,
-        meta: project.location?.split(',')[0] || project.area,
-        image: [
-          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80',
-          'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
-          'https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80',
-        ][idx % 3],
-      })),
-    },
-  ];
+  const projectFolderCards = (displayed || []).map((project, index) => ({
+    key: project.id,
+    label: project.title,
+    tone: 'light',
+    art: 'none',
+    action: 'view',
+    labelPlacement: 'bottom-left',
+    files: [{
+      name: project.title,
+      meta: `${project.location?.split(',')[0] || project.year} · ${project.progress}% built`,
+      image: project.image,
+    }],
+    project,
+  }));
 
   const [mobileDrawerProject, setMobileDrawerProject] = useState(null);
 
@@ -458,21 +423,21 @@ export default function Projects({ projects }) {
           </div>
         </div>
 
-        <div className="mb-10 grid gap-4 md:grid-cols-3">
-          {categoryCards.map((card, index) => (
+        <div className="mb-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {projectFolderCards.map((card, index) => (
             <div
               key={card.key}
               className="cursor-pointer"
-              onClick={() => setActiveTab(card.key)}
+              onClick={() => navigate(`/project/${card.project.id}`)}
               onKeyDown={(event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   event.preventDefault();
-                  setActiveTab(card.key);
+                  navigate(`/project/${card.project.id}`);
                 }
               }}
               role="button"
               tabIndex={0}
-              aria-label={`Open ${card.label} projects`}
+              aria-label={`Open project ${card.label}`}
             >
               <GlassFolder
                 label={card.label}
@@ -482,12 +447,12 @@ export default function Projects({ projects }) {
                 labelPlacement={card.labelPlacement}
                 files={card.files}
                 menu={[
-                  { label: 'View all', onSelect: () => setActiveTab(card.key) },
-                  { label: 'Open category', onSelect: () => setActiveTab(card.key) },
+                  { label: 'View overview', onSelect: () => navigate(`/project/${card.project.id}`) },
+                  { label: 'View more details', onSelect: () => navigate(`/project/${card.project.id}`) },
                 ]}
-                onFileSelect={() => setActiveTab(card.key)}
+                onFileSelect={() => navigate(`/project/${card.project.id}`)}
                 onOpenChange={(nextOpen) => {
-                  if (nextOpen) setActiveTab(card.key);
+                  if (nextOpen) navigate(`/project/${card.project.id}`);
                 }}
                 width={330}
                 appearDelay={60 + index * 100}
@@ -496,22 +461,6 @@ export default function Projects({ projects }) {
           ))}
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {displayed.map((project, idx) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={idx}
-              onClick={() => handleCardClick(project)}
-            />
-          ))}
-          {displayed.length === 0 && (
-            <div className="col-span-full flex items-center justify-center p-16 text-neutral-500 font-mono text-xs">
-              NO PROJECTS IN THIS CATEGORY
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Mobile Details Drawer via Portal */}
