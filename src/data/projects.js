@@ -1,4 +1,4 @@
-// Central projects data — used by App.jsx, Projects.jsx, Carousel.jsx, and ProjectDetail.jsx
+// Central projects data — used by App.jsx, Projects.jsx, and ProjectDetail.jsx
 
 export const ALL_PROJECTS = [
   {

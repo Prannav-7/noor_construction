@@ -3,6 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { ArrowUpRight, X, Compass, PhoneCall, MapPin } from 'lucide-react';
 
+const WHATSAPP_NUMBER = '917200629949';
+const WHATSAPP_MESSAGE = 'Hello Noor Infrastructure, I would like to enquire about a site or construction project for my property.';
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+
 const WhatsAppIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.436.002 9.858-4.384 9.86-9.8 0-2.623-1.02-5.088-2.871-6.941-1.852-1.853-4.319-2.87-6.939-2.871-5.438 0-9.861 4.386-9.864 9.802 0 1.547.414 3.055 1.2 4.4l-.794 2.899 2.97-.779.803.438zm11.287-6.953c-.302-.15-1.787-.88-2.062-.98-.276-.1-.477-.15-.677.15-.2.3-.777.98-.95 1.18-.175.2-.35.225-.652.075-.302-.15-1.276-.47-2.43-1.499-.896-.8-1.5-1.787-1.676-2.087-.175-.3-.019-.462.13-.611.135-.134.302-.35.453-.525.15-.175.2-.3.301-.5.1-.2.05-.375-.025-.525-.075-.15-.677-1.63-.927-2.23-.244-.589-.493-.51-.677-.52l-.578-.01c-.2 0-.525.075-.8.375-.276.3-1.053 1.03-1.053 2.5 0 1.475 1.078 2.899 1.228 3.1.15.2 2.11 3.22 5.11 4.516.714.309 1.271.493 1.703.63.717.228 1.368.196 1.883.12.574-.085 1.787-.73 2.037-1.43.25-.7.25-1.3.175-1.43-.075-.125-.275-.2-.578-.35z" />
@@ -115,7 +119,7 @@ const CardNav = ({
         {/* TOP RIGHT: MINIMALIST MENU TRIGGER */}
         <div className="flex items-center gap-3">
           <a
-            href="https://wa.me/917200629949"
+            href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
             className="w-9 h-9 flex items-center justify-center rounded-full text-white/70 hover:text-[#ff6200] hover:bg-white/5 transition-all cursor-pointer"
@@ -160,7 +164,7 @@ const CardNav = ({
 
             <div className="flex items-center gap-3">
               <a
-                href="https://wa.me/917200629949"
+                href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5 hover:bg-[#ff6200] hover:text-white transition-colors"
@@ -263,7 +267,7 @@ const CardNav = ({
 
                 <div className="flex items-center justify-center gap-3">
                   <a
-                    href="https://wa.me/917200629949"
+                    href={WHATSAPP_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 flex items-center justify-center rounded-xl text-[#ff6200] border border-[#ff6200]/25 bg-white/5 hover:bg-[#ff6200] hover:text-white transition-colors"

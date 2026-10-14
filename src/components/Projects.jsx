@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, ArrowRight, Home, Compass, Ruler, Car, X, CheckCircle2, Clock } from 'lucide-react';
+import GlassFolder from './ui/glass-folder-cards';
 import { PROJECTS_BY_CATEGORY } from '../data/projects';
 
 const TAB_CONFIG = [
@@ -51,19 +52,30 @@ function ProjectCard({ project, index, onClick }) {
       className="group cursor-pointer transition-all duration-700 ease-out"
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
+        transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.98)',
+        perspective: '1200px',
       }}
     >
       {/* Card Container */}
       <div
-        className="relative overflow-hidden rounded-2xl border transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-1"
+        className="relative overflow-hidden rounded-2xl border transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_28px_70px_rgba(15,23,42,0.14)]"
         style={{
-          background: 'rgba(255, 255, 255, 0.6)',
+          background: 'linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.92) 100%)',
           backdropFilter: 'blur(12px)',
           border: '1px solid rgba(0, 0, 0, 0.06)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+          boxShadow: '0 14px 32px rgba(15,23,42,0.08)',
+          transformStyle: 'preserve-3d',
+          transform: 'rotateX(0deg) rotateY(0deg)',
         }}
       >
+        <div
+          className="absolute inset-0 opacity-0 transition-all duration-500 group-hover:opacity-100"
+          style={{
+            background: 'linear-gradient(135deg, rgba(255,98,0,0.18) 0%, rgba(255,255,255,0.04) 38%, rgba(255,255,255,0.14) 100%)',
+            filter: 'blur(0px)',
+          }}
+        />
+        <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#ff6200]/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         {/* Architectural Blueprint Schematic Section (No Photo) */}
         <div
           className="relative h-[220px] sm:h-[260px] overflow-hidden p-5 flex flex-col justify-between"
@@ -226,6 +238,23 @@ function ProjectCard({ project, index, onClick }) {
             ))}
           </div>
 
+          {/* Quick Summary Cards */}
+          <div className="mb-4 grid grid-cols-3 gap-2">
+            {[
+              { label: 'Status', value: isComplete ? 'Complete' : `${project.progress}%` },
+              { label: 'Timeline', value: project.year },
+              { label: 'Area', value: project.area },
+            ].map((meta, i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-neutral-200 bg-white p-2.5 text-center shadow-[0_8px_18px_rgba(15,23,42,0.03)]"
+              >
+                <div className="text-[7px] uppercase tracking-[0.16em] text-neutral-400 font-mono">{meta.label}</div>
+                <div className="mt-1 text-[10px] font-bold text-neutral-800 font-mono leading-tight">{meta.value}</div>
+              </div>
+            ))}
+          </div>
+
           {/* Features Highlight */}
           <div className="space-y-1 mb-4">
             {project.features.slice(0, 2).map((feat, i) => (
@@ -238,10 +267,11 @@ function ProjectCard({ project, index, onClick }) {
 
           {/* CTA Button (Visual only to avoid nested interactive elements) */}
           <div
-            className="w-full py-3 rounded-lg font-mono text-[10px] font-bold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-500 group-hover:shadow-lg"
+            className="w-full py-3 rounded-lg font-mono text-[10px] font-bold tracking-widest uppercase flex items-center justify-center gap-2 transition-all duration-500 group-hover:shadow-[0_12px_20px_rgba(255,98,0,0.28)] group-hover:translate-y-[-1px]"
             style={{
-              background: '#ff6200',
+              background: 'linear-gradient(135deg, #ff6200 0%, #f26b1d 100%)',
               color: '#ffffff',
+              boxShadow: '0 8px 18px rgba(255,98,0,0.18)',
             }}
           >
             View Blueprint Details
@@ -267,6 +297,56 @@ export default function Projects({ projects }) {
   const displayed = activeTab === 'all' ? allProjects : (resolvedProjects[activeTab] || []);
   const totalCount = allProjects.length;
   const completedCount = allProjects.filter(p => p.progress === 100).length;
+
+  const categoryCards = [
+    {
+      key: 'residential',
+      label: 'Villas',
+      tone: 'light',
+      art: 'aurora',
+      action: 'add',
+      labelPlacement: 'bottom-left',
+      files: (resolvedProjects.residential || []).slice(0, 3).map(project => ({
+        name: project.title,
+        meta: project.location?.split(',')[0] || project.year,
+        image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
+      })),
+    },
+    {
+      key: 'commercial',
+      label: 'Commercial',
+      tone: 'dark',
+      art: 'dusk',
+      action: 'more',
+      labelPlacement: 'top-left',
+      files: (resolvedProjects.commercial || []).slice(0, 3).map((project, idx) => ({
+        name: project.title,
+        meta: project.location?.split(',')[0] || `${project.progress}% built`,
+        image: [
+          'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80',
+        ][idx % 3],
+      })),
+    },
+    {
+      key: 'coastal',
+      label: 'Coastal',
+      tone: 'light',
+      art: 'verdant',
+      action: 'none',
+      labelPlacement: 'top-right',
+      files: (resolvedProjects.coastal || []).slice(0, 3).map((project, idx) => ({
+        name: project.title,
+        meta: project.location?.split(',')[0] || project.area,
+        image: [
+          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80',
+        ][idx % 3],
+      })),
+    },
+  ];
 
   const [mobileDrawerProject, setMobileDrawerProject] = useState(null);
 
@@ -376,6 +456,44 @@ export default function Projects({ projects }) {
               </button>
             ))}
           </div>
+        </div>
+
+        <div className="mb-10 grid gap-4 md:grid-cols-3">
+          {categoryCards.map((card, index) => (
+            <div
+              key={card.key}
+              className="cursor-pointer"
+              onClick={() => setActiveTab(card.key)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  setActiveTab(card.key);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Open ${card.label} projects`}
+            >
+              <GlassFolder
+                label={card.label}
+                art={card.art}
+                tone={card.tone}
+                action={card.action}
+                labelPlacement={card.labelPlacement}
+                files={card.files}
+                menu={[
+                  { label: 'View all', onSelect: () => setActiveTab(card.key) },
+                  { label: 'Open category', onSelect: () => setActiveTab(card.key) },
+                ]}
+                onFileSelect={() => setActiveTab(card.key)}
+                onOpenChange={(nextOpen) => {
+                  if (nextOpen) setActiveTab(card.key);
+                }}
+                width={330}
+                appearDelay={60 + index * 100}
+              />
+            </div>
+          ))}
         </div>
 
         {/* Projects Grid */}

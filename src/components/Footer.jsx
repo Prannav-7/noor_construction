@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Clock, ArrowUpRight, Shield, X, MessageCircle } from 'lucide-react';
 
+const WHATSAPP_NUMBER = '917200629949';
+const WHATSAPP_MESSAGE = 'Hello Noor Infrastructure, I would like to enquire about a site or construction project for my property.';
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+
 /* ─── Modal content ─────────────────────────────────────────── */
 const PRIVACY_CONTENT = {
   title: 'Privacy Policy',
@@ -236,7 +240,7 @@ export default function Footer({ timeText }) {
               <div className="flex items-center gap-3">
                 <MessageCircle className="w-4 h-4 shrink-0" style={{ color: '#25D366' }} />
                 <a
-                  href="https://wa.me/917200629949?text=Hello%20Noor%20Infrastructure!%20I%20would%20like%20to%20enquire%20about%20a%20construction%20project."
+                  href={WHATSAPP_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[12px] font-medium transition-colors"
