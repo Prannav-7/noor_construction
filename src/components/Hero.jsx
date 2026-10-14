@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import TypewriterText from './TypewriterText';
+import HeroCarousel from './HeroCarousel';
 
 const stats = [
   { value: '15+', label: 'Years of Craft' },
@@ -8,17 +9,6 @@ const stats = [
   { value: '150+', label: 'Client Partnerships' },
 ];
 
-const projectHighlights = [
-  'Design-led construction planning',
-  'Transparent budgeting and delivery',
-  'Tailored execution for premium spaces',
-];
-
-const processSteps = [
-  { step: '01', title: 'Concept', label: 'Site study & planning' },
-  { step: '02', title: 'Build', label: 'Execution & supervision' },
-  { step: '03', title: 'Deliver', label: 'Turnkey handover' },
-];
 
 export default function Hero({ timeText, setAllocationModal, combined = false }) {
   return (
@@ -145,66 +135,8 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
           </div>
         </div>
 
-        <div className="relative hidden lg:block">
-          <div
-            className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#11181c]/80 p-6 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-sm"
-            style={{ boxShadow: '0 25px 80px rgba(0,0,0,0.45)' }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#ff6200]/10 via-transparent to-white/5" />
-            <div className="relative">
-              <div className="mb-5 flex items-center justify-between">
-                <div
-                  className="inline-flex items-center gap-2 rounded-full border border-[#ff6200]/30 bg-[#ff6200]/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[#ffb38a]"
-                  style={{ fontFamily: 'var(--font-mono)' }}
-                >
-                  Active Portfolio
-                </div>
-                <div className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.18em] text-emerald-300" style={{ fontFamily: 'var(--font-mono)' }}>
-                  On track
-                </div>
-              </div>
-
-              <div className="mb-6 rounded-[22px] border border-white/10 bg-[#171c1f] p-5">
-                <div className="flex items-end justify-between gap-4">
-                  <div>
-                    <div className="text-[10px] uppercase tracking-[0.2em] text-neutral-400" style={{ fontFamily: 'var(--font-mono)' }}>
-                      Current pipeline
-                    </div>
-                    <div className="mt-2 text-4xl font-display font-extrabold tracking-[-0.06em] text-white">28</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[10px] uppercase tracking-[0.2em] text-neutral-400" style={{ fontFamily: 'var(--font-mono)' }}>
-                      Completion
-                    </div>
-                    <div className="mt-2 text-2xl font-semibold text-[#ffb38a]">82%</div>
-                  </div>
-                </div>
-
-                <div className="mt-5 space-y-3">
-                  {projectHighlights.map((item) => (
-                    <div key={item} className="flex items-start gap-3 text-sm text-neutral-200">
-                      <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#ff6200]" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                {processSteps.map((item) => (
-                  <div key={item.step} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#ff6200]/30 bg-[#ff6200]/10 text-[10px] font-bold text-[#ffb38a]" style={{ fontFamily: 'var(--font-mono)' }}>
-                      {item.step}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="text-sm font-medium text-white">{item.title}</div>
-                      <div className="text-[10px] uppercase tracking-[0.18em] text-neutral-400" style={{ fontFamily: 'var(--font-mono)' }}>{item.label}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+        <div className="relative w-full mt-8 lg:mt-0 flex justify-center lg:justify-center xl:justify-start lg:-translate-x-6 xl:-translate-x-12">
+          <HeroCarousel />
         </div>
       </div>
 
