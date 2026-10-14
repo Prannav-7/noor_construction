@@ -446,10 +446,6 @@ export default function Projects({ projects }) {
                 action={card.action}
                 labelPlacement={card.labelPlacement}
                 files={card.files}
-                menu={[
-                  { label: 'View overview', onSelect: () => navigate(`/project/${card.project.id}`) },
-                  { label: 'View more details', onSelect: () => navigate(`/project/${card.project.id}`) },
-                ]}
                 onFileSelect={() => navigate(`/project/${card.project.id}`)}
                 onOpenChange={(nextOpen) => {
                   if (nextOpen) navigate(`/project/${card.project.id}`);

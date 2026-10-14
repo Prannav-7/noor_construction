@@ -103,15 +103,7 @@ export default function ProjectDetail({ setAllocationModal, setSelectedProject }
         <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-[#ff6200]/40 pointer-events-none" />
 
         {/* Top Blueprint Data Header */}
-        <div className="relative z-10 max-w-5xl mx-auto w-full flex items-center justify-between pt-8 sm:pt-4">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[9px] text-[#ff6200] tracking-widest uppercase bg-black/60 px-2.5 py-1 rounded border border-[#ff6200]/30 font-bold">
-              CAD SPECIFICATION SHEET // DWG #{project.id?.toUpperCase()}-2026
-            </span>
-            <span className="hidden sm:inline-block font-mono text-[9px] text-neutral-400">
-              SCALE: 1:100 METRIC
-            </span>
-          </div>
+        <div className="relative z-10 max-w-5xl mx-auto w-full flex items-center justify-end pt-8 sm:pt-4">
           <span className="font-mono text-[9px] text-[#4ade80] tracking-wider uppercase bg-green-500/10 px-2.5 py-1 rounded border border-green-500/20">
             ✓ TN RERA VALIDATED
           </span>

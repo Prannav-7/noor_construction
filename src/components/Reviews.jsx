@@ -196,33 +196,6 @@ const Folder = ({
             <span className="font-display font-extrabold text-xl text-white tracking-widest uppercase">{category}</span>
           </div>
 
-          {(isHovering || isOpen) && (
-            <div className="absolute inset-0 z-50 flex items-center justify-center gap-2 bg-black/35 backdrop-blur-[1px] rounded-tr-[12px] rounded-br-[12px] rounded-bl-[12px]">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (onOpen) {
-                    setActiveIndex(0);
-                    onOpen();
-                  }
-                }}
-                className="px-3 py-2 rounded bg-white text-[#111111] text-[9px] font-bold uppercase tracking-[0.18em] cursor-pointer hover:bg-[#f1f1f1]"
-              >
-                View Overview
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (detailProjectId) navigate(`/project/${detailProjectId}`);
-                }}
-                className="px-3 py-2 rounded bg-[#111111] text-white text-[9px] font-bold uppercase tracking-[0.18em] cursor-pointer hover:bg-[#222222]"
-              >
-                View More Details
-              </button>
-            </div>
-          )}
 
           {/* Papers nested inside */}
           {papers.map((item, i) => {
