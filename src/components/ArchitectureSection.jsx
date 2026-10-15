@@ -205,14 +205,6 @@ export default function ArchitectureSection({ setAllocationModal }) {
 
               {/* Action Strip */}
               <div className="flex flex-wrap items-center gap-3 pt-4">
-                <button
-                  onClick={() => setAllocationModal?.(true)}
-                  className="glow-btn btn-gold px-6 py-3 rounded-lg font-mono text-[11px] font-bold tracking-widest uppercase flex items-center gap-2 cursor-pointer transition-all shadow-md"
-                >
-                  <Compass className="w-4 h-4" />
-                  CONSULT CHIEF ARCHITECT
-                </button>
-
                 <a
                   href={WHATSAPP_LINK}
                   target="_blank"
