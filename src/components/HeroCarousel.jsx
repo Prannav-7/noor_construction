@@ -71,7 +71,7 @@ export default function HeroCarousel() {
   const handleTouchEnd = (e) => {
     if (touchStartX === null) return;
     const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) {
+    if (Math.abs(diff) > 35) {
       if (diff > 0) goToNext();
       else goToPrev();
     }
@@ -82,7 +82,7 @@ export default function HeroCarousel() {
 
   return (
     <div
-      className="relative w-full max-w-[390px] lg:max-w-[420px] mx-auto select-none group"
+      className="relative w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[380px] md:max-w-[400px] lg:max-w-[420px] mx-auto select-none group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
@@ -91,14 +91,14 @@ export default function HeroCarousel() {
     >
       {/* Subtle brand glow behind carousel */}
       <div 
-        className="absolute -inset-1 rounded-[24px] opacity-25 blur-lg transition-opacity duration-500 group-hover:opacity-50 pointer-events-none"
+        className="absolute -inset-0.5 sm:-inset-1 rounded-[18px] sm:rounded-[24px] opacity-20 sm:opacity-25 blur-md sm:blur-lg transition-opacity duration-500 group-hover:opacity-50 pointer-events-none"
         style={{
           background: 'radial-gradient(circle, rgba(255, 98, 0, 0.4) 0%, transparent 70%)'
         }}
       />
 
-      {/* Carousel Container */}
-      <div className="relative overflow-hidden rounded-[20px] border border-white/15 bg-black/60 shadow-[0_20px_50px_rgba(0,0,0,0.55)] backdrop-blur-md aspect-[4/3] w-full">
+      {/* Carousel Container - Fully responsive aspect ratio on mobile & laptop */}
+      <div className="relative overflow-hidden rounded-[16px] sm:rounded-[20px] border border-white/15 bg-black/60 shadow-[0_15px_40px_rgba(0,0,0,0.55)] backdrop-blur-md aspect-[16/10] sm:aspect-[4/3] w-full">
         {/* Animated Image Slides */}
         <AnimatePresence mode="wait">
           <motion.img
@@ -122,33 +122,33 @@ export default function HeroCarousel() {
         {/* Soft edge vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/15 pointer-events-none" />
 
-        {/* Left Arrow Button */}
+        {/* Left Arrow Button - Scaled for touch targets on mobile & desktop */}
         <button
           onClick={goToPrev}
           aria-label="Previous image"
-          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/45 text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-200 hover:bg-[#ff6200] hover:border-[#ff6200] hover:scale-105 active:scale-95 cursor-pointer"
+          className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-black/50 text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-200 hover:bg-[#ff6200] hover:border-[#ff6200] active:scale-90 cursor-pointer"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
-        {/* Right Arrow Button */}
+        {/* Right Arrow Button - Scaled for touch targets on mobile & desktop */}
         <button
           onClick={goToNext}
           aria-label="Next image"
-          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-black/45 text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-200 hover:bg-[#ff6200] hover:border-[#ff6200] hover:scale-105 active:scale-95 cursor-pointer"
+          className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-black/50 text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-200 hover:bg-[#ff6200] hover:border-[#ff6200] active:scale-90 cursor-pointer"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
-        {/* Minimal dot indicators (Zero words) */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10">
+        {/* Minimal dot indicators (Zero words) - Responsive sizing */}
+        <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/10">
           {CAROUSEL_IMAGES.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentIndex ? 'w-5 bg-[#ff6200]' : 'w-1.5 bg-white/40 hover:bg-white/80'
+              className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                idx === currentIndex ? 'w-4 sm:w-5 bg-[#ff6200]' : 'w-1 sm:w-1.5 bg-white/40 hover:bg-white/80'
               }`}
             />
           ))}

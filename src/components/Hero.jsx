@@ -14,7 +14,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
   return (
     <section
       id="hero"
-      className={`relative pt-48 pb-8 md:pt-32 lg:pt-36 lg:pb-12 px-4 md:px-8 lg:px-12 min-h-screen w-full z-10 text-white ${!combined ? 'luxury-grain overflow-hidden' : 'overflow-visible'}`}
+      className={`relative pt-20 sm:pt-24 md:pt-24 lg:pt-24 pb-6 lg:pb-8 px-4 sm:px-6 md:px-8 lg:px-12 min-h-screen w-full z-10 text-white ${!combined ? 'luxury-grain overflow-hidden' : 'overflow-visible'}`}
       style={{ background: combined ? 'transparent' : '#0b1115' }}
     >
       {!combined && (
@@ -50,10 +50,10 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
         NCS
       </div>
 
-      <div className="relative z-10 mx-auto mt-6 grid w-full max-w-7xl gap-8 md:mt-10 lg:mt-20 lg:grid-cols-[1.12fr_0.88fr] lg:items-center">
+      <div className="relative z-10 mx-auto mt-2 md:mt-4 lg:mt-6 grid w-full max-w-7xl gap-6 md:gap-8 lg:grid-cols-[1.12fr_0.88fr] lg:items-center">
         <div className="flex flex-col justify-center reveal-on-scroll">
           <div
-            className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.22em] text-neutral-200 backdrop-blur-sm"
+            className="mb-3 sm:mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.22em] text-neutral-200 backdrop-blur-sm"
             style={{ fontFamily: 'var(--font-mono)' }}
           >
             Design • Build • Deliver
@@ -61,7 +61,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
 
           <h1
             className="font-display font-extrabold leading-[0.95] tracking-[-0.06em] text-white"
-            style={{ fontSize: 'clamp(3rem, 5vw, 5.5rem)' }}
+            style={{ fontSize: 'clamp(2.4rem, 6.5vw, 5.2rem)' }}
           >
             Constructing
             <br />
@@ -76,14 +76,14 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
             </span>
           </h1>
 
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-neutral-300 md:text-base">
+          <p className="mt-3 sm:mt-4 max-w-xl text-xs sm:text-sm md:text-base leading-relaxed text-neutral-300">
             We partner with clients to shape premium residential and commercial spaces through disciplined planning, precise execution, and a clear focus on long-term value.
           </p>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+          <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-3">
             <a
               href="#estimator"
-              className="glow-btn btn-gold px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2.5 rounded-sm cursor-pointer"
+              className="glow-btn btn-gold px-6 py-3 sm:px-7 sm:py-3.5 text-[11px] sm:text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2.5 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
               Book a Consultation
@@ -91,14 +91,14 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
             </a>
             <a
               href="#architecture"
-              className="btn-ghost px-7 py-3.5 text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2 rounded-sm cursor-pointer"
+              className="btn-ghost px-6 py-3 sm:px-7 sm:py-3.5 text-[11px] sm:text-[12px] font-bold tracking-[0.12em] uppercase flex items-center gap-2 rounded-sm cursor-pointer"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
               Explore Portfolio
             </a>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-5 text-[10px] uppercase tracking-[0.2em] text-neutral-400" style={{ fontFamily: 'var(--font-mono)' }}>
+          <div className="mt-4 sm:mt-5 flex flex-wrap items-center gap-4 sm:gap-5 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-neutral-400" style={{ fontFamily: 'var(--font-mono)' }}>
             <span>Licensed team</span>
             <span className="h-1.5 w-1.5 rounded-full bg-[#ff6200]" />
             <span>Transparent process</span>
@@ -107,20 +107,20 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
           </div>
 
           <div
-            className="mt-8 grid w-full max-w-2xl grid-cols-3 gap-2 sm:gap-4 pt-6 sm:pt-8"
+            className="mt-4 sm:mt-5 grid w-full max-w-2xl grid-cols-3 gap-2 sm:gap-4 pt-3 sm:pt-4"
             style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}
           >
             {stats.map((stat, i) => (
               <div key={i} className="pr-1 sm:pr-4 relative">
                 <div
                   className="font-display font-extrabold mb-0.5"
-                  style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2.4rem)', color: '#ff6200', lineHeight: 1 }}
+                  style={{ fontSize: 'clamp(1.3rem, 2.3vw, 2.2rem)', color: '#ff6200', lineHeight: 1 }}
                 >
                   {stat.value}
                 </div>
                 <div
                   className="text-[8px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase leading-tight"
-                  style={{ color: 'rgba(255, 255, 255, 0.6)', fontFamily: 'var(--font-mono)' }}
+                  style={{ color: 'rgba(255, 255, 255, 0.65)', fontFamily: 'var(--font-mono)' }}
                 >
                   {stat.label}
                 </div>
@@ -135,7 +135,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
           </div>
         </div>
 
-        <div className="relative w-full mt-8 lg:mt-0 flex justify-center lg:justify-center xl:justify-start lg:-translate-x-6 xl:-translate-x-12">
+        <div className="relative w-full mt-6 sm:mt-8 lg:mt-0 flex justify-center lg:justify-center xl:justify-start lg:-translate-x-6 xl:-translate-x-12 px-2 sm:px-0">
           <HeroCarousel />
         </div>
       </div>
