@@ -314,6 +314,21 @@ export default function Projects({ projects }) {
   }));
 
   const [mobileDrawerProject, setMobileDrawerProject] = useState(null);
+  const [folderWidth, setFolderWidth] = useState(330);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 400) setFolderWidth(295);
+      else if (w < 640) setFolderWidth(325);
+      else if (w < 1024) setFolderWidth(330);
+      else if (w < 1280) setFolderWidth(315);
+      else setFolderWidth(350);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   useEffect(() => {
     if (mobileDrawerProject) {
@@ -423,11 +438,11 @@ export default function Projects({ projects }) {
           </div>
         </div>
 
-        <div className="mb-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mb-10 grid gap-6 sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center w-full">
           {projectFolderCards.map((card, index) => (
             <div
               key={card.key}
-              className="cursor-pointer"
+              className="cursor-pointer flex justify-center w-full"
               onClick={() => navigate(`/project/${card.project.id}`)}
               onKeyDown={(event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
@@ -450,11 +465,108 @@ export default function Projects({ projects }) {
                 onOpenChange={(nextOpen) => {
                   if (nextOpen) navigate(`/project/${card.project.id}`);
                 }}
-                width={330}
+                width={folderWidth}
                 appearDelay={60 + index * 100}
               />
             </div>
           ))}
+
+          {/* When active tab has empty slots in 3-column grid, fill the remaining right-side space with high-value opportunities */}
+          {activeTab === 'commercial' && (
+            <div
+              style={{ width: folderWidth, minHeight: folderWidth * 0.85 }}
+              className="relative rounded-2xl border-2 border-dashed border-[#ff6200]/30 bg-white/40 hover:bg-white/60 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-md text-left"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-[#ff6200] font-bold px-2 py-0.5 rounded-full bg-[#ff6200]/10 border border-[#ff6200]/20">
+                    Commercial Venture
+                  </span>
+                  <span className="font-mono text-[9px] text-neutral-400">Phase 2026-27</span>
+                </div>
+                <h3 className="font-display font-extrabold text-lg text-neutral-900">
+                  Next Corporate Landmark
+                </h3>
+                <p className="mt-2 text-xs text-neutral-600 leading-relaxed font-sans">
+                  Planning a corporate tech hub, retail facility, or commercial workspace? Partner with our licensed civil engineering team for turnkey 3D BIM execution.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-black/5 flex items-center justify-between">
+                <span className="font-mono text-[9px] uppercase tracking-wider text-neutral-500">Turnkey Execution</span>
+                <a
+                  href="#estimator"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff6200] text-white font-mono text-[10px] font-bold uppercase tracking-wider hover:bg-[#e05600] transition-all shadow-sm"
+                >
+                  <span>Get Estimate</span>
+                  <ArrowRight className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'coastal' && (
+            <>
+              <div
+                style={{ width: folderWidth, minHeight: folderWidth * 0.85 }}
+                className="relative rounded-2xl border-2 border-dashed border-[#ff6200]/30 bg-white/40 hover:bg-white/60 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-md text-left"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#ff6200] font-bold px-2 py-0.5 rounded-full bg-[#ff6200]/10 border border-[#ff6200]/20">
+                      Coastal Venture
+                    </span>
+                    <span className="font-mono text-[9px] text-neutral-400">ECR Corridor</span>
+                  </div>
+                  <h3 className="font-display font-extrabold text-lg text-neutral-900">
+                    Bespoke Seaside Villa
+                  </h3>
+                  <p className="mt-2 text-xs text-neutral-600 leading-relaxed font-sans">
+                    Constructing luxury beachfront residences with marine-grade anti-corrosive reinforcement, panoramic sea elevations, and clean solar arrays.
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-black/5 flex items-center justify-between">
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-neutral-500">Weather Shield</span>
+                  <a
+                    href="#estimator"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ff6200] text-white font-mono text-[10px] font-bold uppercase tracking-wider hover:bg-[#e05600] transition-all shadow-sm"
+                  >
+                    <span>Enquire</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              <div
+                style={{ width: folderWidth, minHeight: folderWidth * 0.85 }}
+                className="relative rounded-2xl border-2 border-dashed border-neutral-300 bg-white/30 hover:bg-white/50 p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-md text-left"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-neutral-600 font-bold px-2 py-0.5 rounded-full bg-black/5 border border-black/10">
+                      Site Consultation
+                    </span>
+                    <span className="font-mono text-[9px] text-neutral-400">Pudupattinam / Meiyur</span>
+                  </div>
+                  <h3 className="font-display font-extrabold text-lg text-neutral-900">
+                    Have a Coastal Plot?
+                  </h3>
+                  <p className="mt-2 text-xs text-neutral-600 leading-relaxed font-sans">
+                    Get free soil testing advisory and architectural 3D layout options tailored specifically to saline coastal conditions.
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-black/5 flex items-center justify-between">
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-neutral-500">Free Feasibility</span>
+                  <a
+                    href="#estimator"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-900 text-white font-mono text-[10px] font-bold uppercase tracking-wider hover:bg-black transition-all shadow-sm"
+                  >
+                    <span>Consult Team</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
       </div>
