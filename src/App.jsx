@@ -23,9 +23,18 @@ function App() {
   const navigate = useNavigate();
   const isProjectDetail = location.pathname.startsWith('/project/');
 
-  // Redirect to home page on initial load/refresh if path is not '/'
+  // Set history scroll restoration to manual and ensure initial load always starts at top
   useEffect(() => {
-    if (location.pathname !== '/') {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // If initial URL has a hash or non-root path on fresh load, clean it up to '/' so IntroSection plays cleanly
+    if (window.location.hash || location.pathname !== '/') {
+      window.history.replaceState(null, '', '/');
       navigate('/', { replace: true });
     }
   }, []);
@@ -263,8 +272,16 @@ function HomePage({
 }) {
   const location = useLocation();
 
-  // Fix layout overlap: reset scroll or scroll to hash
+  // Fix layout overlap: reset scroll or scroll to hash ONLY when intro has completed
   useLayoutEffect(() => {
+    // While the intro is playing or unfolding, ALWAYS enforce top scroll
+    if (introState !== 'completed') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      return;
+    }
+
     if (location.hash) {
       const id = location.hash.replace('#', '');
       const el = document.getElementById(id);
@@ -285,7 +302,7 @@ function HomePage({
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event('resize'));
     });
-  }, [location.hash, location.pathname]);
+  }, [location.hash, location.pathname, introState]);
 
   // Force ScrollStack to remeasure once the intro transitions out and homepage content is scale-100
   useEffect(() => {

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { ArrowUpRight, X, Compass, PhoneCall, MapPin } from 'lucide-react';
 
-const WHATSAPP_NUMBER = '917200629949';
+const WHATSAPP_NUMBER = '917305130207';
 const WHATSAPP_MESSAGE = 'Hello Noor Infrastructure, I would like to enquire about a site or construction project for my property.';
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
@@ -100,11 +100,13 @@ const CardNav = ({
             onClick={(e) => handleLinkClick(e, '#hero')}
             className="flex items-center gap-2.5 sm:gap-3 group cursor-pointer"
           >
-            <img
-              src={logo}
-              alt={logoAlt}
-              className="h-7 sm:h-8 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-            />
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center p-1 border border-[#ff6200]/40 shadow-[0_0_12px_rgba(255,98,0,0.25)] group-hover:border-[#ff6200] group-hover:shadow-[0_0_16px_rgba(255,98,0,0.4)] group-hover:scale-105 transition-all duration-300 shrink-0 overflow-hidden">
+              <img
+                src={logo}
+                alt={logoAlt}
+                className="w-full h-full object-contain"
+              />
+            </div>
             <div className="flex flex-col leading-none">
               <span className="font-display font-extrabold text-[13px] sm:text-[14px] text-white tracking-widest uppercase">
                 NOOR
@@ -151,7 +153,9 @@ const CardNav = ({
           {/* Top Bar inside Drawer */}
           <div className="h-20 flex items-center justify-between px-6 sm:px-12 border-b border-white/8 bg-neutral-950/80 shrink-0">
             <div className="flex items-center gap-2.5 sm:gap-3">
-              <img src={logo} alt={logoAlt} className="h-8 w-auto object-contain" />
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center p-1 border border-[#ff6200]/40 shadow-[0_0_12px_rgba(255,98,0,0.25)] shrink-0 overflow-hidden">
+                <img src={logo} alt={logoAlt} className="w-full h-full object-contain" />
+              </div>
               <div className="flex flex-col leading-none">
                 <span className="font-display font-extrabold text-[13px] text-white tracking-widest uppercase">
                   NOOR
@@ -210,7 +214,7 @@ const CardNav = ({
                   <div className="font-mono text-[8px] text-neutral-400 uppercase tracking-wider">Happy Customers</div>
                 </div>
                 <div>
-                  <div className="font-display font-extrabold text-xl text-white leading-none mb-1">72+</div>
+                  <div className="font-display font-extrabold text-xl text-white leading-none mb-1">130+</div>
                   <div className="font-mono text-[8px] text-neutral-400 uppercase tracking-wider">Projects Built</div>
                 </div>
                 <div>
@@ -226,7 +230,9 @@ const CardNav = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <PhoneCall className="w-3.5 h-3.5 text-[#ff6200]" />
-                  <span>+91 72006 29949 • info@noorconstruction.com</span>
+                  <a href="tel:+917305130207" className="hover:text-[#ff6200] transition-colors">+91 73051 30207</a>
+                  <span>•</span>
+                  <span>info@noorconstruction.com</span>
                 </div>
               </div>
             </div>

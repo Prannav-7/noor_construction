@@ -5,7 +5,7 @@ import HeroCarousel from './HeroCarousel';
 
 const stats = [
   { value: '15+', label: 'Years of Craft' },
-  { value: '72+', label: 'Projects Delivered' },
+  { value: '130+', label: 'Projects Delivered' },
   { value: '150+', label: 'Client Partnerships' },
 ];
 

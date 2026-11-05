@@ -36,7 +36,7 @@ export default function AboutUs() {
     },
     {
       icon: <Building2 className="w-5 h-5" />,
-      value: '72+',
+      value: '130+',
       label: 'Projects Delivered',
     },
     {

@@ -53,7 +53,13 @@ export default function ProjectDetail({ setAllocationModal, setSelectedProject }
   const isDone = project.progress === 100;
 
   const handleBack = () => {
-    navigate('/#projects');
+    navigate('/');
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const el = document.getElementById('projects');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    });
   };
 
   return (

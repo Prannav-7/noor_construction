@@ -289,6 +289,12 @@ const ScrollStack = ({
             animationFrameRef.current = requestAnimationFrame(raf);
 
             lenisRef.current = lenis;
+
+            if (isLocked) {
+                lenis.stop();
+                lenis.scrollTo(0, { immediate: true });
+            }
+
             return lenis;
         } else {
             const scroller = scrollerRef.current;
@@ -333,6 +339,7 @@ const ScrollStack = ({
         if (!lenisRef.current) return;
         if (isLocked) {
             lenisRef.current.stop();
+            lenisRef.current.scrollTo(0, { immediate: true });
         } else {
             lenisRef.current.start();
         }

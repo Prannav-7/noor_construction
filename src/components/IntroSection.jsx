@@ -222,23 +222,7 @@ export default function IntroSection({ onStartReveal, onComplete }) {
         className="absolute top-1/2 left-0 right-0 h-[2px] -translate-y-1/2 bg-[#ff6200] z-30 shadow-[0_0_15px_rgba(255,98,0,1)] origin-center"
       />
 
-      {/* ── TELEMETRY HUD LABELS (DESKTOP ONLY) ── */}
-      <div className="telemetry-hud absolute top-12 left-12 font-mono text-[9px] text-zinc-500 tracking-[0.2em] uppercase z-20 pointer-events-none hidden md:block">
-        <div className="text-zinc-600 mb-0.5">SYS.LOC</div>
-        <div className="text-[#ff6200]/80 font-bold">13.0827° N // 80.2707° E</div>
-      </div>
-      <div className="telemetry-hud absolute bottom-12 left-12 font-mono text-[9px] text-zinc-500 tracking-[0.2em] uppercase z-20 pointer-events-none hidden md:block">
-        <div className="text-zinc-600 mb-0.5">SCALE.MODEL</div>
-        <div className="text-white">1 : 150 (METRIC)</div>
-      </div>
-      <div className="telemetry-hud absolute top-12 right-12 font-mono text-[9px] text-zinc-500 tracking-[0.2em] uppercase z-20 pointer-events-none hidden md:block text-right">
-        <div className="text-zinc-600 mb-0.5">GRID.UNIT</div>
-        <div className="text-zinc-400 font-semibold">ACTIVE SUB-GRID</div>
-      </div>
-      <div className="telemetry-hud absolute bottom-12 right-12 font-mono text-[9px] text-zinc-500 tracking-[0.2em] uppercase z-20 pointer-events-none hidden md:block text-right">
-        <div className="text-zinc-600 mb-0.5">BIM.ENGINE</div>
-        <div className="text-[#ff6200]/80 font-bold">v2.06_ONLINE</div>
-      </div>
+      
 
       {/* ── HOLOGRAM CONTENT CONTAINER ── */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none px-6">
@@ -351,15 +335,17 @@ export default function IntroSection({ onStartReveal, onComplete }) {
 
           {/* Logo, Name & Corporate Tagline */}
           <div ref={logoGroupRef} className="flex flex-col items-center mt-6 text-center select-none">
-            <div className="flex items-center justify-center gap-3 mb-2.5">
-              <img
-                src="/ncs-logo.png"
-                alt="NCS Logo"
-                className="h-10 md:h-12 w-auto object-contain filter drop-shadow-[0_0_12px_rgba(255,98,0,0.4)]"
-              />
-              <div className="w-[1px] h-8 bg-zinc-800" />
+            <div className="flex items-center justify-center gap-3.5 mb-2.5">
+              <div className="relative w-12 h-12 md:w-16 md:h-16 rounded-full bg-white flex items-center justify-center p-1.5 border border-[#ff6200]/50 shadow-[0_0_25px_rgba(255,98,0,0.4)] shrink-0 overflow-hidden">
+                <img
+                  src="/WhatsApp Image 2026-11-05 at 10.43.49 AM.jpeg"
+                  alt="NCS Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="w-[1px] h-10 bg-zinc-800" />
               <span className="font-display font-black text-2xl md:text-4xl text-white tracking-[0.1em] uppercase">
-                NOOR <span className="text-[#ff6200]">Constructions</span>
+                NOOR <span className="text-[#ff6200]">Infrastructure</span>
               </span>
             </div>
             <div className="text-zinc-400 font-mono text-[9px] md:text-[10px] tracking-[0.35em] uppercase">

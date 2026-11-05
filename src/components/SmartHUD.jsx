@@ -172,7 +172,7 @@ export default function SmartHUD({
           {/* Mini Trust Stats */}
           <div className="grid grid-cols-2 gap-2 mt-4">
             <div className="bg-white border border-neutral-200 rounded p-2.5 text-center shadow-sm">
-              <div className="font-mono font-bold text-neutral-900 text-lg leading-none">72+</div>
+              <div className="font-mono font-bold text-neutral-900 text-lg leading-none">130+</div>
               <div className="font-mono text-[8px] text-neutral-450 uppercase tracking-widest mt-0.5">Projects Delivered</div>
             </div>
             <div className="bg-white border border-neutral-200 rounded p-2.5 text-center shadow-sm">

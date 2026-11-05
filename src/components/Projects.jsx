@@ -387,7 +387,7 @@ export default function Projects({ projects }) {
             {/* Stat bar */}
             <div className="flex items-center gap-6 shrink-0 bg-white/40 backdrop-blur-sm border border-black/5 px-5 py-3 rounded-xl">
               {[
-                { num: '72+', label: 'Projects Delivered' },
+                { num: '130+', label: 'Projects Delivered' },
                 { num: '150+', label: 'Happy Customers', gold: true },
                 { num: '100%', label: 'RERA Compliance' },
               ].map((s, i) => (

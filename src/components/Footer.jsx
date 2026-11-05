@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Clock, ArrowUpRight, Shield, X, MessageCircle } from 'lucide-react';
 
-const WHATSAPP_NUMBER = '917200629949';
+const WHATSAPP_NUMBER = '917305130207';
 const WHATSAPP_MESSAGE = 'Hello Noor Infrastructure, I would like to enquire about a site or construction project for my property.';
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
@@ -20,7 +20,7 @@ const PRIVACY_CONTENT = {
     },
     {
       heading: 'Your Rights & Contact',
-      body: 'You may request access, correction, or deletion of your data at any time by calling +91 72006 29949 or visiting our office at 5, East Coast Rd, Kalpakkam, Tamil Nadu 603102.',
+      body: 'You may request access, correction, or deletion of your data at any time by calling +91 73051 30207 or visiting our office at 5, East Coast Rd, Kalpakkam, Tamil Nadu 603102.',
     },
   ],
 };
@@ -159,7 +159,7 @@ function PolicyModal({ content, onClose }) {
 
 /* ─── Footer ─────────────────────────────────────────────────── */
 export default function Footer({ timeText }) {
-  const mapUrl = "https://maps.google.com/?q=Noor+Infrastructure+Kalpakkam";
+  const mapUrl = "https://maps.google.com/?q=5,+East+Coast+Rd,+Pudupattinam,+Kalpakkam,+Tamil+Nadu+603102";
   const [modal, setModal] = useState(null); // 'privacy' | 'terms' | null
 
   const scrollTo = (id) => {
@@ -195,11 +195,23 @@ export default function Footer({ timeText }) {
 
             {/* Brand logo */}
             <div className="mb-8">
-              <img
-                src="/ncs-logo.png"
-                alt="NCS Noor Constructions"
-                className="h-10 md:h-12 w-auto object-contain opacity-95"
-              />
+              <div className="flex items-center gap-3.5 mb-3">
+                <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center p-1.5 border border-[#ff6200]/40 shadow-[0_0_20px_rgba(255,98,0,0.25)] shrink-0 overflow-hidden">
+                  <img
+                    src="/WhatsApp Image 2026-11-05 at 10.43.49 AM.jpeg"
+                    alt="NCS Noor Infrastructure"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-display font-black text-lg md:text-xl text-white tracking-widest uppercase">
+                    NOOR <span className="text-[#ff6200]">INFRASTRUCTURE</span>
+                  </span>
+                  <span className="font-mono text-[8px] md:text-[9px] text-zinc-400 tracking-[0.2em] uppercase">
+                    Vision • Precision • Excellence
+                  </span>
+                </div>
+              </div>
               <div
                 className="h-[1px] w-24 mt-3"
                 style={{ background: 'linear-gradient(90deg, #ff6200, transparent)' }}
@@ -228,13 +240,13 @@ export default function Footer({ timeText }) {
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 shrink-0" style={{ color: '#ff6200' }} />
                 <a
-                  href="tel:+917200629949"
+                  href="tel:+917305130207"
                   className="text-[12px] font-medium transition-colors"
                   style={{ color: 'rgba(255, 255, 255, 0.7)', fontFamily: 'var(--font-mono)' }}
                   onMouseEnter={e => e.target.style.color = '#ff6200'}
                   onMouseLeave={e => e.target.style.color = 'rgba(255, 255, 255, 0.7)'}
                 >
-                  072006 29949
+                  +91 73051 30207
                 </a>
               </div>
               <div className="flex items-center gap-3">
@@ -364,36 +376,55 @@ export default function Footer({ timeText }) {
           {/* ── Map ── */}
           <div className="lg:col-span-4 reveal-on-scroll">
             <div
-              className="relative overflow-hidden aspect-square group"
-              style={{ border: '1px solid rgba(255, 98, 0, 0.25)', transition: 'border-color 0.3s ease' }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255, 98, 0,0.5)'}
-              onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 98, 0,0.25)'}
+              className="relative overflow-hidden aspect-square group rounded-xl"
+              style={{ border: '1px solid rgba(255, 98, 0, 0.3)', transition: 'border-color 0.3s ease' }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255, 98, 0,0.6)'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255, 98, 0,0.3)'}
             >
               {/* Map label */}
               <div
-                className="absolute top-3 left-3 z-20 text-[9px] font-semibold px-2 py-1 flex items-center gap-1.5 pointer-events-none"
+                className="absolute top-3 left-3 z-20 text-[9px] font-semibold px-2 py-1 flex items-center gap-1.5 pointer-events-none rounded"
                 style={{
-                  background: 'rgba(8,8,8,0.75)',
-                  border: '1px solid rgba(255, 98, 0,0.25)',
+                  background: 'rgba(8,8,8,0.85)',
+                  border: '1px solid rgba(255, 98, 0,0.3)',
                   color: '#ff6200',
                   fontFamily: 'var(--font-mono)',
                   backdropFilter: 'blur(8px)',
                 }}
               >
-                <MapPin className="w-3 h-3" />
-                Kalpakkam, TN
+                <MapPin className="w-3 h-3 text-[#ff6200]" />
+                Pudupattinam, Kalpakkam
               </div>
 
-              {/* Google Map iframe */}
+              {/* Direct Pin Location Link */}
+              <a
+                href={mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute top-3 right-3 z-20 text-[9px] font-semibold px-2 py-1 flex items-center gap-1 transition-all rounded cursor-pointer group/pin hover:bg-[#ff6200] hover:text-white"
+                style={{
+                  background: 'rgba(8,8,8,0.85)',
+                  border: '1px solid rgba(255, 98, 0,0.3)',
+                  color: '#ff6200',
+                  fontFamily: 'var(--font-mono)',
+                  backdropFilter: 'blur(8px)',
+                }}
+                title="Open Pinned Location in Google Maps"
+              >
+                <span>Pin Location</span>
+                <ArrowUpRight className="w-3 h-3 group-hover/pin:translate-x-0.5 group-hover/pin:-translate-y-0.5 transition-transform" />
+              </a>
+
+              {/* Google Map iframe with exact pinned location */}
               <iframe
-                 title="Noor Infrastructure Location"
-                 src="https://maps.google.com/maps?q=East+Coast+Road,+Kalpakkam,+Tamil+Nadu&t=m&z=13&output=embed&iwloc=near"
-                 className="absolute inset-0 w-full h-full border-0"
-                 allowFullScreen=""
-                 loading="lazy"
-                 referrerPolicy="no-referrer-when-downgrade"
-                 style={{ filter: 'grayscale(0.4) contrast(1.05) brightness(1.0)' }}
-               />
+                title="Noor Infrastructure Location - 5, East Coast Rd, Pudupattinam, Kalpakkam"
+                src="https://maps.google.com/maps?q=5,+East+Coast+Rd,+Pudupattinam,+Kalpakkam,+Tamil+Nadu+603102&t=m&z=16&output=embed&iwloc=near"
+                className="absolute inset-0 w-full h-full border-0"
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                style={{ filter: 'contrast(1.05) brightness(1.0)' }}
+              />
 
               {/* Bottom coords strip */}
               <div
@@ -401,12 +432,12 @@ export default function Footer({ timeText }) {
                 style={{
                   background: 'rgba(8,8,8,0.85)',
                   borderTop: '1px solid rgba(255, 98, 0,0.15)',
-                  color: 'rgba(255, 255, 255, 0.5)',
+                  color: 'rgba(255, 255, 255, 0.7)',
                   fontFamily: 'var(--font-mono)',
                 }}
               >
-                <span>G46W+J8 Kalpakkam</span>
-                <span style={{ color: '#ff6200' }}>ECR</span>
+                <span>5, East Coast Rd • G46W+J8</span>
+                <span className="font-bold" style={{ color: '#ff6200' }}>PINNED LOCATION</span>
               </div>
             </div>
           </div>

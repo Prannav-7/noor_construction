@@ -6,7 +6,7 @@ import {
   Building2
 } from 'lucide-react';
 
-const WHATSAPP_NUMBER = '917200629949';
+const WHATSAPP_NUMBER = '917305130207';
 const WHATSAPP_MESSAGE = 'Hello Noor Infrastructure, I would like to enquire about a site or construction project for my property.';
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
@@ -176,7 +176,7 @@ export default function ArchitectureSection({ setAllocationModal }) {
 
                   <div className="text-left">
                     <div className="font-display font-extrabold text-2xl text-white leading-none mb-1">
-                      72+
+                      130+
                     </div>
                     <div className="font-mono text-[9px] uppercase tracking-wider text-neutral-400">
                       Projects Delivered

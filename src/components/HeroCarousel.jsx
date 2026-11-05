@@ -4,31 +4,29 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const CAROUSEL_IMAGES = [
   { 
-    id: 'coastal-highway', 
-    src: '/infra_highway.jpg', 
-    alt: 'Highway & Road Infrastructure Development' 
-  },
-  { 
-    id: 'solar-infrastructure', 
-    src: 'https://upload.wikimedia.org/wikipedia/commons/e/e4/KamuthiSolarPark.jpg', 
-    fallback: '/infra_highway.jpg',
-    alt: 'Clean Solar Renewable Energy Infrastructure' 
-  },
-  { 
-    id: 'state-highway-ecr', 
-    src: 'https://upload.wikimedia.org/wikipedia/commons/2/24/2017_four_lane_state_highway_SH_49_Tamil_Nadu_India.jpg', 
-    fallback: '/infra_highway.jpg',
-    alt: '4-Lane State Highway Infrastructure' 
-  },
-  { 
-    id: 'earthworks-civil', 
-    src: '/about_inspection.png', 
-    alt: 'Civil Earthworks & Infrastructure Logistics' 
-  },
-  { 
-    id: 'infrastructure-planning', 
+    id: 'structural-slab-inspection', 
     src: '/hero_bg_workers_colored.png', 
-    alt: 'Civil Infrastructure Technical Engineering' 
+    alt: 'Site Engineers & Structural Slab Construction' 
+  },
+  { 
+    id: 'multi-story-construction', 
+    src: '/local_apartment_construction.png', 
+    alt: 'Multi-Story Residential Framing & Masonry Site' 
+  },
+  { 
+    id: 'ground-civil-construction', 
+    src: '/hero_bg_local_construction.png', 
+    alt: 'Ground Structural Framing & Active Brickwork' 
+  },
+  { 
+    id: 'engineering-supervision', 
+    src: '/about_inspection.png', 
+    alt: 'Civil Engineers Blueprint & Rebar Framework Inspection' 
+  },
+  { 
+    id: 'commercial-structural-development', 
+    src: '/rough_skyscraper.png', 
+    alt: 'High-Rise Commercial Concrete Framing & Construction' 
   },
 ];
 

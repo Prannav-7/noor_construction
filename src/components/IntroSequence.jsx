@@ -122,7 +122,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
     return (
         <div className="relative h-screen w-full overflow-hidden bg-zinc-950 font-sans flex items-center justify-center">
 
-            {/* --- CORE BRAND IDENTITY: NOOR Constructions & Tagline (Phase 1) --- */}
+            {/* --- CORE BRAND IDENTITY: NOOR Infrastructure & Tagline (Phase 1) --- */}
             <motion.div 
                 style={{ 
                     opacity: taglineOpacity,
@@ -158,7 +158,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                         }}
                         className="font-sans font-extralight text-white leading-none tracking-[-0.02em] mb-6 uppercase text-center break-words w-full"
                     >
-                        NOOR <span className="font-display italic font-normal tracking-normal text-gold-shimmer">Constructions</span>
+                        NOOR <span className="font-display italic font-normal tracking-normal text-gold-shimmer">Infrastructure</span>
                     </motion.h1>
 
                     {/* Unified Tagline in Single Line */}
