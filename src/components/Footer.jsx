@@ -159,7 +159,7 @@ function PolicyModal({ content, onClose }) {
 
 /* ─── Footer ─────────────────────────────────────────────────── */
 export default function Footer({ timeText }) {
-  const mapUrl = "https://maps.google.com/?q=5,+East+Coast+Rd,+Pudupattinam,+Kalpakkam,+Tamil+Nadu+603102";
+  const mapUrl = "https://www.google.com/maps/place/Noor+infrastructure/@12.5116818,80.1449342,250m/data=!3m1!1e3!4m14!1m7!3m6!1s0x3a53a92eb73a86c3:0xaa9143fece102b5a!2sNoor+infrastructure!8m2!3d12.5115227!4d80.1458154!16s%2Fg%2F11vz7srkzt!3m5!1s0x3a53a92eb73a86c3:0xaa9143fece102b5a!8m2!3d12.5115227!4d80.1458154!16s%2Fg%2F11vz7srkzt";
   const [modal, setModal] = useState(null); // 'privacy' | 'terms' | null
 
   const scrollTo = (id) => {
@@ -417,8 +417,8 @@ export default function Footer({ timeText }) {
 
               {/* Google Map iframe with exact pinned location */}
               <iframe
-                title="Noor Infrastructure Location - 5, East Coast Rd, Pudupattinam, Kalpakkam"
-                src="https://maps.google.com/maps?q=5,+East+Coast+Rd,+Pudupattinam,+Kalpakkam,+Tamil+Nadu+603102&t=m&z=16&output=embed&iwloc=near"
+                title="Noor Infrastructure Official Location - 5, East Coast Rd, Pudupattinam, Kalpakkam"
+                src="https://maps.google.com/maps?q=12.5115227,80.1458154(Noor+Infrastructure)&t=m&z=17&output=embed&iwloc=near"
                 className="absolute inset-0 w-full h-full border-0"
                 allowFullScreen=""
                 loading="lazy"
@@ -436,8 +436,8 @@ export default function Footer({ timeText }) {
                   fontFamily: 'var(--font-mono)',
                 }}
               >
-                <span>5, East Coast Rd • G46W+J8</span>
-                <span className="font-bold" style={{ color: '#ff6200' }}>PINNED LOCATION</span>
+                <span>12.5115° N, 80.1458° E • G46W+J8</span>
+                <span className="font-bold" style={{ color: '#ff6200' }}>OFFICIAL PIN</span>
               </div>
             </div>
           </div>

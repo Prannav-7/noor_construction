@@ -289,6 +289,7 @@ const ScrollStack = ({
             animationFrameRef.current = requestAnimationFrame(raf);
 
             lenisRef.current = lenis;
+            window.__lenis = lenis;
 
             if (isLocked) {
                 lenis.stop();
@@ -325,6 +326,7 @@ const ScrollStack = ({
             animationFrameRef.current = requestAnimationFrame(raf);
 
             lenisRef.current = lenis;
+            window.__lenis = lenis;
             
             if (isLocked) {
                 lenis.stop();
@@ -406,6 +408,7 @@ const ScrollStack = ({
                 }
                 if (lenisRef.current) {
                     lenisRef.current.destroy();
+                    if (window.__lenis === lenisRef.current) window.__lenis = null;
                 }
                 cardsRef.current = [];
                 transformsCache.clear();
@@ -443,6 +446,7 @@ const ScrollStack = ({
             }
             if (lenisRef.current) {
                 lenisRef.current.destroy();
+                if (window.__lenis === lenisRef.current) window.__lenis = null;
             }
             stackCompletedRef.current = false;
             cardsRef.current = [];
