@@ -305,11 +305,11 @@ export default function Footer({ timeText }) {
               </div>
               <ul className="space-y-3">
                 {[
+                  { label: 'Packages', action: () => scrollTo('packages') },
                   { label: 'Projects', action: () => scrollTo('projects') },
                   { label: 'Process', action: () => scrollTo('why-us') },
                   { label: 'Estimator', action: () => scrollTo('estimator') },
                   { label: 'Reviews', action: () => scrollTo('reviews') },
-                  { label: 'Packages', action: () => scrollTo('packages') },
                 ].map((link, i) => (
                   <li key={i}>
                     <button

@@ -76,10 +76,10 @@ const CardNav = ({
 
   const navLinks = [
     { label: 'About Us', href: '#about', tag: '01' },
-    { label: 'The Way of Architecture', href: '#architecture', tag: '02' },
-    { label: 'Portfolio', href: '#projects', tag: '03' },
-    { label: 'Cost Estimator', href: '#estimator', tag: '04' },
-    { label: 'Packages', href: '#packages', tag: '05' },
+    { label: 'Packages', href: '#packages', tag: '02' },
+    { label: 'The Way of Architecture', href: '#architecture', tag: '03' },
+    { label: 'Portfolio', href: '#projects', tag: '04' },
+    { label: 'Cost Estimator', href: '#estimator', tag: '05' },
     { label: 'Reviews', href: '#reviews', tag: '06' },
     { label: 'Contact', href: '#contact', tag: '07' },
   ];

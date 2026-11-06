@@ -372,6 +372,9 @@ function HomePage({
             setAllocationModal={setAllocationModal}
             onComplete={() => setIntroCompleted(true)}
           />
+          <ScrollStackItem style={{ background: '#18181b' }}>
+            <Packages setAllocationModal={setAllocationModal} setSelectedProject={setSelectedProject} />
+          </ScrollStackItem>
           <ScrollStackItem style={{ background: '#FED8B1' }}>
             <AboutUs />
           </ScrollStackItem>
@@ -391,9 +394,6 @@ function HomePage({
           </ScrollStackItem>
           <ScrollStackItem style={{ background: '#18181b' }}>
             <Reviews reviews={reviews} />
-          </ScrollStackItem>
-          <ScrollStackItem style={{ background: '#18181b' }}>
-            <Packages setAllocationModal={setAllocationModal} setSelectedProject={setSelectedProject} />
           </ScrollStackItem>
           <ScrollStackItem style={{ background: '#FED8B1' }}>
             <ArchitectureSection setAllocationModal={setAllocationModal} />
