@@ -30,7 +30,9 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          background: 'linear-gradient(90deg, rgba(11, 17, 21, 0.92) 0%, rgba(11, 17, 21, 0.7) 35%, rgba(11, 17, 21, 0.82) 100%)'
+          background: combined
+            ? 'linear-gradient(90deg, rgba(11, 17, 21, 0.58) 0%, rgba(11, 17, 21, 0.4) 35%, rgba(11, 17, 21, 0.52) 100%)'
+            : 'linear-gradient(90deg, rgba(11, 17, 21, 0.92) 0%, rgba(11, 17, 21, 0.7) 35%, rgba(11, 17, 21, 0.82) 100%)'
         }}
       />
 
@@ -39,7 +41,7 @@ export default function Hero({ timeText, setAllocationModal, combined = false })
         style={{
           background: 'repeating-linear-gradient(130deg, transparent, transparent 140px, rgba(255, 255, 255, 0.02) 140px, rgba(255, 255, 255, 0.02) 280px)',
           mixBlendMode: 'overlay',
-          opacity: 0.8,
+          opacity: combined ? 0.45 : 0.8,
         }}
       />
 

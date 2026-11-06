@@ -209,7 +209,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                         alt="Foundational Space"
                         loading="eager"
                         decoding="sync"
-                        className="w-full h-full object-cover object-center grayscale brightness-[0.4]"
+                        className="w-full h-full object-cover object-center grayscale-[70%] brightness-[0.62]"
                     />
                 </div>
 
@@ -226,7 +226,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                         alt="Evolved Luxury Space"
                         loading="eager"
                         decoding="sync"
-                        className="w-full h-full object-cover object-center brightness-[0.5]"
+                        className="w-full h-full object-cover object-center brightness-[0.72] saturate-[1.08]"
                     />
                 </motion.div>
             </div>
