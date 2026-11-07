@@ -41,7 +41,7 @@ export default function ArchitectureSection({ setAllocationModal }) {
         }}
       />
 
-      <div className="max-w-7xl w-full mx-auto relative z-10">
+      <div className="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto relative z-10">
 
         {/* ── SECTION HEADER ── */}
         <div className="mb-14 sm:mb-16">

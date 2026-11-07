@@ -355,7 +355,7 @@ export default function Projects({ projects }) {
       className="relative w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 overflow-hidden tech-grid-light"
       style={{ background: '#FED8B1' }}
     >
-      <div className="w-full max-w-7xl mx-auto z-10 relative">
+      <div className="w-full max-w-7xl 2xl:max-w-[1600px] mx-auto z-10 relative">
         {/* Header Block */}
         <div className="mb-10 sm:mb-12">
           <div className="flex items-center gap-3 mb-3">

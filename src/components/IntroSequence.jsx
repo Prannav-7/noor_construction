@@ -191,7 +191,7 @@ export default function IntroSequenceSection({ timeText, setAllocationModal, onC
                     y: heroY,
                     pointerEvents: isHeroInteractive
                 }}
-                className="absolute inset-0 z-50 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none"
+                className="absolute inset-0 z-50 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none flex flex-col justify-center"
             >
                 <Hero 
                     combined={true} 

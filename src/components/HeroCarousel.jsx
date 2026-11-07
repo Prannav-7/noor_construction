@@ -80,7 +80,7 @@ export default function HeroCarousel() {
 
   return (
     <div
-      className="relative w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[380px] md:max-w-[400px] lg:max-w-[420px] mx-auto select-none group"
+      className="relative w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[380px] md:max-w-[400px] lg:max-w-[480px] xl:max-w-[530px] 2xl:max-w-[650px] mx-auto select-none group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
@@ -96,7 +96,7 @@ export default function HeroCarousel() {
       />
 
       {/* Carousel Container - Fully responsive aspect ratio on mobile & laptop */}
-      <div className="relative overflow-hidden rounded-[16px] sm:rounded-[20px] border border-white/15 bg-black/60 shadow-[0_15px_40px_rgba(0,0,0,0.55)] backdrop-blur-md aspect-[16/10] sm:aspect-[4/3] w-full">
+      <div className="relative overflow-hidden rounded-[16px] sm:rounded-[20px] lg:rounded-[22px] xl:rounded-[24px] 2xl:rounded-[28px] border border-white/15 bg-black/60 shadow-[0_15px_40px_rgba(0,0,0,0.55)] lg:shadow-[0_20px_50px_rgba(0,0,0,0.7)] 2xl:shadow-[0_25px_60px_rgba(0,0,0,0.85)] backdrop-blur-md aspect-[16/10] sm:aspect-[4/3] w-full">
         {/* Animated Image Slides */}
         <AnimatePresence mode="wait">
           <motion.img
@@ -124,29 +124,29 @@ export default function HeroCarousel() {
         <button
           onClick={goToPrev}
           aria-label="Previous image"
-          className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-black/50 text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-200 hover:bg-[#ff6200] hover:border-[#ff6200] active:scale-90 cursor-pointer"
+          className="absolute left-2 sm:left-3 lg:left-4 2xl:left-5 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 sm:h-9 sm:w-9 lg:h-10 lg:w-10 2xl:h-12 2xl:w-12 items-center justify-center rounded-full bg-black/50 text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-200 hover:bg-[#ff6200] hover:border-[#ff6200] active:scale-90 cursor-pointer"
         >
-          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 lg:w-5 lg:h-5 2xl:w-6 2xl:h-6" />
         </button>
 
         {/* Right Arrow Button - Scaled for touch targets on mobile & desktop */}
         <button
           onClick={goToNext}
           aria-label="Next image"
-          className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-black/50 text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-200 hover:bg-[#ff6200] hover:border-[#ff6200] active:scale-90 cursor-pointer"
+          className="absolute right-2 sm:right-3 lg:right-4 2xl:right-5 top-1/2 -translate-y-1/2 z-20 flex h-7 w-7 sm:h-9 sm:w-9 lg:h-10 lg:w-10 2xl:h-12 2xl:w-12 items-center justify-center rounded-full bg-black/50 text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-200 hover:bg-[#ff6200] hover:border-[#ff6200] active:scale-90 cursor-pointer"
         >
-          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 lg:w-5 lg:h-5 2xl:w-6 2xl:h-6" />
         </button>
 
         {/* Minimal dot indicators (Zero words) - Responsive sizing */}
-        <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/10">
+        <div className="absolute bottom-2 sm:bottom-3 lg:bottom-4 2xl:bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 sm:gap-1.5 lg:gap-2 2xl:gap-2.5 px-2 sm:px-2.5 lg:px-3 2xl:px-4 py-0.5 sm:py-1 2xl:py-1.5 rounded-full bg-black/45 backdrop-blur-md border border-white/10">
           {CAROUSEL_IMAGES.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentIndex ? 'w-4 sm:w-5 bg-[#ff6200]' : 'w-1 sm:w-1.5 bg-white/40 hover:bg-white/80'
+              className={`h-1 sm:h-1.5 lg:h-2 2xl:h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                idx === currentIndex ? 'w-4 sm:w-5 lg:w-6 2xl:w-8 bg-[#ff6200]' : 'w-1 sm:w-1.5 lg:w-2 2xl:w-2.5 bg-white/40 hover:bg-white/80'
               }`}
             />
           ))}

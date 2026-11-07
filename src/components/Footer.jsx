@@ -188,7 +188,7 @@ export default function Footer({ timeText }) {
         {/* Top gold hairline accent */}
         <div className="hairline absolute top-0 left-0 right-0" />
 
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 relative z-10">
+        <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 relative z-10">
 
           {/* ── Brand / Contact ── */}
           <div className="lg:col-span-5 reveal-on-scroll">
@@ -446,7 +446,7 @@ export default function Footer({ timeText }) {
 
         {/* ── Bottom Bar ── */}
         <div
-          className="max-w-7xl mx-auto w-full mt-12 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 relative z-10"
+          className="max-w-7xl 2xl:max-w-[1600px] mx-auto w-full mt-12 pt-6 flex flex-col md:flex-row justify-between items-center gap-3 relative z-10"
           style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}
         >
           <div

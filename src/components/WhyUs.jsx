@@ -197,7 +197,7 @@ export default function WhyUs() {
 
         {/* ── HEADER ── */}
         <div 
-          className="max-w-7xl w-full mx-auto px-6 mb-8 lg:mb-12 transition-all duration-1000 ease-out"
+          className="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto px-6 mb-8 lg:mb-12 transition-all duration-1000 ease-out"
           style={{ opacity: isVisible ? 1 : 0, transform: isVisible ? 'translateY(0)' : 'translateY(40px)' }}
         >
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">

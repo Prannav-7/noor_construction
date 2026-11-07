@@ -68,7 +68,7 @@ export default function AboutUs() {
         style={{ background: 'radial-gradient(circle, rgba(255, 98, 0,0.06) 0%, transparent 70%)', filter: 'blur(60px)' }}
       />
 
-      <div className="max-w-7xl w-full mx-auto relative z-10">
+      <div className="max-w-7xl 2xl:max-w-[1600px] w-full mx-auto relative z-10">
 
         {/* ── MAIN CONTENT GRID ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center mb-12">

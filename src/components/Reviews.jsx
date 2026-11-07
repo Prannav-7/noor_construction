@@ -456,7 +456,7 @@ export default function Reviews() {
         style={{ background: 'radial-gradient(circle, rgba(255, 98, 0, 0.05) 0%, transparent 65%)', filter: 'blur(80px)' }}
       />
 
-      <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col justify-center h-full">
+      <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto w-full relative z-10 flex flex-col justify-center h-full">
         {/* Header Block */}
         <div className="text-center mb-5 sm:mb-8 shrink-0">
           <div className="flex justify-center items-center gap-3 mb-4">

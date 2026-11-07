@@ -296,7 +296,7 @@ export default function Packages({ setAllocationModal, setSelectedProject }) {
         }}
       />
 
-      <div className="max-w-7xl mx-auto w-full relative z-10">
+      <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto w-full relative z-10">
         {/* Header Block */}
         <div className="text-center mb-16 shrink-0">
           <div className="flex justify-center items-center gap-3 mb-4">
